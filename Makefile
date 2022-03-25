@@ -34,15 +34,17 @@ FASTLY_CLI := fastly compute
 
 APPLICATION_NAME := fastly-compute-at-edge-template
 
-COMPILE_TARGET := wasm32-wasi
+COMPILE_TARGET_WASM32_WASI := wasm32-wasi
 
+CARGO_TARGET_DIR := $(CURDIR)/target
+CARGO_TARGET_WASM32_WASI_DIR := $(CURDIR)/target/$(COMPILE_TARGET_WASM32_WASI)
 FASTLY_CLI_GENERATED_PKG_DIR := $(CURDIR)/pkg
 
-CARGO_GENERATED_RELEASE_WASM_BINARY := $(CURDIR)/target/$(COMPILE_TARGET)/release/$(APPLICATION_NAME).wasm
-CARGO_GENERATED_DEBUG_WASM_BINARY := $(CURDIR)/target/$(COMPILE_TARGET)/debug/$(APPLICATION_NAME).wasm
+CARGO_GENERATED_RELEASE_WASM_BINARY := $(CARGO_TARGET_WASM32_WASI_DIR)/release/$(APPLICATION_NAME).wasm
+CARGO_GENERATED_DEBUG_WASM_BINARY := $(CARGO_TARGET_WASM32_WASI_DIR)/debug/$(APPLICATION_NAME).wasm
 
-FASTLY_CLI_GENERATED_PKG_TAR_BALL := $(CURDIR)/pkg/$(APPLICATION_NAME).tar.gz
-FASTLY_CLI_ARCHIVED_WASM_BINARY := $(CURDIR)/pkg/$(APPLICATION_NAME)/bin/main.wasm
+FASTLY_CLI_GENERATED_PKG_TAR_BALL := $(FASTLY_CLI_GENERATED_PKG_DIR)/$(APPLICATION_NAME).tar.gz
+FASTLY_CLI_ARCHIVED_WASM_BINARY := $(FASTLY_CLI_GENERATED_PKG_DIR)/$(APPLICATION_NAME)/bin/main.wasm
 
 all: help
 
@@ -75,7 +77,7 @@ __clean_generated_by_fastly:
 build_release: __fastly_compute_validate_relase_build ## Create the release build
 
 __cargo_build_release:
-	$(CARGO_BIN) build --release --target=$(COMPILE_TARGET)
+	$(CARGO_BIN) build --release --target=$(COMPILE_TARGET_WASM32_WASI)
 
 __fastly_compute_pack_release_build: __cargo_build_release __clean_generated_by_fastly
 	$(FASTLY_CLI) pack --wasm-binary $(CARGO_GENERATED_RELEASE_WASM_BINARY)
@@ -87,7 +89,7 @@ __fastly_compute_validate_relase_build: __fastly_compute_pack_release_build __cl
 build_debug: __fastly_compute_validate_debug_build ## Create the debug build
 
 __cargo_build_debug:
-	$(CARGO_BIN) build --target=$(COMPILE_TARGET)
+	$(CARGO_BIN) build --target=$(COMPILE_TARGET_WASM32_WASI)
 
 __fastly_compute_pack_debug_build: __cargo_build_debug __clean_generated_by_fastly
 	$(FASTLY_CLI) pack --wasm-binary $(CARGO_GENERATED_DEBUG_WASM_BINARY)
@@ -109,7 +111,7 @@ clippy_fix: ## Try to fix problems founded by static analytics
 	$(CARGO_BIN) clippy --fix --workspace --all-targets
 
 typecheck: ## Check whole code consistency via `cargo check`
-	$(CARGO_BIN) check --workspace --all-targets --target=$(COMPILE_TARGET)
+	$(CARGO_BIN) check --workspace --all-targets --target=$(COMPILE_TARGET_WASM32_WASI)
 
 
 ###########################
