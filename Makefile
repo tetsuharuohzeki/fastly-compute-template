@@ -93,6 +93,12 @@ cargo_build: ## Build by `cargo build` simply (for compile checking purpose)
 clippy: ## Run static analysis via `cargo clippy`
 	$(CARGO_BIN) clippy --workspace --all-targets
 
+clippy_check: ## Run static analysis and fail if there are some warnings.
+	$(CARGO_BIN) clippy --workspace --all-targets -- -D clippy::all
+
+clippy_fix: ## Try to fix problems founded by static analytics
+	$(CARGO_BIN) clippy --fix --workspace --all-targets
+
 typecheck: ## Check whole code consistency via `cargo check`
 	$(CARGO_BIN) check --workspace --all-targets --target=$(COMPILE_TARGET)
 
