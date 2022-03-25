@@ -134,10 +134,10 @@ format: ## Format a code
 format_check: ## Check code formatting
 	$(CARGO_BIN) fmt --check
 
-serve_localy_with_release_build: build_release ## Build and run local development server with the release build.
+serve_localy_with_release_build: build_release ## Alias to `make build_release && run_serve_localy`.
 	$(MAKE) run_serve_localy -C $(CURDIR)
 
-serve_localy_with_debug_build: build_debug ## Build and run local development server with the debug build.
+serve_localy_with_debug_build: build_debug ## Alias to `make build_debug && run_serve_localy`.
 	$(MAKE) run_serve_localy -C $(CURDIR)
 
 run_serve_localy: ## Run local development server without build an application code.
