@@ -116,6 +116,9 @@ unittest_on_wasm32-wasi: __clean_cargo ## Run unit tests with target=wasm32-wasi
 format: ## Format a code
 	$(CARGO_BIN) fmt
 
+format_check: ## Check code formatting
+	$(CARGO_BIN) fmt --check
+
 serve_localy_with_release_build: build_release ## Build and run local development server.
 	$(MAKE) run_serve_localy -C $(CURDIR)
 
