@@ -29,10 +29,19 @@
 ############ CAUTION ########################
 
 CARGO_BIN := cargo
+CARGO_WASI_BIN := cargo wasi
 FASTLY_CLI := fastly compute
+
+APPLICATION_NAME := fastly-compute-at-edge-template
+
+COMPILE_TARGET := wasm32-wasi
 
 FASTLY_CLI_GENERATED_BIN_DIR := $(CURDIR)/bin
 FASTLY_CLI_GENERATED_PKG_DIR := $(CURDIR)/pkg
+
+CARGO_GENERATED_RELEASE_WASM_BINARY := $(CURDIR)/target/$(COMPILE_TARGET)/release/$(APPLICATION_NAME).wasm
+FASTLY_CLI_GENERATED_PKG_TAR_BALL := $(CURDIR)/pkg/$(APPLICATION_NAME).tar.gz
+FASTLY_CLI_ARCHIVED_WASM_BINARY := $(CURDIR)/pkg/$(APPLICATION_NAME)/bin/main.wasm
 
 all: help
 
@@ -63,30 +72,42 @@ __clean_generated_by_fastly:
 ###########################
 # Build
 ###########################
-build: ## Build by fastly CLI
-	$(FASTLY_CLI) build
+build_release: __fastly_compute_validate_relase_build ## Create the release build
+
+__cargo_build_release:
+	$(CARGO_BIN) build --release --target=$(COMPILE_TARGET)
+
+__fastly_compute_pack_release_build: __cargo_build_release
+	$(FASTLY_CLI) pack --wasm-binary $(CARGO_GENERATED_RELEASE_WASM_BINARY)
+
+__fastly_compute_validate_relase_build: __fastly_compute_pack_release_build
+	$(FASTLY_CLI) validate --package $(FASTLY_CLI_GENERATED_PKG_TAR_BALL)
 
 cargo_build: ## Build by `cargo build` simply (for compile checking purpose)
-	$(CARGO_BIN) build
+	$(CARGO_BIN) build --target=$(COMPILE_TARGET)
 
 
 ###########################
 # Static Analysis
 ###########################
-clippy: ## Invoke `cargo clippy`
-	$(CARGO_BIN) clippy
+clippy: ## Run static analysis via `cargo clippy`
+	$(CARGO_BIN) clippy --workspace --all-targets
 
-check: ## Invoke `cargo check`
-	$(CARGO_BIN) check
+typecheck: ## Check whole code consistency via `cargo check`
+	$(CARGO_BIN) check --workspace --all-targets --target=$(COMPILE_TARGET)
 
 
 ###########################
 # Test
 ###########################
 
-# FIXME: cargo test will run generated wasm binary natively and would be fail. We need to think something to workaround
-unittest: ## Build and run unit tests `cargo test`
+unittest: ## Build and run unit tests via `cargo test`
 	$(CARGO_BIN) test --workspace
+
+# FIXME: Ideally, we should run unittests with wasm32-wasi target.
+# But then we cannot write some test cases. So we give up run with that target for the present...
+unittest_on_wasm32-wasi: __clean_cargo ## Run unit tests with target=wasm32-wasi
+	$(CARGO_WASI_BIN) test --workspace
 
 
 ###########################
@@ -95,12 +116,15 @@ unittest: ## Build and run unit tests `cargo test`
 format: ## Format a code
 	$(CARGO_BIN) fmt
 
+serve_localy_with_release_build: build_release ## Build and run local development server.
+	$(MAKE) run_serve_localy -C $(CURDIR)
+
+run_serve_localy: ## Run local development server without build an application code.
+	$(FASTLY_CLI) serve --skip-build --file=$(FASTLY_CLI_ARCHIVED_WASM_BINARY)
+
 
 ###########################
-# Fastly CLI
+# Deployment
 ###########################
 deploy: ## Invoke `fastly compute deploy`
-	$(FASTLY_CLI) deploy
-
-serve_localy: ## Run local development server provided by `fastly compute serve`
-	$(FASTLY_CLI) serve
+	$(FASTLY_CLI) deploy --package $(FASTLY_CLI_GENERATED_PKG_TAR_BALL)
