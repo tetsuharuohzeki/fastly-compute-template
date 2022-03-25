@@ -1,0 +1,5 @@
+[package]
+name = "c_at_e_main"
+publish = false
+version = "0.1.0"
+edition = "2021"
