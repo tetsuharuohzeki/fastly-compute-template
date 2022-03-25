@@ -28,6 +28,9 @@
 #
 ############ CAUTION ########################
 
+FASTLY_CLI_GENERATED_BIN_DIR := $(CURDIR)/bin
+FASTLY_CLI_GENERATED_PKG_DIR := $(CURDIR)/pkg
+
 all: help
 
 .PHONY: help
@@ -35,3 +38,21 @@ help:
 	@echo "Specify the task"
 	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 	@exit 1
+
+
+###########################
+# Clean
+###########################
+CLEAN_TARGETS := \
+	cargo \
+	generated_by_fastly
+
+clean: $(addprefix __clean_, $(CLEAN_TARGETS)) ## Clean Build Artifacts
+
+__clean_cargo:
+	cargo clean
+
+__clean_generated_by_fastly:
+	rm -r $(FASTLY_CLI_GENERATED_BIN_DIR)
+	rm -r $(FASTLY_CLI_GENERATED_PKG_DIR)
+
