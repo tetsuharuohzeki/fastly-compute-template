@@ -28,6 +28,8 @@
 #
 ############ CAUTION ########################
 
+FASTLY_CLI := fastly compute
+
 FASTLY_CLI_GENERATED_BIN_DIR := $(CURDIR)/bin
 FASTLY_CLI_GENERATED_PKG_DIR := $(CURDIR)/pkg
 
@@ -56,3 +58,46 @@ __clean_generated_by_fastly:
 	rm -r $(FASTLY_CLI_GENERATED_BIN_DIR)
 	rm -r $(FASTLY_CLI_GENERATED_PKG_DIR)
 
+
+###########################
+# Build
+###########################
+build: ## Build by fastly CLI
+	$(FASTLY_CLI) build
+
+cargo_build: ## Build by `cargo build` simply (for compile checking purpose)
+	cargo build
+
+
+###########################
+# Static Analysis
+###########################
+clippy: ## Invoke `cargo clippy`
+	cargo clippy
+
+check: ## Invoke `cargo check`
+	cargo check
+
+
+###########################
+# Test
+###########################
+test: ## Invoke `cargo test`
+	cargo test
+
+
+###########################
+# Tools
+###########################
+format: ## Format a code
+	cargo fmt
+
+
+###########################
+# Fastly CLI
+###########################
+deploy: ## Invoke `fastly compute deploy`
+	$(FASTLY_CLI) deploy
+
+serve_localy: ## Run local development server provided by `fastly compute serve`
+	$(FASTLY_CLI) serve
