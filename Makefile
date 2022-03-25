@@ -36,10 +36,11 @@ APPLICATION_NAME := fastly-compute-at-edge-template
 
 COMPILE_TARGET := wasm32-wasi
 
-FASTLY_CLI_GENERATED_BIN_DIR := $(CURDIR)/bin
 FASTLY_CLI_GENERATED_PKG_DIR := $(CURDIR)/pkg
 
 CARGO_GENERATED_RELEASE_WASM_BINARY := $(CURDIR)/target/$(COMPILE_TARGET)/release/$(APPLICATION_NAME).wasm
+CARGO_GENERATED_DEBUG_WASM_BINARY := $(CURDIR)/target/$(COMPILE_TARGET)/debug/$(APPLICATION_NAME).wasm
+
 FASTLY_CLI_GENERATED_PKG_TAR_BALL := $(CURDIR)/pkg/$(APPLICATION_NAME).tar.gz
 FASTLY_CLI_ARCHIVED_WASM_BINARY := $(CURDIR)/pkg/$(APPLICATION_NAME)/bin/main.wasm
 
@@ -65,8 +66,7 @@ __clean_cargo:
 	$(CARGO_BIN) clean
 
 __clean_generated_by_fastly:
-	rm -r $(FASTLY_CLI_GENERATED_BIN_DIR)
-	rm -r $(FASTLY_CLI_GENERATED_PKG_DIR)
+	rm -rf $(FASTLY_CLI_GENERATED_PKG_DIR)
 
 
 ###########################
@@ -77,14 +77,23 @@ build_release: __fastly_compute_validate_relase_build ## Create the release buil
 __cargo_build_release:
 	$(CARGO_BIN) build --release --target=$(COMPILE_TARGET)
 
-__fastly_compute_pack_release_build: __cargo_build_release
+__fastly_compute_pack_release_build: __cargo_build_release __clean_generated_by_fastly
 	$(FASTLY_CLI) pack --wasm-binary $(CARGO_GENERATED_RELEASE_WASM_BINARY)
 
-__fastly_compute_validate_relase_build: __fastly_compute_pack_release_build
+__fastly_compute_validate_relase_build: __fastly_compute_pack_release_build __clean_generated_by_fastly
 	$(FASTLY_CLI) validate --package $(FASTLY_CLI_GENERATED_PKG_TAR_BALL)
 
-cargo_build: ## Build by `cargo build` simply (for compile checking purpose)
+
+build_debug: __fastly_compute_validate_debug_build ## Create the debug build
+
+__cargo_build_debug:
 	$(CARGO_BIN) build --target=$(COMPILE_TARGET)
+
+__fastly_compute_pack_debug_build: __cargo_build_debug __clean_generated_by_fastly
+	$(FASTLY_CLI) pack --wasm-binary $(CARGO_GENERATED_DEBUG_WASM_BINARY)
+
+__fastly_compute_validate_debug_build: __fastly_compute_pack_debug_build __clean_generated_by_fastly
+	$(FASTLY_CLI) validate --package $(FASTLY_CLI_GENERATED_PKG_TAR_BALL)
 
 
 ###########################
@@ -125,7 +134,10 @@ format: ## Format a code
 format_check: ## Check code formatting
 	$(CARGO_BIN) fmt --check
 
-serve_localy_with_release_build: build_release ## Build and run local development server.
+serve_localy_with_release_build: build_release ## Build and run local development server with the release build.
+	$(MAKE) run_serve_localy -C $(CURDIR)
+
+serve_localy_with_debug_build: build_debug ## Build and run local development server with the debug build.
 	$(MAKE) run_serve_localy -C $(CURDIR)
 
 run_serve_localy: ## Run local development server without build an application code.
