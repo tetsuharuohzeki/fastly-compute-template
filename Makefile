@@ -86,7 +86,7 @@ check: ## Invoke `cargo check`
 
 # FIXME: cargo test will run generated wasm binary natively and would be fail. We need to think something to workaround
 unittest: ## Build and run unit tests `cargo test`
-	$(CARGO_BIN) test
+	$(CARGO_BIN) test --workspace
 
 
 ###########################
