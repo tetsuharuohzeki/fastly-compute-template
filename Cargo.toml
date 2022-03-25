@@ -1,14 +1,12 @@
-
-[dependencies]
-  fastly = "^0.8.2"
-
 [package]
-  edition = "2021"
-  name = "fastly-compute-at-edge-template"
-  publish = false
-  version = "0.1.0"
+name = "fastly-compute-at-edge-template"
+publish = false
+version = "0.1.0"
+edition = "2021"
 
 [profile]
-
-  [profile.release]
+    [profile.release]
     debug = 1
+
+[dependencies]
+fastly = "^0.8.2"
