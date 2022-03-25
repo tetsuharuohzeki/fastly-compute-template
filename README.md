@@ -11,3 +11,13 @@ And some changes are added to start to develop easily
 
 - Bootstrap Cargo workspace.
 - Add EditorConfig.
+
+
+## Prerequisites
+
+- Install [rustup](https://rustup.rs/)
+
+
+## How to build
+
+Run `make help`.
