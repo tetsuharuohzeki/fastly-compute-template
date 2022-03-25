@@ -11,7 +11,7 @@ members = [
 # to indentify the build artifact (wasm file) which fastly CLI manipulate before deploying it.
 name = "fastly-compute-at-edge-template"
 publish = false
-version = "0.1.0"
+version = "0.0.0"
 edition = "2021"
 rust-version = "1.59"
 
@@ -20,5 +20,5 @@ rust-version = "1.59"
     debug = 1
 
 [dependencies]
-c_at_e_main = { path = "./crates/main", version = "0.1.0" }
+c_at_e_main = { path = "./crates/main", version = "0.0.0" }
 fastly = "^0.8.2"

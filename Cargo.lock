@@ -37,7 +37,7 @@ checksum = "c4872d67bab6358e59559027aa3b9157c53d9358c51423c17554809a8858e0f8"
 
 [[package]]
 name = "c_at_e_main"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "fastly",
 ]
@@ -91,7 +91,7 @@ dependencies = [
 
 [[package]]
 name = "fastly-compute-at-edge-template"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "c_at_e_main",
  "fastly",
