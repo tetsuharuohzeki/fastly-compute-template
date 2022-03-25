@@ -1,4 +1,14 @@
+[workspace]
+members = [
+    "crates/*",
+]
+
 [package]
+# fastly CLI (at least v1.7.1) does not support a way to work with Cargo Workspace.
+# This mean that we need to keep a crate as an entry point on the directory
+# which we run `fastly compute build`, `deploy`, etc. because
+# fastly CLI check & use `package.name` field in Cargo.toml in the current working directory
+# to indentify the build artifact (wasm file) which fastly CLI manipulate before deploying it.
 name = "fastly-compute-at-edge-template"
 publish = false
 version = "0.1.0"
@@ -10,4 +20,5 @@ rust-version = "1.59"
     debug = 1
 
 [dependencies]
+c_at_e_main = { path = "./crates/main", version = "0.1.0" }
 fastly = "^0.8.2"
