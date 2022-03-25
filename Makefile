@@ -82,7 +82,9 @@ check: ## Invoke `cargo check`
 ###########################
 # Test
 ###########################
-test: ## Invoke `cargo test`
+
+# FIXME: cargo test will run generated wasm binary natively and would be fail. We need to think something to workaround
+unittest: ## Build and run unit tests `cargo test`
 	cargo test
 
 
