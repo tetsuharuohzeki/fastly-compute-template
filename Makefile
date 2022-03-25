@@ -28,6 +28,7 @@
 #
 ############ CAUTION ########################
 
+CARGO_BIN := cargo
 FASTLY_CLI := fastly compute
 
 FASTLY_CLI_GENERATED_BIN_DIR := $(CURDIR)/bin
@@ -52,7 +53,7 @@ CLEAN_TARGETS := \
 clean: $(addprefix __clean_, $(CLEAN_TARGETS)) ## Clean Build Artifacts
 
 __clean_cargo:
-	cargo clean
+	$(CARGO_BIN) clean
 
 __clean_generated_by_fastly:
 	rm -r $(FASTLY_CLI_GENERATED_BIN_DIR)
@@ -66,17 +67,17 @@ build: ## Build by fastly CLI
 	$(FASTLY_CLI) build
 
 cargo_build: ## Build by `cargo build` simply (for compile checking purpose)
-	cargo build
+	$(CARGO_BIN) build
 
 
 ###########################
 # Static Analysis
 ###########################
 clippy: ## Invoke `cargo clippy`
-	cargo clippy
+	$(CARGO_BIN) clippy
 
 check: ## Invoke `cargo check`
-	cargo check
+	$(CARGO_BIN) check
 
 
 ###########################
@@ -85,14 +86,14 @@ check: ## Invoke `cargo check`
 
 # FIXME: cargo test will run generated wasm binary natively and would be fail. We need to think something to workaround
 unittest: ## Build and run unit tests `cargo test`
-	cargo test
+	$(CARGO_BIN) test
 
 
 ###########################
 # Tools
 ###########################
 format: ## Format a code
-	cargo fmt
+	$(CARGO_BIN) fmt
 
 
 ###########################
