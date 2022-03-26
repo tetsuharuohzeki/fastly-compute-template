@@ -3,6 +3,7 @@ name = "c_at_e_main"
 publish = false
 version = "0.0.0"
 edition = "2021"
+rust-version = "1.59"
 
 [dependencies]
 fastly = "^0.8.2"
