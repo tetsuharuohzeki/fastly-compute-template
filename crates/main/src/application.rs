@@ -1,8 +1,8 @@
 use fastly::{convert::ToUrl, Error, Request, Response};
 
-const BACKEND_A: &'static str = "backend_a";
+const BACKEND_A: &str = "backend_a";
 
-const TARGET_DOMAIN: &'static str = "https://developer.fastly.com";
+const TARGET_DOMAIN: &str = "https://developer.fastly.com";
 
 pub fn application_main(req: Request) -> Result<Response, Error> {
     let url: String = match req.get_path() {
