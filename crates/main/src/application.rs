@@ -2,14 +2,17 @@ use fastly::{convert::ToUrl, Error, Request, Response};
 
 const BACKEND_A: &'static str = "backend_a";
 
+const TARGET_DOMAIN: &'static str = "https://developer.fastly.com";
+
 pub fn application_main(req: Request) -> Result<Response, Error> {
-    match req.get_path() {
-        "/fastly" => request_to_backend("https://developer.fastly.com"),
+    let url: String = match req.get_path() {
+        "/fastly" => TARGET_DOMAIN.to_owned(),
         path => {
-            let url = format!("https://developer.fastly.com{}", path);
-            request_to_backend(url)
+            let url = format!("{}{}", TARGET_DOMAIN, path);
+            url
         }
-    }
+    };
+    request_to_backend(url)
 }
 
 fn request_to_backend(url: impl ToUrl) -> Result<Response, Error> {
