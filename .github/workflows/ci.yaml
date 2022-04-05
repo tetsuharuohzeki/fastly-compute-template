@@ -1,0 +1,82 @@
+name: CI
+
+on:
+    push:
+        branches:
+            - "main"
+    pull_request:
+
+# see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+# https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
+# https://docs.github.com/en/actions/learn-github-actions/contexts
+jobs:
+    fetch_cargo_registry:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/ci_prepare_to_compile
+
+    build_debug:
+        needs: [fetch_cargo_registry]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/ci_prepare_to_compile
+
+            - name: Set up Fastly CLI
+              # https://github.com/fastly/compute-actions
+              uses: fastly/compute-actions/setup@main
+
+            - shell: bash
+              run: make build_debug -j
+
+    build_release:
+        needs: [fetch_cargo_registry]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/ci_prepare_to_compile
+
+            - name: Set up Fastly CLI
+              # https://github.com/fastly/compute-actions
+              uses: fastly/compute-actions/setup@main
+
+            - shell: bash
+              run: make build_release -j
+
+    unittest:
+        needs: [fetch_cargo_registry]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/ci_prepare_to_compile
+            - shell: bash
+              run: make unittest -j
+
+    lint_check:
+        needs: [fetch_cargo_registry]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/ci_prepare_to_compile
+            - shell: bash
+              run: make lint_check -j
+
+    format_check:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Install Rust toolchain
+              uses: actions-rs/toolchain@v1
+              with:
+                  toolchain: stable
+                  profile: default
+                  override: false
+
+            - shell: bash
+              run: make format_check -j

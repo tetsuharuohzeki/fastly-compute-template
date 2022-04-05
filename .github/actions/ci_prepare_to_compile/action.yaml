@@ -1,0 +1,28 @@
+name: Setup CI
+description: Setup CI environment
+
+runs:
+    using: composite
+    steps:
+        - name: Install Rust toolchain
+          uses: actions-rs/toolchain@v1
+          with:
+              toolchain: stable
+              profile: default
+              target: wasm32-wasi
+              override: false
+
+        - uses: actions/cache@v3
+          with:
+              # We can cache ./target/ directory to cache a build intermediate artifacts
+              # but then we must add rust toolchain's hash to the cache key.
+              # And also, we need to think to add the key to indicate a build profile
+              path: |
+                  ~/.cargo/
+                  !~/.cargo/bin
+                  !~/.cargo/env
+              key: rev0-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.toml') }}
+
+        - name: Fetch dependency packages
+          shell: bash
+          run: cargo fetch --locked
