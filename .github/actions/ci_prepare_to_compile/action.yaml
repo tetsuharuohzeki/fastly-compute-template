@@ -1,5 +1,5 @@
-name: Setup CI
-description: Setup CI environment
+name: Prepare CI to compile
+description: This action prepare CI to compile and cache cachable items
 
 runs:
     using: composite
