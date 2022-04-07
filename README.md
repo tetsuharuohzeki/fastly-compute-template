@@ -21,3 +21,21 @@ And some changes are added to start to develop easily
 ## How to build
 
 Run `make help`.
+
+
+### Release Channel
+
+The current build system supports _release channel_.
+Now we define these release channels.
+
+- `production`: **For production environment**.
+- `canary`: **For Development environment**.
+
+If you want to build the artifact for `production` release channel,
+you should invoke `make build_release -j RELEASE_CHANNEL=production`.
+By default, `RELEASE_CHANNEL` makefile variable is `canary`.
+
+Additionaly, you can pass `ADDITIONAL_FEATURE` makefile variable (e.g. `make build_debug -j ADDITIONAL_FEATURE=barfoo`).
+Then the artifact will be built with enabling `barfoo` feature.
+
+Release channel is based on [Cargo's "features" mechanism](https://doc.rust-lang.org/cargo/reference/features.html).

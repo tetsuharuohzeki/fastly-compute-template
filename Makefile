@@ -47,6 +47,18 @@ CARGO_GENERATED_DEBUG_WASM_BINARY := $(CARGO_TARGET_WASM32_WASI_DIR)/debug/$(APP
 FASTLY_CLI_GENERATED_PKG_TAR_BALL := $(FASTLY_CLI_GENERATED_PKG_DIR)/$(FASTLY_COMPUTE_AT_EDGE_SERVICE_PKG_NAME).tar.gz
 FASTLY_CLI_ARCHIVED_WASM_BINARY := $(FASTLY_CLI_GENERATED_PKG_DIR)/$(FASTLY_COMPUTE_AT_EDGE_SERVICE_PKG_NAME)/bin/main.wasm
 
+###########################
+# Release Channel Mechanism
+###########################
+RELEASE_CHANNEL ?= canary
+ADDITIONAL_FEATURE ?=
+ifeq ($(RELEASE_CHANNEL),production)
+RELEASE_CHANNEL_FEATURES := c_at_e_main/production,$(ADDITIONAL_FEATURE)
+else
+RELEASE_CHANNEL_FEATURES := c_at_e_main/canary,$(ADDITIONAL_FEATURE)
+endif
+
+
 all: help
 
 .PHONY: help
@@ -78,7 +90,7 @@ __clean_generated_by_fastly:
 build_release: __fastly_compute_validate_relase_build ## Create the release build
 
 __cargo_build_release:
-	$(CARGO_BIN) build --release --target=$(COMPILE_TARGET_WASM32_WASI)
+	$(CARGO_BIN) build --release --target=$(COMPILE_TARGET_WASM32_WASI) --features $(RELEASE_CHANNEL_FEATURES)
 
 __fastly_compute_pack_release_build: __cargo_build_release __clean_generated_by_fastly
 	$(FASTLY_CLI) pack --wasm-binary $(CARGO_GENERATED_RELEASE_WASM_BINARY)
@@ -90,7 +102,7 @@ __fastly_compute_validate_relase_build: __fastly_compute_pack_release_build __cl
 build_debug: __fastly_compute_validate_debug_build ## Create the debug build
 
 __cargo_build_debug:
-	$(CARGO_BIN) build --target=$(COMPILE_TARGET_WASM32_WASI)
+	$(CARGO_BIN) build --target=$(COMPILE_TARGET_WASM32_WASI) --features $(RELEASE_CHANNEL_FEATURES)
 
 __fastly_compute_pack_debug_build: __cargo_build_debug __clean_generated_by_fastly
 	$(FASTLY_CLI) pack --wasm-binary $(CARGO_GENERATED_DEBUG_WASM_BINARY)

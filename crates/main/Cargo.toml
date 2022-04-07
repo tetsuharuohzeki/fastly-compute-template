@@ -7,3 +7,8 @@ rust-version = "1.59"
 
 [dependencies]
 fastly = "^0.8.2"
+
+[features]
+default = []
+production = []
+canary = []
