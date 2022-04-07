@@ -20,12 +20,14 @@ jobs:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/ci_prepare_to_compile
 
-    build_debug:
+    build:
         needs: [fetch_cargo_registry]
         runs-on: ubuntu-latest
         strategy:
             matrix:
+                build_type: ["debug", "release"]
                 release_channel: ["canary", "production"]
+            fail-fast: true
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/ci_prepare_to_compile
@@ -35,24 +37,7 @@ jobs:
               uses: fastly/compute-actions/setup@main
 
             - shell: bash
-              run: make build_debug -j RELEASE_CHANNEL=${{ matrix.release_channel }}
-
-    build_release:
-        needs: [fetch_cargo_registry]
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                release_channel: ["canary", "production"]
-        steps:
-            - uses: actions/checkout@v3
-            - uses: ./.github/actions/ci_prepare_to_compile
-
-            - name: Set up Fastly CLI
-              # https://github.com/fastly/compute-actions
-              uses: fastly/compute-actions/setup@main
-
-            - shell: bash
-              run: make build_release -j RELEASE_CHANNEL=${{ matrix.release_channel }}
+              run: make build_${{ matrix.build_type }} -j RELEASE_CHANNEL=${{ matrix.release_channel }}
 
     unittest:
         needs: [fetch_cargo_registry]
