@@ -23,6 +23,9 @@ jobs:
     build_debug:
         needs: [fetch_cargo_registry]
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                release_channel: ["canary", "production"]
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/ci_prepare_to_compile
@@ -32,11 +35,14 @@ jobs:
               uses: fastly/compute-actions/setup@main
 
             - shell: bash
-              run: make build_debug -j
+              run: make build_debug -j RELEASE_CHANNEL=${{ matrix.release_channel }}
 
     build_release:
         needs: [fetch_cargo_registry]
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                release_channel: ["canary", "production"]
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/ci_prepare_to_compile
@@ -46,7 +52,7 @@ jobs:
               uses: fastly/compute-actions/setup@main
 
             - shell: bash
-              run: make build_release -j
+              run: make build_release -j RELEASE_CHANNEL=${{ matrix.release_channel }}
 
     unittest:
         needs: [fetch_cargo_registry]
