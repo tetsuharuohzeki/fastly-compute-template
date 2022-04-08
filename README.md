@@ -29,7 +29,9 @@ The current build system supports _release channel_.
 Now we define these release channels.
 
 - `production`: **For production environment**.
-- `canary`: **For Development environment**.
+- `canary`: **For development environment**.
+
+**These are mutually exclusive. You cannot enable both of them**.
 
 If you want to build the artifact for `production` release channel,
 you should invoke `make build_release -j RELEASE_CHANNEL=production`.
