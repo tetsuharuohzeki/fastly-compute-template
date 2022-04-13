@@ -133,12 +133,12 @@ check_integrity: ## Validate type and semantics for whole of codes by `cargo che
 # Test
 ###########################
 
-unittest: ## Build and run unit tests via `cargo test`
+unittests: ## Build and run unit tests via `cargo test`
 	$(CARGO_BIN) test --workspace
 
 # FIXME: Ideally, we should run unittests with wasm32-wasi target.
 # But then we cannot write some test cases. So we give up run with that target for the present...
-unittest_on_wasm32-wasi: __clean_cargo ## Run unit tests with target=wasm32-wasi
+unittests_on_wasm32-wasi: __clean_cargo ## Run unit tests with target=wasm32-wasi
 	$(CARGO_WASI_BIN) test --workspace
 
 

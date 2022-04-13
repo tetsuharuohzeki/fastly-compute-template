@@ -39,14 +39,14 @@ jobs:
             - shell: bash
               run: make build_${{ matrix.build_type }} -j RELEASE_CHANNEL=${{ matrix.release_channel }}
 
-    unittest:
+    unittests:
         needs: [fetch_cargo_registry]
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/ci_prepare_to_compile
             - shell: bash
-              run: make unittest -j
+              run: make unittests -j
 
     lint_check:
         needs: [fetch_cargo_registry]
