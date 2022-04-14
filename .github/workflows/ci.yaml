@@ -111,3 +111,13 @@ jobs:
 
             - shell: bash
               run: make format_check -j
+
+    # TODO(#7)
+    # deploy:
+    #    needs: [build, integration_tests]
+    #    runs-on: ubuntu-latest
+    #    steps:
+    #        - uses: actions/download-artifact@v3
+    #          with:
+    #              name: application-${{ github.sha }}-${{ matrix.release_channel }}-release
+    #              path: ${{ github.workspace }}/pkg
