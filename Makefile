@@ -167,10 +167,10 @@ integration_tests_with_update_expectations: build_debug ## Build debug build && 
 	$(MAKE) run_integration_tests_with_update_expectations -C $(CURDIR) -j
 
 run_integration_tests: ## Run integration tests only.
-	$(NODE_BIN) $(INTEGRATION_TESTS_DIR)/src/supervisor.js
+	env RELEASE_CHANNEL=$(RELEASE_CHANNEL) $(NODE_BIN) $(INTEGRATION_TESTS_DIR)/src/supervisor.js
 
 run_integration_tests_with_update_expectations: ## Run integration tests only with updating expectations.
-	env UPDATE_SNAPSHOTS=true $(NODE_BIN) $(INTEGRATION_TESTS_DIR)/src/supervisor.js
+	env RELEASE_CHANNEL=$(RELEASE_CHANNEL) UPDATE_SNAPSHOTS=true $(NODE_BIN) $(INTEGRATION_TESTS_DIR)/src/supervisor.js
 
 
 ###########################

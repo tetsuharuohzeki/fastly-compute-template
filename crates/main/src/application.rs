@@ -3,6 +3,11 @@ use fastly::http::StatusCode;
 use fastly::mime;
 use fastly::{Error, Request, Response};
 
+#[cfg(not(feature = "canary"))]
+const EXAMPLE_BODY: &str = "This is production channel!";
+#[cfg(feature = "canary")]
+const EXAMPLE_BODY: &str = "This is canary channel!";
+
 const BACKEND_A: &str = "backend_a";
 
 const TARGET_DOMAIN: &str = "https://developer.fastly.com";
@@ -10,9 +15,14 @@ const TARGET_DOMAIN: &str = "https://developer.fastly.com";
 pub fn main(req: Request) -> Result<Response, Error> {
     let url: String = match req.get_path() {
         "/" => {
-            let res = Response::from_status(StatusCode::OK)
-                .with_content_type(mime::TEXT_PLAIN_UTF_8)
-                .with_body("hello");
+            let mut res =
+                Response::from_status(StatusCode::OK).with_content_type(mime::TEXT_PLAIN_UTF_8);
+            if req.get_query_parameter("release_channel").is_some() {
+                res.set_body(EXAMPLE_BODY);
+            } else {
+                res.set_body("hello");
+            }
+
             return Ok(res);
         }
         "/fastly" => TARGET_DOMAIN.to_owned(),
