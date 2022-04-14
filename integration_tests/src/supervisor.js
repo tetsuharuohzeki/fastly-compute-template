@@ -11,6 +11,7 @@ const THIS_DIRNAME = path.dirname(THIS_FILENAME);
 
 const WORKSPACE_ROOT = path.resolve(THIS_DIRNAME, '..');
 
+const REPOSITORY_ROOT = path.resolve(WORKSPACE_ROOT, '..');
 const INTEGRATION_TESTS_DIR = WORKSPACE_ROOT;
 
 function dumpFlags() {
@@ -38,6 +39,7 @@ async function launchLocalApplicationServer(aborter) {
     const signal = aborter.signal;
 
     const status = await spawnAndGracefulShutdown(aborter, 'make', ['run_serve_localy', '-j'], {
+        cwd: REPOSITORY_ROOT,
         stdio: 'inherit',
         signal,
     });

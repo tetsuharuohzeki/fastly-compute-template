@@ -31,9 +31,6 @@
 CARGO_BIN := cargo
 CARGO_WASI_BIN := cargo wasi
 FASTLY_CLI := fastly compute
-NODE_BIN := node
-NPM_BIN := npm
-NPM_RUN := $(NPM_BIN) run
 
 APPLICATION_NAME := c_at_e_main
 FASTLY_COMPUTE_AT_EDGE_SERVICE_PKG_NAME := fastly-compute-at-edge-template
@@ -91,14 +88,14 @@ __clean_generated_by_fastly:
 	rm -rf $(FASTLY_CLI_GENERATED_PKG_DIR)
 
 __clean_integration_tests:
-	rm -rf $(INTEGRATION_TESTS_DIR)/node_modules
+	$(MAKE) clean -C $(INTEGRATION_TESTS_DIR)
 
 
 ###########################
 # Setup
 ###########################
 setup_integration_tests: ## Setup integration tests including install dependencies.
-	cd $(INTEGRATION_TESTS_DIR) && $(NPM_BIN) install
+	$(MAKE) setup -C $(INTEGRATION_TESTS_DIR)
 
 
 ###########################
@@ -167,10 +164,10 @@ integration_tests_with_update_expectations: build_debug ## Build debug build && 
 	$(MAKE) run_integration_tests_with_update_expectations -C $(CURDIR) -j
 
 run_integration_tests: ## Run integration tests only.
-	env RELEASE_CHANNEL=$(RELEASE_CHANNEL) $(NODE_BIN) $(INTEGRATION_TESTS_DIR)/src/supervisor.js
+	$(MAKE) run_integration_tests -C $(INTEGRATION_TESTS_DIR) RELEASE_CHANNEL=$(RELEASE_CHANNEL)
 
 run_integration_tests_with_update_expectations: ## Run integration tests only with updating expectations.
-	env RELEASE_CHANNEL=$(RELEASE_CHANNEL) UPDATE_SNAPSHOTS=true $(NODE_BIN) $(INTEGRATION_TESTS_DIR)/src/supervisor.js
+	$(MAKE) update_expectations -C $(INTEGRATION_TESTS_DIR) RELEASE_CHANNEL=$(RELEASE_CHANNEL)
 
 
 ###########################
@@ -180,13 +177,13 @@ format: ## Format a code
 	$(CARGO_BIN) fmt
 
 format_integration_tests: ## Format a code under integration_tests/
-	cd $(INTEGRATION_TESTS_DIR) && $(NPM_BIN) run format
+	$(MAKE) format -C $(INTEGRATION_TESTS_DIR)
 
 format_check: ## Check code formatting
 	$(CARGO_BIN) fmt --check
 
 format_check_integration_tests: ## Check code formatting under integration_tests/
-	cd $(INTEGRATION_TESTS_DIR) && $(NPM_BIN) run format:check
+	$(MAKE) format_check -C $(INTEGRATION_TESTS_DIR)
 
 
 ###########################
