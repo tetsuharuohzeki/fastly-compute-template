@@ -21,7 +21,7 @@ runs:
                   ~/.cargo/
                   !~/.cargo/bin
                   !~/.cargo/env
-              key: rev0-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
+              key: rev0-cargo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
 
         - name: Fetch dependency packages
           shell: bash
