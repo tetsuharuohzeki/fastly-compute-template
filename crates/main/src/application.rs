@@ -1,4 +1,7 @@
-use fastly::{convert::ToUrl, Error, Request, Response};
+use fastly::convert::ToUrl;
+use fastly::http::StatusCode;
+use fastly::mime;
+use fastly::{Error, Request, Response};
 
 const BACKEND_A: &str = "backend_a";
 
@@ -6,6 +9,12 @@ const TARGET_DOMAIN: &str = "https://developer.fastly.com";
 
 pub fn main(req: Request) -> Result<Response, Error> {
     let url: String = match req.get_path() {
+        "/" => {
+            let res = Response::from_status(StatusCode::OK)
+                .with_content_type(mime::TEXT_PLAIN_UTF_8)
+                .with_body("hello");
+            return Ok(res);
+        }
         "/fastly" => TARGET_DOMAIN.to_owned(),
         path => {
             let url = format!("{}{}", TARGET_DOMAIN, path);
