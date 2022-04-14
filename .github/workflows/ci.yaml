@@ -39,13 +39,11 @@ jobs:
             - shell: bash
               run: make build_${{ matrix.build_type }} -j RELEASE_CHANNEL=${{ matrix.release_channel }}
 
-            - uses: actions/upload-artifact@v3
+            - uses: ./.github/actions/upload_build_artifacts
               with:
-                  name: application-${{ github.sha }}-${{ matrix.release_channel }}-${{ matrix.build_type }}
-                  path: ${{ github.workspace }}/pkg
-                  if-no-files-found: error
-                  # We can reproduce a build easily. We don't have to keep artifacts for a long time.
-                  retention-days: 1
+                  git-sha: ${{ github.sha }}
+                  release-channel: ${{ matrix.release_channel }}
+                  build-type: ${{ matrix.build_type }}
 
     integration_tests:
         needs: [build]
@@ -62,10 +60,11 @@ jobs:
             fail-fast: false
         steps:
             - uses: actions/checkout@v3
-            - uses: actions/download-artifact@v3
+            - uses: ./.github/actions/download_build_artifacts
               with:
-                  name: application-${{ github.sha }}-${{ matrix.release_channel }}-${{ matrix.build_type }}
-                  path: ${{ github.workspace }}/pkg
+                  git-sha: ${{ github.sha }}
+                  release-channel: ${{ matrix.release_channel }}
+                  build-type: ${{ matrix.build_type }}
             - name: Set Node.js version
               uses: actions/setup-node@v3.1.1
               with:
