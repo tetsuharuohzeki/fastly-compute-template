@@ -68,7 +68,7 @@ jobs:
             - name: Set Node.js version
               uses: actions/setup-node@v3.1.1
               with:
-                  node-version: 17
+                  node-version: 18
                   cache: "npm"
                   cache-dependency-path: integration_tests/package-lock.json
             - run: make setup_integration_tests -j
