@@ -3,6 +3,8 @@ use fastly::http::StatusCode;
 use fastly::mime;
 use fastly::{Error, Request, Response};
 
+use crate::build_info::create_build_info_response;
+
 #[cfg(not(feature = "canary"))]
 const EXAMPLE_BODY: &str = "This is production channel!";
 #[cfg(feature = "canary")]
@@ -13,7 +15,13 @@ const BACKEND_A: &str = "backend_a";
 const TARGET_DOMAIN: &str = "https://developer.fastly.com";
 
 pub fn main(req: Request) -> Result<Response, Error> {
-    let url: String = match req.get_path() {
+    let req_path = req.get_path();
+    if req_path == "/buildinfo" {
+        let res = create_build_info_response();
+        return Ok(res);
+    }
+
+    let url: String = match req_path {
         "/" => {
             let mut res =
                 Response::from_status(StatusCode::OK).with_content_type(mime::TEXT_PLAIN_UTF_8);

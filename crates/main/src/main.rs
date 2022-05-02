@@ -1,4 +1,5 @@
 mod application;
+mod build_info;
 
 use fastly::{Error, Request, Response};
 
