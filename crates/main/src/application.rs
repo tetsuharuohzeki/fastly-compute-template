@@ -1,4 +1,3 @@
-use fastly::convert::ToUrl;
 use fastly::http::StatusCode;
 use fastly::mime;
 use fastly::{Error, Request, Response};
@@ -12,14 +11,16 @@ const EXAMPLE_BODY: &str = "This is canary channel!";
 
 const BACKEND_A: &str = "backend_a";
 
-pub fn main(req: Request) -> Result<Response, Error> {
-    let req_path = req.get_path();
-    if req_path == "/buildinfo" {
-        let res = create_build_info_response();
-        return Ok(res);
-    }
+pub type FastlyResult = Result<Response, Error>;
 
-    let url: String = match req_path {
+pub fn main(req: Request) -> FastlyResult {
+    let req_path = req.get_path();
+
+    let should_res_directly: Option<FastlyResult> = match req_path {
+        "/buildinfo" => {
+            let res = create_build_info_response();
+            Some(Ok(res))
+        }
         "/" => {
             let mut res =
                 Response::from_status(StatusCode::OK).with_content_type(mime::TEXT_PLAIN_UTF_8);
@@ -29,20 +30,19 @@ pub fn main(req: Request) -> Result<Response, Error> {
                 res.set_body("hello");
             }
 
-            return Ok(res);
+            Some(Ok(res))
         }
-        path => {
-            let url = format!("{}{}", TARGET_DOMAIN, path);
-            url
-        }
+        _ => None,
     };
-    request_to_backend(url)
-}
 
-fn request_to_backend(url: impl ToUrl) -> Result<Response, Error> {
-    let api_req = Request::get(url);
-    let beresp = api_req.send(BACKEND_A)?;
-    Ok(beresp)
+    if let Some(res) = should_res_directly {
+        return res;
+    }
+
+    let mut bereq = req.clone_without_body();
+    bereq.set_ttl(60);
+    let beres = bereq.send(BACKEND_A)?;
+    Ok(beres)
 }
 
 #[cfg(test)]
