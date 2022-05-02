@@ -12,8 +12,6 @@ const EXAMPLE_BODY: &str = "This is canary channel!";
 
 const BACKEND_A: &str = "backend_a";
 
-const TARGET_DOMAIN: &str = "https://developer.fastly.com";
-
 pub fn main(req: Request) -> Result<Response, Error> {
     let req_path = req.get_path();
     if req_path == "/buildinfo" {
@@ -33,7 +31,6 @@ pub fn main(req: Request) -> Result<Response, Error> {
 
             return Ok(res);
         }
-        "/fastly" => TARGET_DOMAIN.to_owned(),
         path => {
             let url = format!("{}{}", TARGET_DOMAIN, path);
             url
