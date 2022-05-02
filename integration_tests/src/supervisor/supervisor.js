@@ -9,7 +9,7 @@ import { spawnCancelableChild } from './spawn.js';
 const THIS_FILENAME = fileURLToPath(import.meta.url);
 const THIS_DIRNAME = path.dirname(THIS_FILENAME);
 
-const WORKSPACE_ROOT = path.resolve(THIS_DIRNAME, '..');
+const WORKSPACE_ROOT = path.resolve(THIS_DIRNAME, '../..');
 
 const REPOSITORY_ROOT = path.resolve(WORKSPACE_ROOT, '..');
 const INTEGRATION_TESTS_DIR = WORKSPACE_ROOT;
@@ -30,7 +30,6 @@ async function spawnAndGracefulShutdown(aborter, name, args, option) {
     assert.ok(option.signal instanceof AbortSignal, 'option.signal must be set');
 
     const status = await spawnCancelableChild(name, args, option);
-
 
     aborter.abort();
     return status;
@@ -98,7 +97,7 @@ async function launchTestRunner(aborter) {
     return true;
 }
 
-(async function main(process) {
+export async function main(process) {
     dumpFlags();
 
     const globalAborter = new AbortController();
@@ -127,4 +126,4 @@ async function launchTestRunner(aborter) {
     if (!ok) {
         process.exit(1);
     }
-})(process);
+}
