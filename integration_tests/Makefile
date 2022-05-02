@@ -51,3 +51,6 @@ format: ## Format a code
 
 format_check: ## Check code formatting
 	$(NPM_RUN) format:check
+
+launch_server_formation: ## Launch the app and mock servers for integration tests.
+	env LAUNCH_INTEGRATION_TEST_FORMATION=true RELEASE_CHANNEL=$(RELEASE_CHANNEL) $(NODE_BIN) $(SRC_DIR)/supervisor.js

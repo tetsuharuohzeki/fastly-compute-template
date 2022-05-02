@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import * as timer from 'node:timers/promises';
 import { fileURLToPath } from 'node:url';
 
-import { RELEASE_CHANNEL, UPDATE_SNAPSHOTS } from './flags.js';
+import { RELEASE_CHANNEL, UPDATE_SNAPSHOTS, LAUNCH_INTEGRATION_TEST_FORMATION } from './flags.js';
 import { spawnCancelableChild } from './spawn.js';
 
 const THIS_FILENAME = fileURLToPath(import.meta.url);
@@ -19,6 +19,7 @@ function dumpFlags() {
 ============ Configurations for integration tests ============
 RELEASE_CHANNEL: ${RELEASE_CHANNEL}
 UPDATE_SNAPSHOTS: ${UPDATE_SNAPSHOTS}
+LAUNCH_INTEGRATION_TEST_FORMATION: ${LAUNCH_INTEGRATION_TEST_FORMATION}
 ==============================================================
     `;
     console.log(txt);
@@ -30,7 +31,22 @@ async function spawnAndGracefulShutdown(aborter, name, args, option) {
 
     const status = await spawnCancelableChild(name, args, option);
 
+
     aborter.abort();
+    return status;
+}
+
+async function launchMockServer(aborter) {
+    assert.ok(aborter instanceof AbortController);
+    const signal = aborter.signal;
+
+    const serverPath = path.resolve(INTEGRATION_TESTS_DIR, './src/mock_server.js');
+    const status = await spawnAndGracefulShutdown(aborter, 'node', [serverPath], {
+        cwd: INTEGRATION_TESTS_DIR,
+        stdio: 'inherit',
+        signal,
+    });
+
     return status;
 }
 
@@ -38,11 +54,16 @@ async function launchLocalApplicationServer(aborter) {
     assert.ok(aborter instanceof AbortController);
     const signal = aborter.signal;
 
-    const status = await spawnAndGracefulShutdown(aborter, 'make', ['run_serve_localy', '-j'], {
-        cwd: REPOSITORY_ROOT,
-        stdio: 'inherit',
-        signal,
-    });
+    const status = await spawnAndGracefulShutdown(
+        aborter,
+        'make',
+        ['run_serve_localy', '-j', 'FASTLY_TOML_ENV=testing'],
+        {
+            cwd: REPOSITORY_ROOT,
+            stdio: 'inherit',
+            signal,
+        }
+    );
 
     return status;
 }
@@ -77,16 +98,33 @@ async function launchTestRunner(aborter) {
     return true;
 }
 
-(async function main() {
+(async function main(process) {
     dumpFlags();
 
     const globalAborter = new AbortController();
-    const testResult = launchTestRunner(globalAborter);
 
-    await Promise.all([launchLocalApplicationServer(globalAborter), testResult]);
+    if (LAUNCH_INTEGRATION_TEST_FORMATION) {
+        process.once('SIGINT', () => {
+            globalAborter.abort();
+        });
+    }
+
+    const testResult =
+        LAUNCH_INTEGRATION_TEST_FORMATION === false ? launchTestRunner(globalAborter) : Promise.resolve();
+
+    const serverFormation = Promise.all([
+        // @prettier-ignore
+        launchMockServer(globalAborter),
+        launchLocalApplicationServer(globalAborter),
+    ]);
+
+    await Promise.all([serverFormation, testResult]);
+    if (LAUNCH_INTEGRATION_TEST_FORMATION) {
+        return;
+    }
 
     const ok = await testResult;
     if (!ok) {
         process.exit(1);
     }
-})();
+})(process);

@@ -48,6 +48,8 @@ CARGO_GENERATED_DEBUG_WASM_BINARY := $(CARGO_TARGET_WASM32_WASI_DIR)/debug/$(APP
 FASTLY_CLI_GENERATED_PKG_TAR_BALL := $(FASTLY_CLI_GENERATED_PKG_DIR)/$(FASTLY_COMPUTE_AT_EDGE_SERVICE_PKG_NAME).tar.gz
 FASTLY_CLI_ARCHIVED_WASM_BINARY := $(FASTLY_CLI_GENERATED_PKG_DIR)/$(FASTLY_COMPUTE_AT_EDGE_SERVICE_PKG_NAME)/bin/main.wasm
 
+FASTLY_TOML_ENV ?= ""
+
 ###########################
 # Release Channel Mechanism
 ###########################
@@ -196,7 +198,10 @@ serve_localy_with_debug_build: build_debug ## Alias to `make build_debug && make
 	$(MAKE) run_serve_localy -C $(CURDIR)
 
 run_serve_localy: ## Run local development server without build an application code.
-	$(FASTLY_CLI) serve --skip-build --file=$(FASTLY_CLI_ARCHIVED_WASM_BINARY)
+	$(FASTLY_CLI) serve --skip-build --file=$(FASTLY_CLI_ARCHIVED_WASM_BINARY) --env=$(FASTLY_TOML_ENV)
+
+launch_local_server_formation: ## Launch the app and mock servers for integration tests.
+	$(MAKE) launch_server_formation -C $(INTEGRATION_TESTS_DIR) RELEASE_CHANNEL=$(RELEASE_CHANNEL)
 
 
 ###########################

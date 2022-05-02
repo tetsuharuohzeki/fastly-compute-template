@@ -1,0 +1,9 @@
+# This file describes a Fastly Compute@Edge package. To learn more visit:
+# https://developer.fastly.com/reference/fastly-toml/
+
+manifest_version = 2
+
+[local_server]
+    [local_server.backends]
+        [local_server.backends.backend_a]
+        url = "http://localhost:8030"
