@@ -7,7 +7,7 @@ fn main() {
         .unwrap_or_else(|_| "[could not get git-commit-hash]".to_string());
     println!("cargo:rustc-env=GIT_HASH={}", git_hash);
 
-    let build_date = get_command_stdout_str("date", ["+%Y/%m/%d %H:%M:%S %z"])
+    let build_date = get_command_stdout_str("date", ["-u", "+%Y-%m-%d %T%z"])
         .unwrap_or_else(|_| "[could not built-date]".to_string());
     println!("cargo:rustc-env=BUILD_DATE={}", build_date);
 }
