@@ -1,8 +1,13 @@
 import test from 'ava';
 import { fetch } from 'undici';
 
+import * as HttpHeader from '../__helpers__/http_header.js';
+import * as Mime from '../__helpers__/mime.js';
+
 import { constructUrl } from './__helpers__/domain.js';
-import { CONTENT_TYPE_HEADER, MIME_TEXT_PLAIN_UTF_8 } from './__helpers__/http_header.js';
+
+const CONTENT_TYPE_HEADER = HttpHeader.CONTENT_TYPE;
+const MIME_TEXT_PLAIN_UTF_8 = Mime.TEXT_PLAIN_UTF_8;
 
 const PATH = '/';
 const URL = constructUrl(PATH);

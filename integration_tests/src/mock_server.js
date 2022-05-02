@@ -1,20 +1,8 @@
 import * as http from 'node:http';
 
-const HttpStatus = Object.freeze({
-    // 20x
-    OK: 200,
-
-    // 40x
-    NOT_FOUND: 404,
-});
-
-const HttpHeader = Object.freeze({
-    CONTENT_TYPE: 'content-type',
-});
-
-const Mime = Object.freeze({
-    TEXT_WITH_UTF8: 'text/plain; charset=utf-8',
-});
+import * as HttpHeader from '../__helpers__/http_header.js';
+import * as HttpStatus from '../__helpers__/http_status.js';
+import * as Mime from '../__helpers__/mime.js';
 
 const PORT = 8030;
 
@@ -24,7 +12,7 @@ const PORT = 8030;
         console.log(`request incoming: ${url}`);
 
         if (url === '/hello_this_is_mock') {
-            res.setHeader(HttpHeader.CONTENT_TYPE, Mime.TEXT_WITH_UTF8);
+            res.setHeader(HttpHeader.CONTENT_TYPE, Mime.TEXT_PLAIN_UTF_8);
             res.writeHead(HttpStatus.OK);
             res.end(`this is mock server listening on ${String(PORT)}`);
             return;
