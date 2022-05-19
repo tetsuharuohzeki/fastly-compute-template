@@ -9,7 +9,7 @@ import { spawnCancelableChild } from './spawn.js';
 const THIS_FILENAME = fileURLToPath(import.meta.url);
 const THIS_DIRNAME = path.dirname(THIS_FILENAME);
 
-const WORKSPACE_ROOT = path.resolve(THIS_DIRNAME, '../..');
+const WORKSPACE_ROOT = path.resolve(THIS_DIRNAME, '..');
 
 const REPOSITORY_ROOT = path.resolve(WORKSPACE_ROOT, '..');
 const INTEGRATION_TESTS_DIR = WORKSPACE_ROOT;
@@ -39,7 +39,7 @@ async function launchMockServer(aborter) {
     assert.ok(aborter instanceof AbortController);
     const signal = aborter.signal;
 
-    const serverPath = path.resolve(INTEGRATION_TESTS_DIR, './src/mock_server.js');
+    const serverPath = path.resolve(INTEGRATION_TESTS_DIR, './mock_server/main.js');
     const status = await spawnAndGracefulShutdown(aborter, 'node', [serverPath], {
         cwd: INTEGRATION_TESTS_DIR,
         stdio: 'inherit',

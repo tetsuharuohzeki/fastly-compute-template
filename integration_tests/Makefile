@@ -3,6 +3,7 @@ NPM_BIN := npm
 NPM_RUN := $(NPM_BIN) run
 
 SRC_DIR := $(CURDIR)/src
+SUPERVISOR_SRC_DIR := $(CURDIR)/supervisor
 NODE_MODULES_DIR := $(CURDIR)/node_modules
 
 all: help
@@ -37,10 +38,10 @@ setup: ## Setup with install dependencies.
 # Test
 ###########################
 run_integration_tests: ## Run integration tests only.
-	env RELEASE_CHANNEL=$(RELEASE_CHANNEL) $(NODE_BIN) $(SRC_DIR)/supervisor/main.js
+	env RELEASE_CHANNEL=$(RELEASE_CHANNEL) $(NODE_BIN) $(SUPERVISOR_SRC_DIR)/main.js
 
 update_expectations: ## Run integration tests only with updating expectations.
-	env RELEASE_CHANNEL=$(RELEASE_CHANNEL) UPDATE_SNAPSHOTS=true $(NODE_BIN) $(SRC_DIR)/supervisor/main.js
+	env RELEASE_CHANNEL=$(RELEASE_CHANNEL) UPDATE_SNAPSHOTS=true $(NODE_BIN) $(SUPERVISOR_SRC_DIR)/main.js
 
 
 ###########################
@@ -53,4 +54,4 @@ format_check: ## Check code formatting
 	$(NPM_RUN) format:check
 
 launch_server_formation: ## Launch the app and mock servers for integration tests.
-	env LAUNCH_INTEGRATION_TEST_FORMATION=true RELEASE_CHANNEL=$(RELEASE_CHANNEL) $(NODE_BIN) $(SRC_DIR)/supervisor/main.js
+	env LAUNCH_INTEGRATION_TEST_FORMATION=true RELEASE_CHANNEL=$(RELEASE_CHANNEL) $(NODE_BIN) $(SUPERVISOR_SRC_DIR)/main.js

@@ -1,8 +1,8 @@
 import * as http from 'node:http';
 
-import * as HttpHeader from '../__helpers__/http_header.js';
-import * as HttpStatus from '../__helpers__/http_status.js';
-import * as Mime from '../__helpers__/mime.js';
+import * as HttpHeader from '../http_helpers/http_header.js';
+import * as HttpStatus from '../http_helpers/http_status.js';
+import * as Mime from '../http_helpers/mime.js';
 
 const PORT = 8030;
 
