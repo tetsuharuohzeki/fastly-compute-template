@@ -1,15 +1,5 @@
-name: CI
-
 on:
-    push:
-        branches:
-            - "main"
-    pull_request:
-
-# see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
-concurrency:
-    group: ${{ github.workflow }}-${{ github.ref }}
-    cancel-in-progress: true
+    workflow_call:
 
 # https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
 # https://docs.github.com/en/actions/learn-github-actions/contexts
@@ -110,13 +100,3 @@ jobs:
 
             - shell: bash
               run: make format_check -j
-
-    # TODO(#7)
-    # deploy:
-    #    needs: [build, integration_tests]
-    #    runs-on: ubuntu-latest
-    #    steps:
-    #        - uses: actions/download-artifact@v3
-    #          with:
-    #              name: application-${{ github.sha }}-${{ matrix.release_channel }}-release
-    #              path: ${{ github.workspace }}/pkg
