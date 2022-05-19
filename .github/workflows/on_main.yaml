@@ -1,0 +1,30 @@
+name: CI & Deploy on the default branch
+
+on:
+    push:
+        branches:
+            - "main"
+
+# see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    ci:
+        uses: ./.github/workflows/ci_workflow.yaml
+
+    deploy:
+        needs: [ci]
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                release_channel: ["canary"]
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/download_build_artifacts
+              with:
+                  git-sha: ${{ github.sha }}
+                  release-channel: ${{ matrix.release_channel }}
+                  build-type: release
+            # TODO(#7)

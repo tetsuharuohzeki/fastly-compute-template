@@ -1,9 +1,6 @@
 name: CI
 
 on:
-    push:
-        branches:
-            - "main"
     pull_request:
 
 # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
@@ -11,112 +8,6 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 
-# https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
-# https://docs.github.com/en/actions/learn-github-actions/contexts
 jobs:
-    fetch_cargo_registry:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: ./.github/actions/ci_prepare_to_compile
-
-    build:
-        needs: [fetch_cargo_registry]
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                build_type: ["debug", "release"]
-                release_channel: ["canary", "production"]
-            fail-fast: true
-        steps:
-            - uses: actions/checkout@v3
-            - uses: ./.github/actions/ci_prepare_to_compile
-
-            - name: Set up Fastly CLI
-              # https://github.com/fastly/compute-actions
-              uses: fastly/compute-actions/setup@main
-
-            - shell: bash
-              run: make build_${{ matrix.build_type }} -j RELEASE_CHANNEL=${{ matrix.release_channel }}
-
-            - uses: ./.github/actions/upload_build_artifacts
-              with:
-                  git-sha: ${{ github.sha }}
-                  release-channel: ${{ matrix.release_channel }}
-                  build-type: ${{ matrix.build_type }}
-
-    integration_tests:
-        needs: [build]
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                build_type: [
-                        "release",
-                        # We can use `debug_assert!()` or overflow check only in debug build.
-                        "debug",
-                    ]
-                release_channel: ["canary", "production"]
-            # allow to observe the difference of the result
-            fail-fast: false
-        steps:
-            - uses: actions/checkout@v3
-            - uses: ./.github/actions/download_build_artifacts
-              with:
-                  git-sha: ${{ github.sha }}
-                  release-channel: ${{ matrix.release_channel }}
-                  build-type: ${{ matrix.build_type }}
-            - name: Set Node.js version
-              uses: actions/setup-node@v3.2.0
-              with:
-                  node-version: 18
-                  cache: "npm"
-                  cache-dependency-path: integration_tests/package-lock.json
-            - run: make setup_integration_tests -j
-              shell: bash
-            - name: Set up Fastly CLI
-              # https://github.com/fastly/compute-actions
-              uses: fastly/compute-actions/setup@main
-            - run: make run_integration_tests -j RELEASE_CHANNEL=${{ matrix.release_channel }}
-
-    unittests:
-        needs: [fetch_cargo_registry]
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: ./.github/actions/ci_prepare_to_compile
-            - shell: bash
-              run: make unittests -j
-
-    lint_check:
-        needs: [fetch_cargo_registry]
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: ./.github/actions/ci_prepare_to_compile
-            - shell: bash
-              run: make lint_check -j
-
-    format_check:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-
-            - name: Install Rust toolchain
-              uses: actions-rs/toolchain@v1
-              with:
-                  toolchain: stable
-                  profile: default
-                  override: false
-
-            - shell: bash
-              run: make format_check -j
-
-    # TODO(#7)
-    # deploy:
-    #    needs: [build, integration_tests]
-    #    runs-on: ubuntu-latest
-    #    steps:
-    #        - uses: actions/download-artifact@v3
-    #          with:
-    #              name: application-${{ github.sha }}-${{ matrix.release_channel }}-release
-    #              path: ${{ github.workspace }}/pkg
+    ci:
+        uses: ./.github/workflows/ci_workflow.yaml
