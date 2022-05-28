@@ -31,7 +31,7 @@ __clean_dependencies:
 # Setup
 ###########################
 setup: ## Setup with install dependencies.
-	$(NPM_BIN) install
+	$(NPM_BIN) ci
 
 
 ###########################
