@@ -1,4 +1,4 @@
-name: CI & Deploy on the default branch
+name: CI on main branch
 
 on:
     push:
