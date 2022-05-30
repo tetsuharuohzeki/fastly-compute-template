@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
     ci:
-        uses: ./.github/workflows/ci_workflow.yaml
+        uses: ./.github/workflows/ci.yaml
 
     deploy:
         needs: [ci]
