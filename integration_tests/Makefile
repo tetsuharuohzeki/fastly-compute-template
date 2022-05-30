@@ -18,13 +18,7 @@ help:
 ###########################
 # Clean
 ###########################
-CLEAN_TARGETS := \
-	dependencies
-
-clean: $(addprefix __clean_, $(CLEAN_TARGETS)) ## Clean Artifacts.
-
-__clean_dependencies:
-	rm -rf $(NODE_MODULES_DIR)
+clean: ## Clean Artifacts.
 
 
 ###########################
