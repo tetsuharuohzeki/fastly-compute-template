@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import * as timer from 'node:timers/promises';
 import { fileURLToPath } from 'node:url';
 
-import { RELEASE_CHANNEL, UPDATE_SNAPSHOTS, LAUNCH_INTEGRATION_TEST_FORMATION } from './flags.js';
+import { RELEASE_CHANNEL, LAUNCH_INTEGRATION_TEST_FORMATION, parseCliOptions, assertIsCliOptions } from './flags.js';
 import { spawnCancelableChild } from './spawn.js';
 
 const THIS_FILENAME = fileURLToPath(import.meta.url);
@@ -14,11 +14,13 @@ const WORKSPACE_ROOT = path.resolve(THIS_DIRNAME, '..');
 const REPOSITORY_ROOT = path.resolve(WORKSPACE_ROOT, '..');
 const INTEGRATION_TESTS_DIR = WORKSPACE_ROOT;
 
-function dumpFlags() {
+function dumpFlags(cliOptions) {
+    assertIsCliOptions(cliOptions);
+
     const txt = `
 ============ Configurations for integration tests ============
 RELEASE_CHANNEL: ${RELEASE_CHANNEL}
-UPDATE_SNAPSHOTS: ${UPDATE_SNAPSHOTS}
+UPDATE_SNAPSHOTS: ${cliOptions.shouldUpdateSnapshots}
 LAUNCH_INTEGRATION_TEST_FORMATION: ${LAUNCH_INTEGRATION_TEST_FORMATION}
 ==============================================================
     `;
@@ -67,9 +69,12 @@ async function launchLocalApplicationServer(aborter) {
     return status;
 }
 
-async function launchTestRunner(aborter) {
+async function launchTestRunner(aborter, cliOptions) {
     assert.ok(aborter instanceof AbortController);
+    assertIsCliOptions(cliOptions);
+
     const signal = aborter.signal;
+    const shouldUpdateSnapshots = cliOptions.shouldUpdateSnapshots;
 
     // await to launch the app server.
     // this value is just heuristics.
@@ -81,7 +86,7 @@ async function launchTestRunner(aborter) {
         RELEASE_CHANNEL,
     };
 
-    const cmd = UPDATE_SNAPSHOTS ? 'test:update_snapshot' : 'test';
+    const cmd = shouldUpdateSnapshots ? 'test:update_snapshot' : 'test';
 
     const { code } = await spawnAndGracefulShutdown(aborter, 'npm', ['run', cmd], {
         cwd: INTEGRATION_TESTS_DIR,
@@ -98,7 +103,8 @@ async function launchTestRunner(aborter) {
 }
 
 export async function main(process) {
-    dumpFlags();
+    const cliOptions = parseCliOptions();
+    dumpFlags(cliOptions);
 
     const globalAborter = new AbortController();
 
@@ -109,7 +115,7 @@ export async function main(process) {
     }
 
     const testResult =
-        LAUNCH_INTEGRATION_TEST_FORMATION === false ? launchTestRunner(globalAborter) : Promise.resolve();
+        LAUNCH_INTEGRATION_TEST_FORMATION === false ? launchTestRunner(globalAborter, cliOptions) : Promise.resolve();
 
     const serverFormation = Promise.all([
         // @prettier-ignore

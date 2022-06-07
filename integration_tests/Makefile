@@ -35,7 +35,7 @@ run_integration_tests: ## Run integration tests only.
 	env RELEASE_CHANNEL=$(RELEASE_CHANNEL) $(NODE_BIN) $(SUPERVISOR_SRC_DIR)/main.js
 
 update_expectations: ## Run integration tests only with updating expectations.
-	env RELEASE_CHANNEL=$(RELEASE_CHANNEL) UPDATE_SNAPSHOTS=true $(NODE_BIN) $(SUPERVISOR_SRC_DIR)/main.js
+	env RELEASE_CHANNEL=$(RELEASE_CHANNEL) $(NODE_BIN) $(SUPERVISOR_SRC_DIR)/main.js --update-snapshots
 
 
 ###########################
