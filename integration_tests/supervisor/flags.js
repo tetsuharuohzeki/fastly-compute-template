@@ -1,32 +1,25 @@
 import * as assert from 'node:assert/strict';
 import { parseArgs } from 'node:util';
 import { expectNotUndefined } from 'option-t/esm/Undefinable/expect';
-import { mapOrForUndefinable } from 'option-t/esm/Undefinable/mapOr';
-
-function isTrue(value) {
-    const ok = value === 'true';
-    return ok;
-}
 
 export const RELEASE_CHANNEL = expectNotUndefined(process.env.RELEASE_CHANNEL, 'RELEASE_CHANNEL envvar must be set');
 
-export const LAUNCH_INTEGRATION_TEST_FORMATION = mapOrForUndefinable(
-    process.env.LAUNCH_INTEGRATION_TEST_FORMATION,
-    false,
-    isTrue
-);
-
 const CLI_FLAG_UPDATE_SNAPSHOTS = 'update-snapshots';
+const CLI_FLAG_IS_ONLY_FORMATION = 'is-only-formation';
 
 const CLI_OPTIONS = {
     [CLI_FLAG_UPDATE_SNAPSHOTS]: {
         type: 'boolean',
     },
+    [CLI_FLAG_IS_ONLY_FORMATION]: {
+        type: 'boolean',
+    },
 };
 
 class CliOptions {
-    constructor(shouldUpdateSnapshots) {
+    constructor(shouldUpdateSnapshots, isOnlyFormation) {
         this.shouldUpdateSnapshots = shouldUpdateSnapshots;
+        this.isOnlyFormation = isOnlyFormation;
         Object.freeze(this);
     }
 }
@@ -46,7 +39,8 @@ export function parseCliOptions() {
     });
 
     const shouldUpdateSnapshots = !!values[CLI_FLAG_UPDATE_SNAPSHOTS];
+    const isOnlyFormation = !!values[CLI_FLAG_IS_ONLY_FORMATION];
 
-    const options = new CliOptions(shouldUpdateSnapshots);
+    const options = new CliOptions(shouldUpdateSnapshots, isOnlyFormation);
     return options;
 }

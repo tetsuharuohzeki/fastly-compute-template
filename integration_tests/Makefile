@@ -48,4 +48,4 @@ format_check: ## Check code formatting
 	$(NPM_RUN) format:check
 
 launch_server_formation: ## Launch the app and mock servers for integration tests.
-	env LAUNCH_INTEGRATION_TEST_FORMATION=true RELEASE_CHANNEL=$(RELEASE_CHANNEL) $(NODE_BIN) $(SUPERVISOR_SRC_DIR)/main.js
+	env RELEASE_CHANNEL=$(RELEASE_CHANNEL) $(NODE_BIN) $(SUPERVISOR_SRC_DIR)/main.js --is-only-formation

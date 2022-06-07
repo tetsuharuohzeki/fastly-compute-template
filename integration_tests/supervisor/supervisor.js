@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import * as timer from 'node:timers/promises';
 import { fileURLToPath } from 'node:url';
 
-import { RELEASE_CHANNEL, LAUNCH_INTEGRATION_TEST_FORMATION, parseCliOptions, assertIsCliOptions } from './flags.js';
+import { RELEASE_CHANNEL, parseCliOptions, assertIsCliOptions } from './flags.js';
 import { spawnCancelableChild } from './spawn.js';
 import { SuperVisorContext, assertIsSuperVisorContext } from './sv_ctx.js';
 
@@ -22,7 +22,7 @@ function dumpFlags(cliOptions) {
 ============ Configurations for integration tests ============
 RELEASE_CHANNEL: ${RELEASE_CHANNEL}
 UPDATE_SNAPSHOTS: ${cliOptions.shouldUpdateSnapshots}
-LAUNCH_INTEGRATION_TEST_FORMATION: ${LAUNCH_INTEGRATION_TEST_FORMATION}
+IS_ONLY_FORMATION: ${cliOptions.isOnlyFormation}
 ==============================================================
     `;
     console.log(txt);
@@ -115,14 +115,15 @@ export async function main(process) {
     const globalCtx = new SuperVisorContext(cliOptions);
 
     const globalAborter = globalCtx.aborter;
+    const isOnlyFormation = cliOptions.isOnlyFormation;
 
-    if (LAUNCH_INTEGRATION_TEST_FORMATION) {
+    if (isOnlyFormation) {
         process.once('SIGINT', () => {
             globalAborter.abort();
         });
     }
 
-    const testResult = LAUNCH_INTEGRATION_TEST_FORMATION === false ? launchTestRunner(globalCtx) : Promise.resolve();
+    const testResult = isOnlyFormation === false ? launchTestRunner(globalCtx) : Promise.resolve();
 
     const serverFormation = Promise.all([
         // @prettier-ignore
@@ -131,7 +132,7 @@ export async function main(process) {
     ]);
 
     await Promise.all([serverFormation, testResult]);
-    if (LAUNCH_INTEGRATION_TEST_FORMATION) {
+    if (isOnlyFormation) {
         return;
     }
 
