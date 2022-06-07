@@ -20,6 +20,10 @@ export class SuperVisorContext {
     get signal() {
         return this.#aborter.signal;
     }
+
+    get releaseChannel() {
+        return this.cliOptions.releaseChannel;
+    }
 }
 
 /**

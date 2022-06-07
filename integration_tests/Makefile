@@ -32,10 +32,10 @@ setup: ## Setup with install dependencies.
 # Test
 ###########################
 run_integration_tests: ## Run integration tests only.
-	env RELEASE_CHANNEL=$(RELEASE_CHANNEL) $(NODE_BIN) $(SUPERVISOR_SRC_DIR)/main.js
+	$(NODE_BIN) $(SUPERVISOR_SRC_DIR)/main.js --release-channel=$(RELEASE_CHANNEL)
 
 update_expectations: ## Run integration tests only with updating expectations.
-	env RELEASE_CHANNEL=$(RELEASE_CHANNEL) $(NODE_BIN) $(SUPERVISOR_SRC_DIR)/main.js --update-snapshots
+	$(NODE_BIN) $(SUPERVISOR_SRC_DIR)/main.js --release-channel=$(RELEASE_CHANNEL) --update-snapshots
 
 
 ###########################
@@ -48,4 +48,4 @@ format_check: ## Check code formatting
 	$(NPM_RUN) format:check
 
 launch_server_formation: ## Launch the app and mock servers for integration tests.
-	env RELEASE_CHANNEL=$(RELEASE_CHANNEL) $(NODE_BIN) $(SUPERVISOR_SRC_DIR)/main.js --is-only-formation
+	$(NODE_BIN) $(SUPERVISOR_SRC_DIR)/main.js --release-channel=$(RELEASE_CHANNEL) --is-only-formation

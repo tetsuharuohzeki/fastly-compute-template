@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import * as timer from 'node:timers/promises';
 import { fileURLToPath } from 'node:url';
 
-import { RELEASE_CHANNEL, parseCliOptions, assertIsCliOptions } from './flags.js';
+import { parseCliOptions, assertIsCliOptions } from './flags.js';
 import { spawnCancelableChild } from './spawn.js';
 import { SuperVisorContext, assertIsSuperVisorContext } from './sv_ctx.js';
 
@@ -20,7 +20,7 @@ function dumpFlags(cliOptions) {
 
     const txt = `
 ============ Configurations for integration tests ============
-RELEASE_CHANNEL: ${RELEASE_CHANNEL}
+RELEASE_CHANNEL: ${cliOptions.releaseChannel}
 UPDATE_SNAPSHOTS: ${cliOptions.shouldUpdateSnapshots}
 IS_ONLY_FORMATION: ${cliOptions.isOnlyFormation}
 ==============================================================
@@ -88,6 +88,7 @@ async function launchTestRunner(ctx) {
     const millisec = 2 * 1000;
     await timer.setTimeout(millisec);
 
+    const RELEASE_CHANNEL = ctx.releaseChannel;
     const env = {
         ...process.env,
         RELEASE_CHANNEL,
