@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 import { RELEASE_CHANNEL, LAUNCH_INTEGRATION_TEST_FORMATION, parseCliOptions, assertIsCliOptions } from './flags.js';
 import { spawnCancelableChild } from './spawn.js';
+import { SuperVisorContext, assertIsSuperVisorContext } from './sv_ctx.js';
 
 const THIS_FILENAME = fileURLToPath(import.meta.url);
 const THIS_DIRNAME = path.dirname(THIS_FILENAME);
@@ -37,8 +38,10 @@ async function spawnAndGracefulShutdown(aborter, name, args, option) {
     return status;
 }
 
-async function launchMockServer(aborter) {
-    assert.ok(aborter instanceof AbortController);
+async function launchMockServer(ctx) {
+    assertIsSuperVisorContext(ctx);
+
+    const aborter = ctx.aborter;
     const signal = aborter.signal;
 
     const serverPath = path.resolve(INTEGRATION_TESTS_DIR, './mock_server/main.js');
@@ -51,8 +54,10 @@ async function launchMockServer(aborter) {
     return status;
 }
 
-async function launchLocalApplicationServer(aborter) {
-    assert.ok(aborter instanceof AbortController);
+async function launchLocalApplicationServer(ctx) {
+    assertIsSuperVisorContext(ctx);
+
+    const aborter = ctx.aborter;
     const signal = aborter.signal;
 
     const status = await spawnAndGracefulShutdown(
@@ -69,11 +74,13 @@ async function launchLocalApplicationServer(aborter) {
     return status;
 }
 
-async function launchTestRunner(aborter, cliOptions) {
-    assert.ok(aborter instanceof AbortController);
-    assertIsCliOptions(cliOptions);
+async function launchTestRunner(ctx) {
+    assertIsSuperVisorContext(ctx);
 
+    const aborter = ctx.aborter;
     const signal = aborter.signal;
+    const cliOptions = ctx.cliOptions;
+
     const shouldUpdateSnapshots = cliOptions.shouldUpdateSnapshots;
 
     // await to launch the app server.
@@ -105,8 +112,9 @@ async function launchTestRunner(aborter, cliOptions) {
 export async function main(process) {
     const cliOptions = parseCliOptions();
     dumpFlags(cliOptions);
+    const globalCtx = new SuperVisorContext(cliOptions);
 
-    const globalAborter = new AbortController();
+    const globalAborter = globalCtx.aborter;
 
     if (LAUNCH_INTEGRATION_TEST_FORMATION) {
         process.once('SIGINT', () => {
@@ -114,13 +122,12 @@ export async function main(process) {
         });
     }
 
-    const testResult =
-        LAUNCH_INTEGRATION_TEST_FORMATION === false ? launchTestRunner(globalAborter, cliOptions) : Promise.resolve();
+    const testResult = LAUNCH_INTEGRATION_TEST_FORMATION === false ? launchTestRunner(globalCtx) : Promise.resolve();
 
     const serverFormation = Promise.all([
         // @prettier-ignore
-        launchMockServer(globalAborter),
-        launchLocalApplicationServer(globalAborter),
+        launchMockServer(globalCtx),
+        launchLocalApplicationServer(globalCtx),
     ]);
 
     await Promise.all([serverFormation, testResult]);

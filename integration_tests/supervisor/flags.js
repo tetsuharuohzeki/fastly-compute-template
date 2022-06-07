@@ -31,8 +31,12 @@ class CliOptions {
     }
 }
 
+/**
+ * @param {unknown} value
+ * @returns {asserts value is CliOptions}
+ */
 export function assertIsCliOptions(value) {
-    assert.ok(value instanceof CliOptions);
+    assert.ok(value instanceof CliOptions, 'value must be CliOptions');
 }
 
 export function parseCliOptions() {
@@ -42,7 +46,6 @@ export function parseCliOptions() {
     });
 
     const shouldUpdateSnapshots = !!values[CLI_FLAG_UPDATE_SNAPSHOTS];
-    console.log('aaaa: ' + shouldUpdateSnapshots);
 
     const options = new CliOptions(shouldUpdateSnapshots);
     return options;
