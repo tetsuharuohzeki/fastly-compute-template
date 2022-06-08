@@ -1,5 +1,5 @@
 import * as assert from 'node:assert/strict';
-import { assertIsCliOptions } from './flags.js';
+import { assertIsCliOptions } from './cli_flags.js';
 
 export class SuperVisorContext {
     #aborter;

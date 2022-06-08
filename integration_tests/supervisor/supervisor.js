@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import * as timer from 'node:timers/promises';
 import { fileURLToPath } from 'node:url';
 
-import { parseCliOptions, assertIsCliOptions } from './flags.js';
+import { parseCliOptions, assertIsCliOptions } from './cli_flags.js';
 import { spawnCancelableChild } from './spawn.js';
 import { SuperVisorContext, assertIsSuperVisorContext } from './sv_ctx.js';
 
