@@ -18,6 +18,6 @@ test(PATH, async (t) => {
     t.is(headers.get(CONTENT_TYPE_HEADER), MIME_TEXT_PLAIN_UTF_8, `${CONTENT_TYPE_HEADER} header value`);
 
     const body = await res.text();
-    t.true(body.includes("git revision:"), 'contains git revision info');
-    t.true(body.includes("build date:"), 'contains build date info');
+    t.true(body.includes('git revision:'), 'contains git revision info');
+    t.true(body.includes('build date:'), 'contains build date info');
 });
