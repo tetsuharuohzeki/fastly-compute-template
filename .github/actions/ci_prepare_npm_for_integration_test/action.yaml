@@ -1,0 +1,14 @@
+name: Prepare npm for Integration Test CI job
+description: This action prepare the integration test dir for CI job
+
+runs:
+    using: composite
+    steps:
+        - name: Set Node.js version
+          uses: actions/setup-node@v3.3.0
+          with:
+              node-version: 18
+              cache: "npm"
+              cache-dependency-path: integration_tests/package-lock.json
+        - run: make setup_integration_tests -j
+          shell: bash

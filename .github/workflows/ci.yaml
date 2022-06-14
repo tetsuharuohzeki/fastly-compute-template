@@ -63,14 +63,7 @@ jobs:
                   git-sha: ${{ github.sha }}
                   release-channel: ${{ matrix.release_channel }}
                   build-type: ${{ matrix.build_type }}
-            - name: Set Node.js version
-              uses: actions/setup-node@v3.3.0
-              with:
-                  node-version: 18
-                  cache: "npm"
-                  cache-dependency-path: integration_tests/package-lock.json
-            - run: make setup_integration_tests -j
-              shell: bash
+            - uses: ./.github/actions/ci_prepare_npm_for_integration_test
             - name: Set up Fastly CLI
               # https://github.com/fastly/compute-actions
               uses: fastly/compute-actions/setup@main
