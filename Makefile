@@ -136,11 +136,20 @@ lint: ## Run static analysis via `cargo clippy`
 lint_check: ## Run static analysis and fail if there are some warnings.
 	$(CARGO_BIN) clippy --workspace --all-targets -- -D clippy::all
 
-lint_fix: ## Try to fix problems founded by static analytics
+lint_fix: ## Try to fix problems found by static analytics
 	$(CARGO_BIN) clippy --fix --workspace --all-targets
 
 check_integrity: ## Validate type and semantics for whole of codes by `cargo check`.
 	$(CARGO_BIN) check --workspace --all-targets --target=$(COMPILE_TARGET_WASM32_WASI)
+
+lint_integration_tests: ## Run static analysis under integration_tests/
+	$(MAKE) lint -C $(INTEGRATION_TESTS_DIR)
+
+lint_check_integration_tests: ## Run static analysis under integration_tests/
+	$(MAKE) lint_check -C $(INTEGRATION_TESTS_DIR)
+
+lint_fix_integration_tests: ## Try to fix problems found by static analytics under integration_tests/
+	$(MAKE) lint_fix -C $(INTEGRATION_TESTS_DIR)
 
 
 ###########################

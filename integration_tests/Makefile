@@ -41,6 +41,15 @@ update_expectations: ## Run integration tests only with updating expectations.
 ###########################
 # Tools
 ###########################
+lint: ## Run static analysis
+	$(NPM_RUN) lint
+
+lint_check: ## Run static analysis and fail if there are some warnings.
+	$(NPM_RUN) lint:check
+
+lint_fix: ## Try to fix problems founded by static analytics
+	$(NPM_RUN) lint:fix
+
 format: ## Format a code
 	$(NPM_RUN) format
 

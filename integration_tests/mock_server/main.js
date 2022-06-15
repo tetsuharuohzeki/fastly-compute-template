@@ -6,7 +6,7 @@ import * as Mime from '../http_helpers/mime.js';
 
 const PORT = 8030;
 
-(async function main(_process) {
+(async function main() {
     const server = http.createServer((req, res) => {
         const url = req.url;
         console.log(`request incoming: ${url}`);
@@ -23,4 +23,4 @@ const PORT = 8030;
     });
     server.listen(PORT);
     console.log(`mock server listen on ${String(PORT)}`);
-})(process);
+})();

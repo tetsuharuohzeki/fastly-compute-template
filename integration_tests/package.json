@@ -8,6 +8,9 @@
         "__format": "prettier '*/**/*.{js,cjs,mjs}'",
         "format": "npm run __format -- --write",
         "format:check": "npm run __format -- --check",
+        "lint": "eslint .",
+        "lint:check": "npm run lint -- --max-warnings 0",
+        "lint:fix": "npm run lint -- --fix",
         "test": "ava",
         "test:update_snapshot": "ava --update-snapshots"
     },
@@ -17,6 +20,8 @@
         "undici": "^5.4.0"
     },
     "devDependencies": {
+        "eslint": "^8.17.0",
+        "eslint-config-prettier": "^8.5.0",
         "prettier": "2.6.2"
     }
 }
