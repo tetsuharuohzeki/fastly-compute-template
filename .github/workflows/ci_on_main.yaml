@@ -21,15 +21,4 @@ jobs:
 
     deploy:
         needs: [ci]
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                release_channel: ["canary"]
-        steps:
-            - uses: actions/checkout@v3
-            - uses: ./.github/actions/download_build_artifacts
-              with:
-                  git-sha: ${{ github.sha }}
-                  release-channel: ${{ matrix.release_channel }}
-                  build-type: release
-            # TODO(#7)
+        uses: ./.github/workflows/__deploy_for_canary.yaml

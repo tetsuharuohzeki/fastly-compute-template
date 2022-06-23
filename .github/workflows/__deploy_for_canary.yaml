@@ -1,0 +1,19 @@
+on:
+    workflow_call:
+
+# https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
+# https://docs.github.com/en/actions/learn-github-actions/contexts
+jobs:
+    deploy_for_canary:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                release_channel: ["canary"]
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/download_build_artifacts
+              with:
+                  git-sha: ${{ github.sha }}
+                  release-channel: ${{ matrix.release_channel }}
+                  build-type: release
+            # TODO(#7)
