@@ -16,5 +16,5 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Sleep for 30 seconds
-              run: sleep 30s
+              run: sleep 120s
               shell: bash
