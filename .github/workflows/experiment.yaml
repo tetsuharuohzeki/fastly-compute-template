@@ -15,4 +15,6 @@ jobs:
     experiment:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - name: Sleep for 30 seconds
+              run: sleep 30s
+              shell: bash
