@@ -1,10 +1,5 @@
-name: CI on main branch
-
 on:
-    push:
-        branches:
-            - "main"
-    pull_request:
+    workflow_call:
 
 # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
 concurrency:
@@ -14,26 +9,10 @@ concurrency:
     # If we use `${{ github.workflow }}-${{ github.ref }}` and the invoked workflow for our `ci` job also has same group id,
     # this workflow will be cancelled by the invoked workflow's `concurrency` setting.
     # To avoid this problem, we use uuid v4 as a key to mark this workflow's uniqueness.
-    group: "63f09107-e884-4366-b912-66ec06064c00"
+    group: "ed300d85-50ab-4ae0-a0b1-2c627aff3df3"
 
 jobs:
-    ci:
-        uses: ./.github/workflows/ci.yaml
-
-    expriment:
-        uses: ./.github/workflows/experiment.yaml
-
-    deploy:
-        needs: [ci]
+    experiment:
         runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                release_channel: ["canary"]
         steps:
             - uses: actions/checkout@v3
-            - uses: ./.github/actions/download_build_artifacts
-              with:
-                  git-sha: ${{ github.sha }}
-                  release-channel: ${{ matrix.release_channel }}
-                  build-type: release
-            # TODO(#7)
