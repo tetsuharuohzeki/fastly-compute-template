@@ -47,7 +47,7 @@ lint: ## Run static analysis
 lint_check: ## Run static analysis and fail if there are some warnings.
 	$(NPM_RUN) lint:check
 
-lint_fix: ## Try to fix problems founded by static analytics
+lint_fix: ## Try to fix problems found by static analytics
 	$(NPM_RUN) lint:fix
 
 format: ## Format a code
