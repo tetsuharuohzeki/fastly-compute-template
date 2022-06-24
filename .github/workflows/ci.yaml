@@ -74,6 +74,9 @@ jobs:
               # https://github.com/fastly/compute-actions
               uses: fastly/compute-actions/setup@main
             - run: make run_integration_tests -j RELEASE_CHANNEL=${{ matrix.release_channel }}
+            - name: Check there is no new snapshot
+              shell: bash
+              run: git add --intent-to-add . && git diff --exit-code
 
     unittests:
         needs: [fetch_cargo_registry]
