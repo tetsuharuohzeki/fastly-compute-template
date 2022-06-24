@@ -4,7 +4,12 @@
 
 ## Prerequisites
 
+- [Fastly CLI](https://github.com/fastly/cli)
+    - We uses the laetst one.
 - Install [rustup](https://rustup.rs/)
+    - We uses the laetst _stable_ toolchain.
+- Node.js (for integration tests)
+    - The version is [here](./integration_tests/.node-version).
 
 
 ## How to build
