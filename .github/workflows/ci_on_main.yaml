@@ -5,6 +5,9 @@ on:
         branches:
             - "main"
 
+permissions:
+    contents: read
+
 # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
 concurrency:
     # We would like to run this workflow for all commits in the target branch.
