@@ -10,6 +10,9 @@ on:
         types:
             - released
 
+permissions:
+    contents: read
+
 # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
 concurrency:
     # This workflow should run exclusively at once.
