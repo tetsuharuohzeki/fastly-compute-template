@@ -1,16 +1,10 @@
-import prettierConfig from 'eslint-config-prettier/index.js';
 import globals from 'globals';
 
-import prettierOverride from './tools/eslint/prettier_ovrride.cjs';
+import prettierOverride from './tools/eslint/prettier_ovrride.js';
 
 export default [
     'eslint:recommended',
-    {
-        rules: prettierConfig.rules,
-    },
-    {
-        rules: prettierOverride.rules,
-    },
+    ...prettierOverride,
     {
         languageOptions: {
             globals: {
