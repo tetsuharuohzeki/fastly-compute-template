@@ -8,15 +8,22 @@ on:
 permissions:
     contents: read
 
-# see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
-concurrency:
-    # We would like to run this workflow for all commits in the target branch.
-    # But we need to limit the workflow concurrency to ensure a deployment order as FIFO.
-    #
-    # If we use `${{ github.workflow }}-${{ github.ref }}` and the invoked workflow for our `ci` job also has same group id,
-    # this workflow will be cancelled by the invoked workflow's `concurrency` setting.
-    # To avoid this problem, we use uuid v4 as a key to mark this workflow's uniqueness.
-    group: "63f09107-e884-4366-b912-66ec06064c00"
+# See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
+#
+# We would like to run this workflow for all commits in the target branch.
+# But we also want to limit the workflow concurrency to ensure a deployment order as FIFO as possible.
+# At this moment, we use specify a group key to control the order of this kind of a workflow.
+# By GitHub's document, `concurrency.group` cancels all pending workflows in the queue
+# when we push a new change (`cancel-in-progress=true` works to cancel the workflow that has been invoked!).
+# This behavior does not achieve to ensure all commits will be deployed as FIFO order.
+#
+# `jobs.<job_id>.concurrency` can specify a job level concurrency similar to workflow level concurrency.
+# But it also lacks some features to ensure FIFO order for all commits.
+# So we don't have a way to ensure both of 1) FIFO order deployment. and 2) for all commits.
+#
+# Thus we don't limit the concurent running for this workflow to run this for all commits,
+# and give up to ensure FIFO order as the trade-off.
+# If we face a problem that causes an unexpected order for deployment, then we should rerun workflow by hands.....
 
 jobs:
     ci:
