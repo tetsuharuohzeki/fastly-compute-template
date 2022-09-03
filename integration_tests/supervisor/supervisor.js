@@ -43,6 +43,9 @@ async function launchMockServer(ctx) {
 
     const aborter = ctx.aborter;
     const signal = aborter.signal;
+    if (signal.aborted) {
+        return null;
+    }
 
     const serverPath = path.resolve(INTEGRATION_TESTS_DIR, './mock_server/main.js');
     const status = await spawnAndGracefulShutdown(aborter, 'node', [serverPath], {
@@ -59,6 +62,9 @@ async function launchLocalApplicationServer(ctx) {
 
     const aborter = ctx.aborter;
     const signal = aborter.signal;
+    if (signal.aborted) {
+        return null;
+    }
 
     const status = await spawnAndGracefulShutdown(
         aborter,
@@ -79,6 +85,10 @@ async function launchTestRunner(ctx) {
 
     const aborter = ctx.aborter;
     const signal = aborter.signal;
+    if (signal.aborted) {
+        return null;
+    }
+
     const cliOptions = ctx.cliOptions;
 
     const shouldUpdateSnapshots = cliOptions.shouldUpdateSnapshots;
@@ -124,7 +134,7 @@ export async function main(process) {
         });
     }
 
-    const testResult = isOnlyFormation === false ? launchTestRunner(globalCtx) : Promise.resolve();
+    const testResult = isOnlyFormation === false ? launchTestRunner(globalCtx) : Promise.resolve(true);
 
     const serverFormation = Promise.all([
         // @prettier-ignore
