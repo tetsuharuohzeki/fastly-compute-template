@@ -1,6 +1,8 @@
 import * as assert from 'node:assert/strict';
 
-const ORIGIN = 'http://127.0.0.1:7676';
+import { APP_LOCAL_ORIGIN } from '../../url_origin.js';
+
+export const ORIGIN = APP_LOCAL_ORIGIN;
 
 export function constructUrl(path) {
     assert.strictEqual(typeof path, 'string');
