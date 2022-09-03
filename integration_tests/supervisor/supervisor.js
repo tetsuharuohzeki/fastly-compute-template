@@ -1,9 +1,11 @@
 import * as assert from 'node:assert/strict';
 import * as path from 'node:path';
-import * as timer from 'node:timers/promises';
 import { fileURLToPath } from 'node:url';
 
+import { APP_LOCAL_ORIGIN } from '../url_origin.js';
+
 import { parseCliOptions, assertIsCliOptions } from './cli_flags.js';
+import { pollToLaunchApplication } from './poll_to_launch_app.js';
 import { spawnCancelableChild } from './spawn.js';
 import { SuperVisorContext, assertIsSuperVisorContext } from './sv_ctx.js';
 
@@ -80,6 +82,8 @@ async function launchLocalApplicationServer(ctx) {
     return status;
 }
 
+const TIMEOUT_MS_DEADLINE_TO_WAIT_APPLICATION = 15 * 1000;
+
 async function launchTestRunner(ctx) {
     assertIsSuperVisorContext(ctx);
 
@@ -93,10 +97,16 @@ async function launchTestRunner(ctx) {
 
     const shouldUpdateSnapshots = cliOptions.shouldUpdateSnapshots;
 
-    // await to launch the app server.
-    // this value is just heuristics.
-    const millisec = 2 * 1000;
-    await timer.setTimeout(millisec);
+    const appIsLaunched = await pollToLaunchApplication(
+        signal,
+        APP_LOCAL_ORIGIN,
+        TIMEOUT_MS_DEADLINE_TO_WAIT_APPLICATION
+    );
+    if (!appIsLaunched) {
+        aborter.abort();
+        console.error(`cannot launche the test target application`);
+        return false;
+    }
 
     const RELEASE_CHANNEL = ctx.releaseChannel;
     const env = {
