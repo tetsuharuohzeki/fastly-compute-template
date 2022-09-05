@@ -16,7 +16,7 @@ export async function pollToLaunchApplication(signal, url, timeoutMillisec) {
     assert.ok(typeof timeoutMillisec === 'number');
     assert.ok(timeoutMillisec > INITIAL_WAIT_MS, `timeoutMillisec must be >= ${INITIAL_WAIT_MS}ms`);
 
-   // This avoid the waring:
+    // This avoid the waring:
     //  > (node:12052) MaxListenersExceededWarning: Possible EventTarget memory leak detected.
     //  > 11 abort listeners added to [AbortSignal]. Use events.setMaxListeners() to increase limit
     setMaxListeners(100, signal);
