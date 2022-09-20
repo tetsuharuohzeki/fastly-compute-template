@@ -20,7 +20,7 @@
         "undici": "^5.10.0"
     },
     "devDependencies": {
-        "eslint": "^8.23.0",
+        "eslint": "^8.23.1",
         "eslint-config-prettier": "^8.5.0",
         "globals": "^13.17.0",
         "prettier": "2.7.1"
