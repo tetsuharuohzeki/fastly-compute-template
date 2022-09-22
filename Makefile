@@ -64,7 +64,7 @@ RELEASE_CHANNEL_FEATURES := $(APPLICATION_NAME)/canary,$(ADDITIONAL_FEATURES)
 endif
 
 CLIPPY_RULES := \
-	-D rust-2018-idioms \
+    -D rust-2018-idioms \
     -D clippy::all
 
 
