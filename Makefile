@@ -63,6 +63,8 @@ else
 RELEASE_CHANNEL_FEATURES := $(APPLICATION_NAME)/canary,$(ADDITIONAL_FEATURES)
 endif
 
+CLIPPY_RULES := \
+    -D clippy::all
 
 all: help
 
@@ -130,14 +132,11 @@ __fastly_compute_validate_debug_build: __fastly_compute_pack_debug_build __clean
 ###########################
 # Static Analysis
 ###########################
-lint: ## Run static analysis via `cargo clippy`
-	$(CARGO_BIN) clippy --workspace --all-targets
-
 lint_check: ## Run static analysis and fail if there are some warnings.
-	$(CARGO_BIN) clippy --workspace --all-targets -- -D clippy::all
+	$(CARGO_BIN) clippy --workspace --all-targets -- $(CLIPPY_RULES)
 
 lint_fix: ## Try to fix problems found by static analytics
-	$(CARGO_BIN) clippy --fix --workspace --all-targets
+	$(CARGO_BIN) clippy --fix --workspace --all-targets -- $(CLIPPY_RULES)
 
 check_integrity: ## Validate type and semantics for whole of codes by `cargo check`.
 	$(CARGO_BIN) check --workspace --all-targets --target=$(COMPILE_TARGET_WASM32_WASI)
