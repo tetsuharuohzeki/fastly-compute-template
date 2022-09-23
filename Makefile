@@ -134,7 +134,7 @@ __fastly_compute_validate_debug_build: __fastly_compute_pack_debug_build __clean
 ###########################
 # Static Analysis
 ###########################
-lint_check: ## Run static analysis and fail if there are some warnings.
+lint: ## Run static analysis.
 	$(CARGO_BIN) clippy --workspace --all-targets -- $(CLIPPY_RULES)
 
 lint_fix: ## Try to fix problems found by static analytics
