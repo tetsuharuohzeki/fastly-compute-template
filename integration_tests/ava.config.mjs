@@ -1,3 +1,4 @@
+import * as assert from 'node:assert/strict';
 import { unwrapOrFromUndefinable } from 'option-t/esm/Undefinable/unwrapOr';
 
 const RELEASE_CHANNEL = unwrapOrFromUndefinable(process.env.RELEASE_CHANNEL, null);
@@ -7,29 +8,43 @@ const ReleaseChannel = Object.freeze({
     Canary: 'canary',
 });
 
-const PRODUCTION_ONLY_TEST_PATTERN = `**/__tests__/**/*.production.js`;
-const CANARY_ONLY_TEST_PATTERN = `**/__tests__/**/*.canary.js`;
+const TEST_TARGET_DIR_GLOB_PREFIX = `**/__tests__/**`;
+
+const PRODUCTION_ONLY_TEST_PATTERN = [
+    `${TEST_TARGET_DIR_GLOB_PREFIX}/*.production.js`,
+    `${TEST_TARGET_DIR_GLOB_PREFIX}/*.production.test.js`,
+];
+const CANARY_ONLY_TEST_PATTERN = [
+    `${TEST_TARGET_DIR_GLOB_PREFIX}/*.canary.js`,
+    `${TEST_TARGET_DIR_GLOB_PREFIX}/*.canary.test.js`,
+];
 
 function buildTargetPathPatternList() {
+    function ignorePatterns(list) {
+        assert.ok(Array.isArray(list));
+        return list.map(ignore);
+    }
+
     function ignore(str) {
+        assert.ok(typeof str === 'string');
         return `!${str}`;
     }
 
     const files = [
-        '**/__tests__/**/*',
-        ignore('**/__tests__/**/__helpers__/**/*'),
-        ignore('**/__tests__/**/__fixtures__/**/*'),
+        `${TEST_TARGET_DIR_GLOB_PREFIX}/*`,
+        ignore(`${TEST_TARGET_DIR_GLOB_PREFIX}/__helpers__/**/*`),
+        ignore(`${TEST_TARGET_DIR_GLOB_PREFIX}/__fixtures__/**/*`),
     ];
     switch (RELEASE_CHANNEL) {
         case ReleaseChannel.Production:
-            files.push(PRODUCTION_ONLY_TEST_PATTERN, ignore(CANARY_ONLY_TEST_PATTERN));
+            files.push(...PRODUCTION_ONLY_TEST_PATTERN, ...ignorePatterns(CANARY_ONLY_TEST_PATTERN));
             break;
         case ReleaseChannel.Canary:
-            files.push(ignore(PRODUCTION_ONLY_TEST_PATTERN), CANARY_ONLY_TEST_PATTERN);
+            files.push(...ignorePatterns(PRODUCTION_ONLY_TEST_PATTERN), ...CANARY_ONLY_TEST_PATTERN);
             break;
         case null:
             // ignore all specific release channel tests.
-            files.push(ignore(PRODUCTION_ONLY_TEST_PATTERN), ignore(CANARY_ONLY_TEST_PATTERN));
+            files.push(...ignorePatterns(PRODUCTION_ONLY_TEST_PATTERN), ...ignorePatterns(CANARY_ONLY_TEST_PATTERN));
             break;
         default:
             throw new RangeError(`RELEASE_CHANNEL is unknown '${RELEASE_CHANNEL}'`);

@@ -26,7 +26,8 @@ Please place your test case under [`__tests__/`](./__tests__).
 ### _Release Channel_ specific test.
 
 Our integration tests support to write a release Channel specific test.
-Files matching `__tests__/**/*.[release_channel].js` are running only if the specified release channel is matched.
+Files matching `__tests__/**/*.[release_channel].js` or `__tests__/**/*.[release_channel].test.js` are
+running only if the specified release channel is matched.
 
 For example, if you want to write a test for _production_ release channel,
-then you should name a test file as `barfoo.production.js`.
+then you should name a test file as `barfoo.production.js` or `barfoo.production.test.js`.
