@@ -58,10 +58,13 @@ RELEASE_CHANNEL ?= production
 RELEASE_CHANNEL_FEATURES :=
 ADDITIONAL_FEATURES ?=
 ifeq ($(RELEASE_CHANNEL),production)
-RELEASE_CHANNEL_FEATURES := $(APPLICATION_NAME)/production,$(ADDITIONAL_FEATURES)
+RELEASE_CHANNEL_FEATURES := $(APPLICATION_NAME)/production
 else
-RELEASE_CHANNEL_FEATURES := $(APPLICATION_NAME)/canary,$(ADDITIONAL_FEATURES)
+RELEASE_CHANNEL_FEATURES := $(APPLICATION_NAME)/canary
 endif
+
+CARGO_FEATURES_CLI_FLAGS := \
+    --features $(RELEASE_CHANNEL_FEATURES),$(ADDITIONAL_FEATURES)
 
 CLIPPY_RULES := \
     -D rust-2018-idioms \
@@ -110,7 +113,7 @@ setup_integration_tests: ## Setup integration tests including install dependenci
 build_release: __fastly_compute_validate_relase_build ## Create the release build
 
 __cargo_build_release:
-	$(CARGO_BIN) build --release --target=$(COMPILE_TARGET_WASM32_WASI) --features $(RELEASE_CHANNEL_FEATURES)
+	$(CARGO_BIN) build --release --target=$(COMPILE_TARGET_WASM32_WASI) $(CARGO_FEATURES_CLI_FLAGS)
 
 __fastly_compute_pack_release_build: __cargo_build_release __clean_generated_by_fastly
 	$(FASTLY_CLI) pack --wasm-binary $(CARGO_GENERATED_RELEASE_WASM_BINARY)
@@ -122,7 +125,7 @@ __fastly_compute_validate_relase_build: __fastly_compute_pack_release_build __cl
 build_debug: __fastly_compute_validate_debug_build ## Create the debug build
 
 __cargo_build_debug:
-	$(CARGO_BIN) build --target=$(COMPILE_TARGET_WASM32_WASI) --features $(RELEASE_CHANNEL_FEATURES)
+	$(CARGO_BIN) build --target=$(COMPILE_TARGET_WASM32_WASI) $(CARGO_FEATURES_CLI_FLAGS)
 
 __fastly_compute_pack_debug_build: __cargo_build_debug __clean_generated_by_fastly
 	$(FASTLY_CLI) pack --wasm-binary $(CARGO_GENERATED_DEBUG_WASM_BINARY)
@@ -135,13 +138,13 @@ __fastly_compute_validate_debug_build: __fastly_compute_pack_debug_build __clean
 # Static Analysis
 ###########################
 lint: ## Run static analysis.
-	$(CARGO_BIN) clippy --workspace --all-targets -- $(CLIPPY_RULES)
+	$(CARGO_BIN) clippy --workspace --all-targets $(CARGO_FEATURES_CLI_FLAGS) -- $(CLIPPY_RULES)
 
 lint_fix: ## Try to fix problems found by static analytics
-	$(CARGO_BIN) clippy --fix --workspace --all-targets -- $(CLIPPY_RULES)
+	$(CARGO_BIN) clippy --fix --workspace --all-targets $(CARGO_FEATURES_CLI_FLAGS) -- $(CLIPPY_RULES)
 
 check_integrity: ## Validate type and semantics for whole of codes by `cargo check`.
-	$(CARGO_BIN) check --workspace --all-targets --target=$(COMPILE_TARGET_WASM32_WASI)
+	$(CARGO_BIN) check --workspace --all-targets --target=$(COMPILE_TARGET_WASM32_WASI) $(CARGO_FEATURES_CLI_FLAGS)
 
 lint_integration_tests: ## Run static analysis under integration_tests/
 	$(MAKE) lint -C $(INTEGRATION_TESTS_DIR)
@@ -158,12 +161,12 @@ lint_fix_integration_tests: ## Try to fix problems found by static analytics und
 ###########################
 
 unittests: ## Build and run unit tests via `cargo test`
-	$(CARGO_BIN) test --workspace
+	$(CARGO_BIN) test --workspace $(CARGO_FEATURES_CLI_FLAGS)
 
 # FIXME: Ideally, we should run unittests with wasm32-wasi target.
 # But then we cannot write some test cases. So we give up run with that target for the present...
 unittests_on_wasm32-wasi: __clean_cargo ## Run unit tests with target=wasm32-wasi
-	$(CARGO_WASI_BIN) test --workspace
+	$(CARGO_WASI_BIN) test --workspace $(CARGO_FEATURES_CLI_FLAGS)
 
 
 ###########################
