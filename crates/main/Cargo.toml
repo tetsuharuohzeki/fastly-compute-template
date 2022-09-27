@@ -9,11 +9,6 @@ rust-version.workspace = true
 fastly = "^0.8.7"
 
 [features]
-default = [
-    # We want to be able to rollout this application to production at all time.
-    # Thus we use _production_ as our default build feature set.
-    "production"
-]
 
 # These feature flags represents _release channel_.
 # These are mutually exclusive. You cannot enable both of them.
