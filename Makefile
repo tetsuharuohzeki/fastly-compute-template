@@ -53,6 +53,9 @@ FASTLY_TOML_ENV ?= ""
 ###########################
 # Release Channel Mechanism
 ###########################
+
+# We want to be able to rollout this application to production at all time.
+# Thus we use _production_ as our default build feature set.
 RELEASE_CHANNEL ?= production
 
 RELEASE_CHANNEL_FEATURES :=

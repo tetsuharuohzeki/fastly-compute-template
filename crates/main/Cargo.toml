@@ -9,13 +9,6 @@ rust-version.workspace = true
 fastly = "^0.8.7"
 
 [features]
-# Our build system requires to set _release channel_ explicitly by using `--no-default-features`.
-# This default set is only used for toolchains that are not integrated our build systems (e.g. rust-analyzer).
-default = [
-    # We want to be able to rollout this application to production at all time.
-    # Thus we use _production_ as our default build feature set.
-    "production"
-]
 
 # These feature flags represents _release channel_.
 # These are mutually exclusive. You cannot enable both of them.
