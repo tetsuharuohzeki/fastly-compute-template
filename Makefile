@@ -71,8 +71,14 @@ CARGO_FEATURES_CLI_FLAGS := \
     --features $(RELEASE_CHANNEL_FEATURES),$(ADDITIONAL_FEATURES)
 
 CLIPPY_RULES := \
-    -D rust-2018-idioms \
-    -D clippy::all
+    -W rust-2018-idioms \
+    -W clippy::all
+
+# We pass `-Dwarnings` flag to fail all warnings.
+# see https://doc.rust-lang.org/clippy/usage.html#command-line
+CLIPPY_RULES_FAIL_IF_WARNINGS :=\
+    $(CLIPPY_RULES) \
+    -Dwarnings
 
 
 all: help
@@ -144,6 +150,9 @@ __fastly_compute_validate_debug_build: __fastly_compute_pack_debug_build __clean
 lint: ## Run static analysis.
 	$(CARGO_BIN) clippy --workspace --all-targets $(CARGO_FEATURES_CLI_FLAGS) -- $(CLIPPY_RULES)
 
+lint_check: ## Run static analysis and fail if there are some warnings.
+	$(CARGO_BIN) clippy --workspace --all-targets $(CARGO_FEATURES_CLI_FLAGS) -- $(CLIPPY_RULES_FAIL_IF_WARNINGS)
+
 lint_fix: ## Try to fix problems found by static analytics
 	$(CARGO_BIN) clippy --fix --workspace --all-targets $(CARGO_FEATURES_CLI_FLAGS) -- $(CLIPPY_RULES)
 
@@ -153,7 +162,7 @@ check_integrity: ## Validate type and semantics for whole of codes by `cargo che
 lint_integration_tests: ## Run static analysis under integration_tests/
 	$(MAKE) lint -C $(INTEGRATION_TESTS_DIR)
 
-lint_check_integration_tests: ## Run static analysis under integration_tests/
+lint_check_integration_tests: ## Run static analysis under integration_tests/ and fail if there are some warnings.
 	$(MAKE) lint_check -C $(INTEGRATION_TESTS_DIR)
 
 lint_fix_integration_tests: ## Try to fix problems found by static analytics under integration_tests/
