@@ -153,7 +153,7 @@ check_integrity: ## Validate type and semantics for whole of codes by `cargo che
 lint_integration_tests: ## Run static analysis under integration_tests/
 	$(MAKE) lint -C $(INTEGRATION_TESTS_DIR)
 
-lint_check_integration_tests: ## Run static analysis under integration_tests/
+lint_check_integration_tests: ## Run static analysis under integration_tests/ and fail if there are some warnings.
 	$(MAKE) lint_check -C $(INTEGRATION_TESTS_DIR)
 
 lint_fix_integration_tests: ## Try to fix problems found by static analytics under integration_tests/
