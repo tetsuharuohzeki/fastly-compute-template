@@ -67,7 +67,6 @@ RELEASE_CHANNEL_FEATURES := $(APPLICATION_NAME)/canary
 endif
 
 CARGO_FEATURES_CLI_FLAGS := \
-    --no-default-features \
     --features $(RELEASE_CHANNEL_FEATURES),$(ADDITIONAL_FEATURES)
 
 CLIPPY_RULES := \
