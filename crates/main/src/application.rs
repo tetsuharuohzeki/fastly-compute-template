@@ -39,10 +39,10 @@ pub fn main(req: Request) -> FastlyResult {
         return res;
     }
 
-    let mut bereq = req.clone_without_body();
-    bereq.set_ttl(60);
-    let beres = bereq.send(BACKEND_A)?;
-    Ok(beres)
+    let mut be_req = req.clone_without_body();
+    be_req.set_ttl(60);
+    let be_res = be_req.send(BACKEND_A)?;
+    Ok(be_res)
 }
 
 #[cfg(test)]
