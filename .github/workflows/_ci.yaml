@@ -35,7 +35,9 @@ jobs:
 
             - name: Set up Fastly CLI
               # https://github.com/fastly/compute-actions
-              uses: fastly/compute-actions/setup@main
+              uses: fastly/compute-actions/setup@v3
+              with:
+                  cli_version: "4.2.0"
 
             - shell: bash
               run: make build_${{ matrix.build_type }} -j RELEASE_CHANNEL=${{ matrix.release_channel }}
@@ -68,8 +70,9 @@ jobs:
                   build-type: ${{ matrix.build_type }}
             - uses: ./.github/actions/ci_prepare_npm_for_integration_test
             - name: Set up Fastly CLI
-              # https://github.com/fastly/compute-actions
-              uses: fastly/compute-actions/setup@main
+              uses: fastly/compute-actions/setup@v3
+              with:
+                  cli_version: "4.2.0"
             - run: make run_integration_tests -j RELEASE_CHANNEL=${{ matrix.release_channel }}
 
     unittests:

@@ -45,8 +45,8 @@ INTEGRATION_TESTS_DIR := $(CURDIR)/integration_tests
 CARGO_GENERATED_RELEASE_WASM_BINARY := $(CARGO_TARGET_WASM32_WASI_DIR)/release/$(APPLICATION_NAME).wasm
 CARGO_GENERATED_DEBUG_WASM_BINARY := $(CARGO_TARGET_WASM32_WASI_DIR)/debug/$(APPLICATION_NAME).wasm
 
-FASTLY_CLI_GENERATED_PKG_TAR_BALL := $(FASTLY_CLI_GENERATED_PKG_DIR)/$(FASTLY_COMPUTE_AT_EDGE_SERVICE_PKG_NAME).tar.gz
-FASTLY_CLI_ARCHIVED_WASM_BINARY := $(FASTLY_CLI_GENERATED_PKG_DIR)/$(FASTLY_COMPUTE_AT_EDGE_SERVICE_PKG_NAME)/bin/main.wasm
+FASTLY_CLI_GENERATED_PKG_TAR_BALL := $(FASTLY_CLI_GENERATED_PKG_DIR)/package.tar.gz
+GENERATED_WASM_BINARY := $(FASTLY_CLI_GENERATED_PKG_DIR)/main.wasm
 
 FASTLY_TOML_ENV ?= ""
 
@@ -119,7 +119,7 @@ setup_integration_tests: ## Setup integration tests including install dependenci
 ###########################
 # Build
 ###########################
-build_release: __fastly_compute_validate_relase_build ## Create the release build
+build_release: __fastly_compute_validate_relase_build __cp_release_build_to_pkg_dir_in_root ## Create the release build
 
 __cargo_build_release:
 	$(CARGO_BIN) build --release --target=$(COMPILE_TARGET_WASM32_WASI) $(CARGO_FEATURES_CLI_FLAGS)
@@ -130,8 +130,12 @@ __fastly_compute_pack_release_build: __cargo_build_release __clean_generated_by_
 __fastly_compute_validate_relase_build: __fastly_compute_pack_release_build __clean_generated_by_fastly
 	$(FASTLY_CLI) validate --package $(FASTLY_CLI_GENERATED_PKG_TAR_BALL)
 
+__cp_release_build_to_pkg_dir_in_root: __cargo_build_release __clean_generated_by_fastly
+	mkdir -p $(FASTLY_CLI_GENERATED_PKG_DIR)
+	cp $(CARGO_GENERATED_RELEASE_WASM_BINARY) $(GENERATED_WASM_BINARY)
 
-build_debug: __fastly_compute_validate_debug_build ## Create the debug build
+
+build_debug: __fastly_compute_validate_debug_build __cp_debug_build_to_pkg_dir_in_root ## Create the debug build
 
 __cargo_build_debug:
 	$(CARGO_BIN) build --target=$(COMPILE_TARGET_WASM32_WASI) $(CARGO_FEATURES_CLI_FLAGS)
@@ -141,6 +145,10 @@ __fastly_compute_pack_debug_build: __cargo_build_debug __clean_generated_by_fast
 
 __fastly_compute_validate_debug_build: __fastly_compute_pack_debug_build __clean_generated_by_fastly
 	$(FASTLY_CLI) validate --package $(FASTLY_CLI_GENERATED_PKG_TAR_BALL)
+
+__cp_debug_build_to_pkg_dir_in_root: __cargo_build_debug __clean_generated_by_fastly
+	mkdir -p $(FASTLY_CLI_GENERATED_PKG_DIR)
+	cp $(CARGO_GENERATED_DEBUG_WASM_BINARY) $(GENERATED_WASM_BINARY)
 
 
 ###########################
@@ -223,7 +231,7 @@ serve_localy_with_debug_build: build_debug ## Alias to `make build_debug && make
 	$(MAKE) run_serve_localy -C $(CURDIR)
 
 run_serve_localy: ## Run local development server without build an application code.
-	$(FASTLY_CLI) serve --skip-build --file=$(FASTLY_CLI_ARCHIVED_WASM_BINARY) --env=$(FASTLY_TOML_ENV)
+	$(FASTLY_CLI) serve --skip-build --file=$(GENERATED_WASM_BINARY) --env=$(FASTLY_TOML_ENV)
 
 launch_local_server_formation: ## Launch the app and mock servers for integration tests.
 	$(MAKE) launch_server_formation -C $(INTEGRATION_TESTS_DIR) RELEASE_CHANNEL=$(RELEASE_CHANNEL)
