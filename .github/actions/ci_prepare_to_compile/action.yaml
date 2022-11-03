@@ -7,7 +7,7 @@ runs:
         - name: Install Rust toolchain
           uses: actions-rs/toolchain@v1
           with:
-              toolchain: stable
+              toolchain: "1.64"
               profile: default
               target: wasm32-wasi
               override: false
