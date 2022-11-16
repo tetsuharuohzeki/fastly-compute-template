@@ -134,14 +134,20 @@ export async function main(process) {
     const cliOptions = parseCliOptions();
     dumpFlags(cliOptions);
     const globalCtx = new SuperVisorContext(cliOptions);
-
     const globalAborter = globalCtx.aborter;
-    const isOnlyFormation = cliOptions.isOnlyFormation;
+    const cancelGlobal = () => {
+        if (globalAborter.signal.aborted) {
+            return;
+        }
 
+        globalAborter.abort();
+    };
+
+    process.once('SIGTERM', cancelGlobal);
+
+    const isOnlyFormation = cliOptions.isOnlyFormation;
     if (isOnlyFormation) {
-        process.once('SIGINT', () => {
-            globalAborter.abort();
-        });
+        process.once('SIGINT', cancelGlobal);
     }
 
     const testResult = isOnlyFormation === false ? launchTestRunner(globalCtx) : Promise.resolve(true);
