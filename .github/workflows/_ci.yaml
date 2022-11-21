@@ -35,7 +35,7 @@ jobs:
 
             - name: Set up Fastly CLI
               # https://github.com/fastly/compute-actions
-              uses: fastly/compute-actions/setup@v3
+              uses: fastly/compute-actions/setup@v4
               with:
                   cli_version: "4.3.0"
                   token: ${{ secrets.GITHUB_TOKEN }}
@@ -71,7 +71,7 @@ jobs:
                   build-type: ${{ matrix.build_type }}
             - uses: ./.github/actions/ci_prepare_npm_for_integration_test
             - name: Set up Fastly CLI
-              uses: fastly/compute-actions/setup@v3
+              uses: fastly/compute-actions/setup@v4
               with:
                   cli_version: "4.3.0"
                   token: ${{ secrets.GITHUB_TOKEN }}
