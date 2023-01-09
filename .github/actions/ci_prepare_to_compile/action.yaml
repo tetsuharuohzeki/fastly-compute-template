@@ -5,7 +5,7 @@ runs:
     using: composite
     steps:
         - name: Install Rust toolchain
-          uses: ./.github/actions/rust-toolchain
+          uses: ./.github/actions/rust_toolchain
           with:
               toolchain: "1.66"
               profile: default
