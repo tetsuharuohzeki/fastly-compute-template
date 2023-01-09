@@ -101,11 +101,11 @@ jobs:
             - uses: actions/checkout@v3
 
             - name: Install Rust toolchain
-              uses: actions-rs/toolchain@v1
+              uses: ./.github/actions/rust-toolchain
               with:
                   toolchain: "1.66"
                   profile: default
-                  override: false
+                  override: true
 
             - shell: bash
               run: make format_check -j
