@@ -1,0 +1,82 @@
+name: rust-toolchain
+
+# This emulates https://github.com/actions-rs/toolchain#inputs
+inputs:
+    toolchain:
+        description: See https://rust-lang.github.io/rustup/concepts/toolchains.html#toolchain-specification
+        required: false
+        default: "stable"
+    target:
+        description: Space-separated list of target triple to be additionally installed.
+        required: false
+    default:
+        description: Whether to set the installed toolchain as default or not.
+        required: false
+        default: false
+    override:
+        description: Whether to override the installed toolchain to the working directory.
+        required: false
+        default: false
+    profile:
+        description: See https://rust-lang.github.io/rustup/concepts/profiles.html
+        required: false
+        default: "default"
+    components:
+        description: Space-separated list of components to be additionally installed.
+        required: false
+    working-directory:
+        description: The working directory.
+        required: false
+
+runs:
+    using: composite
+    steps:
+        - name: Set up toolchains.
+          shell: bash
+          working-directory: ${{ inputs.working-directory }}
+          run: |
+              set -x
+              rustup self update
+              rustup set profile ${{ inputs.profile }}
+              rustup toolchain install ${{ inputs.toolchain }}
+        - name: Set the default toolchain.
+          shell: bash
+          working-directory: ${{ inputs.working-directory }}
+          if: ${{ inputs.default == true }}
+          run: |
+              set -x
+              rustup default ${{ inputs.toolchain }}
+        - name: Set the toolchain override.
+          shell: bash
+          working-directory: ${{ inputs.working-directory }}
+          if: ${{ inputs.override }}
+          run: |
+              set -x
+              rustup override set ${{ inputs.toolchain }}
+        - name: Install additional compile targets.
+          shell: bash
+          working-directory: ${{ inputs.working-directory }}
+          if: ${{ inputs.target }}
+          run: |
+              set -x
+              rustup target add ${{ inputs.target }}
+        - name: Install additional toolchain componentns.
+          shell: bash
+          working-directory: ${{ inputs.working-directory }}
+          if: ${{ inputs.components }}
+          run: |
+              set -x
+              rustup component add ${{ inputs.components }}
+        - name: Installed toolchains' versions.
+          shell: bash
+          working-directory: ${{ inputs.working-directory }}
+          run: |
+              set -x
+              rustc --version
+              cargo --version
+        - name: Show the active and installed toolchains or profiles.
+          shell: bash
+          working-directory: ${{ inputs.working-directory }}
+          run: |
+              set -x
+              rustup show

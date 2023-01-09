@@ -5,12 +5,12 @@ runs:
     using: composite
     steps:
         - name: Install Rust toolchain
-          uses: actions-rs/toolchain@v1
+          uses: ./.github/actions/rust-toolchain
           with:
               toolchain: "1.66"
               profile: default
               target: wasm32-wasi
-              override: false
+              override: true
 
         - uses: actions/cache@v3
           with:
