@@ -67,7 +67,8 @@ runs:
               set -x
               rustup self update
               rustup set profile ${{ inputs.profile }}
-              rustup toolchain install ${{ inputs.toolchain }}
+              rustup toolchain install --no-self-update ${{ inputs.toolchain }}
+              rustup update --no-self-update ${{ inputs.toolchain }}
         - name: Set the default toolchain.
           shell: bash
           working-directory: ${{ inputs.working-directory }}
