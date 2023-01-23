@@ -9,6 +9,7 @@ inputs:
     target:
         description: Space-separated list of target triple to be additionally installed.
         required: false
+        default: null
     default:
         description: Whether to set the installed toolchain as default or not.
         required: false
@@ -24,6 +25,7 @@ inputs:
     components:
         description: Space-separated list of components to be additionally installed.
         required: false
+        default: null
     working-directory:
         description: The working directory.
         required: false
@@ -56,14 +58,14 @@ runs:
         - name: Install additional compile targets.
           shell: bash
           working-directory: ${{ inputs.working-directory }}
-          if: ${{ inputs.target }}
+          if: ${{ inputs.target != null }}
           run: |
               set -x
               rustup target add ${{ inputs.target }}
         - name: Install additional toolchain componentns.
           shell: bash
           working-directory: ${{ inputs.working-directory }}
-          if: ${{ inputs.components }}
+          if: ${{ inputs.components != null }}
           run: |
               set -x
               rustup component add ${{ inputs.components }}
