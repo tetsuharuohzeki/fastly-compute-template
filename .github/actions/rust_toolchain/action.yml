@@ -33,6 +33,11 @@ inputs:
 runs:
     using: composite
     steps:
+        - name: Clean up preinstalled 'stable' toolchain if we don't use it
+          shell: bash
+          if: ${{ inputs.toolchain != 'stable' }}
+          working-directory: ${{ inputs.working-directory }}
+          run: rustup toolchain uninstall stable
         - name: Set up toolchains.
           shell: bash
           working-directory: ${{ inputs.working-directory }}
