@@ -11,6 +11,7 @@ runs:
               profile: default
               target: wasm32-wasi
               override: true
+              cache: true
 
         - uses: actions/cache@v3
           with:
