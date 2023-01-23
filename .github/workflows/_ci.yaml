@@ -106,6 +106,7 @@ jobs:
                   toolchain: "1.66"
                   profile: default
                   override: true
+                  cache: true
 
             - shell: bash
               run: make format_check -j

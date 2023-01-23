@@ -29,10 +29,32 @@ inputs:
     working-directory:
         description: The working directory.
         required: false
+    cache:
+        description: |
+            Enable toolchains cache. This is just for workaround to API limit to download toolchains.
+            We don't have a way to evict cache automatically. Please be careful if you use a channel name (e.g. `'stable'` or `'nightly'`, or) `toolchain` option.
+        required: false
+        default: false
 
 runs:
     using: composite
     steps:
+        - name: Look up toolchains' cache.
+          id: cache-toolchain
+          uses: actions/cache@v3
+          if: ${{ inputs.cache == 'true' }}
+          with:
+              path: |
+                  ~/.rustup/toolchains/
+                  ~/.rustup/update-hashes/
+                  ~/.rustup/settings.toml
+              key: rev0-rust-toolchains-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('rust-toolchain.toml') }}--toolchain:${{ inputs.toolchain }}--targets:${{ inputs.target }}--profile:${{ inputs.profile }}--components:${{ inputs.components }}
+        - name: Show restored cached toolchains' information
+          shell: bash
+          working-directory: ${{ inputs.working-directory }}
+          run: |
+             set -x
+             rustup show --verbose
         - name: Clean up preinstalled 'stable' toolchain if we don't use it
           shell: bash
           if: ${{ inputs.toolchain != 'stable' }}
@@ -49,28 +71,28 @@ runs:
         - name: Set the default toolchain.
           shell: bash
           working-directory: ${{ inputs.working-directory }}
-          if: ${{ inputs.default == 'true' }}
+          if: ${{ inputs.default == 'true' && steps.cache-toolchain.outputs.cache-hit != 'true' }}
           run: |
               set -x
               rustup default ${{ inputs.toolchain }}
         - name: Set the toolchain override.
           shell: bash
           working-directory: ${{ inputs.working-directory }}
-          if: ${{ inputs.override == 'true' }}
+          if: ${{ inputs.override == 'true' && steps.cache-toolchain.outputs.cache-hit != 'true' }}
           run: |
               set -x
               rustup override set ${{ inputs.toolchain }}
         - name: Install additional compile targets.
           shell: bash
           working-directory: ${{ inputs.working-directory }}
-          if: ${{ inputs.target != null }}
+          if: ${{ inputs.target != null && steps.cache-toolchain.outputs.cache-hit != 'true' }}
           run: |
               set -x
               rustup target add ${{ inputs.target }}
         - name: Install additional toolchain componentns.
           shell: bash
           working-directory: ${{ inputs.working-directory }}
-          if: ${{ inputs.components != null }}
+          if: ${{ inputs.components != null && steps.cache-toolchain.outputs.cache-hit != 'true' }}
           run: |
               set -x
               rustup component add ${{ inputs.components }}
