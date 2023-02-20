@@ -17,7 +17,7 @@
     "dependencies": {
         "ava": "^5.2.0",
         "option-t": "^33.9.0",
-        "undici": "^5.19.1"
+        "undici": "^5.20.0"
     },
     "devDependencies": {
         "eslint": "^8.34.0",
