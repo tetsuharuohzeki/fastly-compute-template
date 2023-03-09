@@ -1,6 +1,3 @@
-// rust-analyzer v0.3.1386 (released in 2023, Jan., 30th) does not support this style.
-// We disable this until rust-analyzer supports it.
-#![allow(clippy::uninlined_format_args)]
 mod application;
 mod build_info;
 
