@@ -37,7 +37,7 @@ jobs:
               # https://github.com/fastly/compute-actions
               uses: fastly/compute-actions/setup@v5
               with:
-                  cli_version: "8.0.0"
+                  cli_version: "8.1.0"
                   token: ${{ secrets.GITHUB_TOKEN }}
 
             - shell: bash
@@ -73,7 +73,7 @@ jobs:
             - name: Set up Fastly CLI
               uses: fastly/compute-actions/setup@v5
               with:
-                  cli_version: "8.0.0"
+                  cli_version: "8.1.0"
                   token: ${{ secrets.GITHUB_TOKEN }}
             - run: make run_integration_tests -j RELEASE_CHANNEL=${{ matrix.release_channel }}
 
