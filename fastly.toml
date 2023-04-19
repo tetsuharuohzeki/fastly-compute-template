@@ -1,7 +1,7 @@
 # This file describes a Fastly Compute@Edge package. To learn more visit:
 # https://developer.fastly.com/reference/fastly-toml/
 
-manifest_version = 2
+manifest_version = 3
 name = "fastly-compute-at-edge-template"
 authors = [""]
 description = "An empty starter kit project template."

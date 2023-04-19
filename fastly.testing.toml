@@ -1,7 +1,7 @@
 # This file describes a Fastly Compute@Edge package. To learn more visit:
 # https://developer.fastly.com/reference/fastly-toml/
 
-manifest_version = 2
+manifest_version = 3
 
 [local_server]
     [local_server.backends]
