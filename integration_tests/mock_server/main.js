@@ -1,4 +1,5 @@
 import * as http from 'node:http';
+import { URL } from 'node:url';
 
 import * as HttpHeader from '../http_helpers/http_header.js';
 import * as HttpStatus from '../http_helpers/http_status.js';
@@ -8,10 +9,11 @@ const PORT = 8030;
 
 (async function main() {
     const server = http.createServer((req, res) => {
-        const url = req.url;
-        console.log(`request incoming: ${url}`);
+        const url = new URL(req.url, `http://${req.headers.host}`);
+        const urlPathname = url.pathname;
+        console.log(`request incoming: ${urlPathname}`);
 
-        if (url === '/hello_this_is_mock') {
+        if (urlPathname === '/hello_this_is_mock') {
             res.setHeader(HttpHeader.CONTENT_TYPE, Mime.TEXT_PLAIN_UTF_8);
             res.writeHead(HttpStatus.OK);
             res.end(`this is mock server listening on ${String(PORT)}`);
