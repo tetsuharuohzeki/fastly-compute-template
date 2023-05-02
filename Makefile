@@ -201,6 +201,16 @@ unittests_on_wasm32-wasi: __clean_cargo ## Run unit tests with target=wasm32-was
 
 
 ###########################
+# Benchmark
+###########################
+benchmarks: ## Wrapper of `cargo bench`.
+	$(CARGO_BIN) bench $(CARGO_FEATURES_CLI_FLAGS)
+
+benchmark_only_build: ## Build benchmarks but does not run.
+	$(CARGO_BIN) bench $(CARGO_FEATURES_CLI_FLAGS) --no-run
+
+
+###########################
 # Integration Test
 ###########################
 integration_tests: build_debug ## Build debug build && Run integration tests.
