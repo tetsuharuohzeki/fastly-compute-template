@@ -6,7 +6,7 @@ edition.workspace = true
 rust-version.workspace = true
 
 [dependencies]
-fastly = "^0.9.3"
+fastly = "^0.9.4"
 
 [features]
 
