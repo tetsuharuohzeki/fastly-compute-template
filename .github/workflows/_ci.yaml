@@ -11,12 +11,14 @@ permissions:
 jobs:
     fetch_cargo_registry:
         runs-on: ubuntu-latest
+        timeout-minutes: 5
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/ci_prepare_to_compile
 
     fetch_npm_registry:
         runs-on: ubuntu-latest
+        timeout-minutes: 5
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/ci_prepare_npm_for_integration_test
@@ -24,6 +26,7 @@ jobs:
     build:
         needs: [fetch_cargo_registry]
         runs-on: ubuntu-latest
+        timeout-minutes: 10
         strategy:
             matrix:
                 build_type: ["debug", "release"]
@@ -52,6 +55,7 @@ jobs:
     integration_tests:
         needs: [fetch_npm_registry, build]
         runs-on: ubuntu-latest
+        timeout-minutes: 10
         strategy:
             matrix:
                 build_type: [
@@ -80,6 +84,7 @@ jobs:
     unittests:
         needs: [fetch_cargo_registry]
         runs-on: ubuntu-latest
+        timeout-minutes: 10
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/ci_prepare_to_compile
@@ -89,6 +94,7 @@ jobs:
     lint_check:
         needs: [fetch_cargo_registry]
         runs-on: ubuntu-latest
+        timeout-minutes: 10
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/ci_prepare_to_compile
@@ -97,6 +103,7 @@ jobs:
 
     format_check:
         runs-on: ubuntu-latest
+        timeout-minutes: 10
         steps:
             - uses: actions/checkout@v3
 
@@ -114,6 +121,7 @@ jobs:
     format_check_integration_tests:
         needs: [fetch_npm_registry]
         runs-on: ubuntu-latest
+        timeout-minutes: 10
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/ci_prepare_npm_for_integration_test
@@ -123,6 +131,7 @@ jobs:
     lint_check_integration_tests:
         needs: [fetch_npm_registry]
         runs-on: ubuntu-latest
+        timeout-minutes: 10
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/ci_prepare_npm_for_integration_test
