@@ -5,6 +5,7 @@ import { expectNotUndefined } from 'option-t/esm/Undefinable/expect';
 const CLI_FLAG_RELEASE_CHANNEL = 'release-channel';
 const CLI_FLAG_UPDATE_SNAPSHOTS = 'update-snapshots';
 const CLI_FLAG_IS_ONLY_FORMATION = 'is-only-formation';
+const CLI_FLAG_IS_VERBOSE = 'verbose';
 
 const CLI_OPTIONS = {
     [CLI_FLAG_RELEASE_CHANNEL]: {
@@ -16,6 +17,9 @@ const CLI_OPTIONS = {
     [CLI_FLAG_IS_ONLY_FORMATION]: {
         type: 'boolean',
     },
+    [CLI_FLAG_IS_VERBOSE]: {
+        type: 'boolean',
+    },
 };
 
 class CliOptions {
@@ -25,11 +29,14 @@ class CliOptions {
     isOnlyFormation;
     /** @type {string} */
     releaseChannel;
+    /** @type {boolean} */
+    isVerbose;
 
-    constructor({ shouldUpdateSnapshots, isOnlyFormation, releaseChannel }) {
+    constructor({ shouldUpdateSnapshots, isOnlyFormation, releaseChannel, isVerbose }) {
         this.shouldUpdateSnapshots = shouldUpdateSnapshots;
         this.isOnlyFormation = isOnlyFormation;
         this.releaseChannel = releaseChannel;
+        this.isVerbose = isVerbose;
         Object.freeze(this);
     }
 }
@@ -58,11 +65,13 @@ export function parseCliOptions() {
 
     const shouldUpdateSnapshots = !!values[CLI_FLAG_UPDATE_SNAPSHOTS];
     const isOnlyFormation = !!values[CLI_FLAG_IS_ONLY_FORMATION];
+    const isVerbose = !!values[CLI_FLAG_IS_VERBOSE];
 
     const options = new CliOptions({
         shouldUpdateSnapshots,
         isOnlyFormation,
         releaseChannel,
+        isVerbose,
     });
     return options;
 }
