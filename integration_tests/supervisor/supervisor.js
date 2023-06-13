@@ -142,7 +142,9 @@ export async function main(process) {
 
     const globalCtx = new SuperVisorContext(cliOptions);
     const globalAborter = globalCtx.aborter;
-    const cancelGlobal = () => {
+    const cancelGlobal = (e) => {
+        console.error(e);
+
         if (globalAborter.signal.aborted) {
             return;
         }
@@ -151,6 +153,8 @@ export async function main(process) {
     };
 
     process.once('SIGTERM', cancelGlobal);
+    process.once('uncaughtException', cancelGlobal);
+    process.once('unhandledRejection', cancelGlobal);
 
     const isOnlyFormation = cliOptions.isOnlyFormation;
     if (isOnlyFormation) {
