@@ -1,7 +1,7 @@
 import * as assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 
-import * as logger from './logger.js';
+import * as logger from '../logger/mod.js';
 
 const SIGTERM = 15;
 

@@ -4,10 +4,10 @@ import { fileURLToPath } from 'node:url';
 
 import { isNotNull, isNull } from 'option-t/esm/Nullable';
 
+import * as logger from '../logger/mod.js';
 import { APP_LOCAL_ORIGIN } from '../url_origin.js';
 
 import { parseCliOptions, assertIsCliOptions } from './cli_flags.js';
-import * as logger from './logger.js';
 import { pollToLaunchApplication } from './poll_to_launch_app.js';
 import { spawnCancelableChild } from './spawn.js';
 import { SuperVisorContext, assertIsSuperVisorContext } from './sv_ctx.js';
@@ -156,7 +156,7 @@ function installShutdownGlobally(process, canceler) {
 export async function main(process) {
     const cliOptions = parseCliOptions();
     dumpFlags(cliOptions);
-    logger.setupLogger(cliOptions.isVerbose);
+    logger.setupLogger('supervisor', cliOptions.isVerbose);
 
     const globalCtx = new SuperVisorContext(cliOptions);
     const globalAborter = globalCtx.aborter;
