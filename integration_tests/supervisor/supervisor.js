@@ -2,7 +2,7 @@ import * as assert from 'node:assert/strict';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { isNull } from 'option-t/esm/Nullable';
+import { isNotNull, isNull } from 'option-t/esm/Nullable';
 
 import { APP_LOCAL_ORIGIN } from '../url_origin.js';
 
@@ -133,6 +133,20 @@ async function launchTestRunner(ctx) {
 }
 
 /**
+ *  @param  {NodeJS.Process} process
+ *  @param  {Function} canceler
+ */
+function installShutdownGlobally(process, canceler) {
+    assert.ok(typeof process === 'object' && isNotNull(process));
+    assert.ok(typeof canceler === 'function');
+
+    process.once('SIGTERM', canceler);
+    process.once('SIGINT', canceler);
+    process.once('uncaughtException', canceler);
+    process.once('unhandledRejection', canceler);
+}
+
+/**
  * @param {NodeJS.Process} process
  * @returns {void}
  */
@@ -151,21 +165,14 @@ export async function main(process) {
 
         globalAborter.abort();
     };
-
-    process.once('SIGTERM', cancelGlobal);
-    process.once('uncaughtException', cancelGlobal);
-    process.once('unhandledRejection', cancelGlobal);
-
-    const isOnlyFormation = cliOptions.isOnlyFormation;
-    if (isOnlyFormation) {
-        process.once('SIGINT', cancelGlobal);
-    }
+    installShutdownGlobally(process, cancelGlobal);
 
     const serverFormation = Promise.all([
         // @prettier-ignore
         launchMockServer(globalCtx),
         launchLocalApplicationServer(globalCtx),
     ]);
+    const isOnlyFormation = cliOptions.isOnlyFormation;
     if (isOnlyFormation) {
         await serverFormation;
         return;
