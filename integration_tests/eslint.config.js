@@ -1,9 +1,10 @@
+import js from '@eslint/js';
 import globals from 'globals';
 
 import prettierOverride from './tools/eslint/prettier_ovrride.js';
 
 export default [
-    'eslint:recommended',
+    js.configs.recommended,
     ...prettierOverride,
     {
         languageOptions: {
@@ -14,7 +15,7 @@ export default [
         },
 
         rules: {
-            // Not covered by eslint:recommended
+            // Not covered by js.configs.recommended,
             strict: ['error', 'global'],
             'no-unused-private-class-members': 'warn',
         },
