@@ -7,6 +7,7 @@ import { isNotNull, isNull } from 'option-t/esm/Nullable';
 import { APP_LOCAL_ORIGIN } from '../url_origin.js';
 
 import { parseCliOptions, assertIsCliOptions } from './cli_flags.js';
+import * as logger from './logger.js';
 import { pollToLaunchApplication } from './poll_to_launch_app.js';
 import { spawnCancelableChild } from './spawn.js';
 import { SuperVisorContext, assertIsSuperVisorContext } from './sv_ctx.js';
@@ -106,7 +107,7 @@ async function launchTestRunner(ctx) {
     );
     if (!appIsLaunched) {
         aborter.abort();
-        console.error(`cannot launche the test target application`);
+        logger.error(`cannot launche the test target application`);
         return false;
     }
 
@@ -140,6 +141,8 @@ function installShutdownGlobally(process, canceler) {
     assert.ok(typeof process === 'object' && isNotNull(process));
     assert.ok(typeof canceler === 'function');
 
+    logger.debug(`Install the global canceler`);
+
     process.once('SIGTERM', canceler);
     process.once('SIGINT', canceler);
     process.once('uncaughtException', canceler);
@@ -153,20 +156,25 @@ function installShutdownGlobally(process, canceler) {
 export async function main(process) {
     const cliOptions = parseCliOptions();
     dumpFlags(cliOptions);
+    logger.setupLogger(cliOptions.isVerbose);
 
     const globalCtx = new SuperVisorContext(cliOptions);
     const globalAborter = globalCtx.aborter;
     const cancelGlobal = (e) => {
-        console.error(e);
+        logger.debug(`the supervisor is cancelled now globally`);
+        logger.error(e);
 
         if (globalAborter.signal.aborted) {
+            logger.debug(`the supervisor has been cancelled previously`);
             return;
         }
 
         globalAborter.abort();
+        logger.debug(`dispatched the cencallation to all tasks`);
     };
     installShutdownGlobally(process, cancelGlobal);
 
+    logger.debug('try to launch the target application formation');
     const serverFormation = Promise.all([
         // @prettier-ignore
         launchMockServer(globalCtx),
@@ -174,21 +182,27 @@ export async function main(process) {
     ]);
     const isOnlyFormation = cliOptions.isOnlyFormation;
     if (isOnlyFormation) {
+        logger.debug('global aborter has been aborted before to launch the test runner.');
         await serverFormation;
         return;
     }
 
+    logger.debug('try to launch the test runner process.');
     const testResult = await launchTestRunner(globalCtx);
     if (isNull(testResult)) {
-        // global aborter has been aborted before to launch the test runner.
+        logger.debug('global aborter has been aborted before to launch the test runner.');
         process.exit(1);
     }
 
-    // Wait to shutdown all background processes.
+    logger.debug('Wait to shutdown all background processes...');
     await serverFormation;
+    logger.debug('Complete to shutdown all background processes.');
 
     const ok = testResult;
     if (!ok) {
+        logger.debug('the test runner is totally faild.');
         process.exit(1);
     }
+
+    logger.debug('Finish integration test successfully.');
 }

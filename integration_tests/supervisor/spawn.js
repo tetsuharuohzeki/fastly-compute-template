@@ -1,6 +1,8 @@
 import * as assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 
+import * as logger from './logger.js';
+
 const SIGTERM = 15;
 
 /**
@@ -21,9 +23,12 @@ export function spawnCancelableChild(bin, args, option) {
 
         option.killSignal = SIGTERM;
         const proc = spawn(bin, args, option);
-        console.log('spawn: ' + bin + ' ' + args.join(' '));
+
+        const command = bin + ' ' + args.join(' ');
+        logger.info(`spawn: ${command}`);
 
         proc.on('exit', function (code, signal) {
+            logger.debug(`on exit: ${command}`);
             resolve({
                 code,
                 signal,
@@ -32,9 +37,11 @@ export function spawnCancelableChild(bin, args, option) {
 
         proc.on('error', (err) => {
             if (isAbortError(err)) {
+                logger.debug(`canceled on error: ${command}`);
                 return;
             }
-            console.error(err);
+            logger.debug(`on error: ${command}`);
+            logger.error(err);
             reject(err);
         });
     });
