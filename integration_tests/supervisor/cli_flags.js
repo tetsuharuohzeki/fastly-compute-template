@@ -19,6 +19,13 @@ const CLI_OPTIONS = {
 };
 
 class CliOptions {
+    /** @type {boolean} */
+    shouldUpdateSnapshots;
+    /** @type {boolean} */
+    isOnlyFormation;
+    /** @type {string} */
+    releaseChannel;
+
     constructor({ shouldUpdateSnapshots, isOnlyFormation, releaseChannel }) {
         this.shouldUpdateSnapshots = shouldUpdateSnapshots;
         this.isOnlyFormation = isOnlyFormation;

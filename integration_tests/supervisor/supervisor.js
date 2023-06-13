@@ -2,6 +2,8 @@ import * as assert from 'node:assert/strict';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { isNull } from 'option-t/esm/Nullable';
+
 import { APP_LOCAL_ORIGIN } from '../url_origin.js';
 
 import { parseCliOptions, assertIsCliOptions } from './cli_flags.js';
@@ -130,9 +132,14 @@ async function launchTestRunner(ctx) {
     return true;
 }
 
+/**
+ * @param {NodeJS.Process} process
+ * @returns {void}
+ */
 export async function main(process) {
     const cliOptions = parseCliOptions();
     dumpFlags(cliOptions);
+
     const globalCtx = new SuperVisorContext(cliOptions);
     const globalAborter = globalCtx.aborter;
     const cancelGlobal = () => {
@@ -150,20 +157,26 @@ export async function main(process) {
         process.once('SIGINT', cancelGlobal);
     }
 
-    const testResult = isOnlyFormation === false ? launchTestRunner(globalCtx) : Promise.resolve(true);
-
     const serverFormation = Promise.all([
         // @prettier-ignore
         launchMockServer(globalCtx),
         launchLocalApplicationServer(globalCtx),
     ]);
-
-    await Promise.all([serverFormation, testResult]);
     if (isOnlyFormation) {
+        await serverFormation;
         return;
     }
 
-    const ok = await testResult;
+    const testResult = await launchTestRunner(globalCtx);
+    if (isNull(testResult)) {
+        // global aborter has been aborted before to launch the test runner.
+        process.exit(1);
+    }
+
+    // Wait to shutdown all background processes.
+    await serverFormation;
+
+    const ok = testResult;
     if (!ok) {
         process.exit(1);
     }
