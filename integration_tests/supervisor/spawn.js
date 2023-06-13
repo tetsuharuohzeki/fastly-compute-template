@@ -27,8 +27,8 @@ export function spawnCancelableChild(bin, args, option) {
         const command = bin + ' ' + args.join(' ');
         logger.info(`spawn: ${command}`);
 
-        proc.on('exit', function (code, signal) {
-            logger.debug(`on exit: ${command}`);
+        proc.on('close', function (code, signal) {
+            logger.debug(`on close: ${command}`);
             resolve({
                 code,
                 signal,
