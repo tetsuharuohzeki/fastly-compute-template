@@ -1,7 +1,8 @@
 import * as assert from 'node:assert/strict';
+import { isNotNull } from 'option-t/Nullable';
 
 let messagePrefix = '';
-let isVerboseMode = false;
+let isVerboseMode = null;
 
 /**
  *  @param {string} prefix
@@ -11,6 +12,10 @@ let isVerboseMode = false;
 export function setupLogger(prefix, isVerbose = false) {
     assert.ok(typeof prefix === 'string');
     assert.ok(typeof isVerbose === 'boolean');
+
+    if (isNotNull(isVerboseMode)) {
+        throw new Error('calling setupLogger is only allowed once per process');
+    }
 
     messagePrefix = prefix + ':';
     isVerboseMode = isVerbose;
