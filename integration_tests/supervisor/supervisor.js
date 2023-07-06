@@ -145,7 +145,7 @@ async function launchTestRunner(ctx) {
 
 /**
  *  @param  {NodeJS.Process} process
- *  @param  {Function} canceler
+ *  @param  {(e: unknown) => void} canceler
  */
 function installShutdownGlobally(process, canceler) {
     assert.ok(typeof process === 'object' && isNotNull(process));
@@ -161,7 +161,7 @@ function installShutdownGlobally(process, canceler) {
 
 /**
  * @param {NodeJS.Process} process
- * @returns {void}
+ * @returns {Promise<void>}
  */
 export async function main(process) {
     const cliOptions = parseCliOptions();
@@ -170,7 +170,7 @@ export async function main(process) {
 
     const globalCtx = new SuperVisorContext(cliOptions);
     const globalAborter = globalCtx.aborter;
-    const cancelGlobal = (e) => {
+    const cancelGlobal = (e /** @type {unknown} */) => {
         logger.debug(`the supervisor is cancelled now globally`);
         logger.error(e);
 

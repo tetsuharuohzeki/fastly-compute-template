@@ -7,6 +7,11 @@ const CLI_FLAG_UPDATE_SNAPSHOTS = 'update-snapshots';
 const CLI_FLAG_IS_ONLY_FORMATION = 'is-only-formation';
 const CLI_FLAG_IS_VERBOSE = 'verbose';
 
+/**
+ * @typedef {import('node:util').ParseArgsConfig} ParseArgsConfig
+ */
+
+/** @type {ParseArgsConfig['options']} */
 const CLI_OPTIONS = {
     [CLI_FLAG_RELEASE_CHANNEL]: {
         type: 'string',
