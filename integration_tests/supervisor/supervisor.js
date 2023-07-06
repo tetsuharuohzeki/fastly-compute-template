@@ -3,6 +3,7 @@ import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { isNotNull, isNull } from 'option-t/esm/Nullable';
+import { unwrapOrFromUndefinable } from 'option-t/esm/Undefinable';
 
 import * as logger from '../logger/mod.js';
 import { APP_LOCAL_ORIGIN } from '../url_origin.js';
@@ -43,8 +44,17 @@ async function spawnAndGracefulShutdown(aborter, name, args, option) {
     return status;
 }
 
-async function launchMockServer(ctx) {
+async function launchMockServer(ctx, filename, cliFlags = null) {
     assertIsSuperVisorContext(ctx);
+    assert.strictEqual(typeof filename, 'string');
+
+    const nodeOptions = unwrapOrFromUndefinable(cliFlags?.node, []);
+    assert.ok(Array.isArray(nodeOptions));
+    assert.ok(nodeOptions.every((value) => typeof value === 'string'));
+
+    const appOptions = unwrapOrFromUndefinable(cliFlags?.app, []);
+    assert.ok(Array.isArray(appOptions));
+    assert.ok(appOptions.every((value) => typeof value === 'string'));
 
     const aborter = ctx.aborter;
     const signal = aborter.signal;
@@ -52,8 +62,8 @@ async function launchMockServer(ctx) {
         return null;
     }
 
-    const serverPath = path.resolve(INTEGRATION_TESTS_DIR, './mock_server/main.js');
-    const status = await spawnAndGracefulShutdown(aborter, 'node', [serverPath], {
+    const serverPath = path.resolve(INTEGRATION_TESTS_DIR, filename);
+    const status = await spawnAndGracefulShutdown(aborter, 'node', [...nodeOptions, serverPath, ...appOptions], {
         cwd: INTEGRATION_TESTS_DIR,
         stdio: 'inherit',
         signal,
@@ -177,7 +187,7 @@ export async function main(process) {
     logger.debug('try to launch the target application formation');
     const serverFormation = Promise.all([
         // @prettier-ignore
-        launchMockServer(globalCtx),
+        launchMockServer(globalCtx, './mock_server/main.js'),
         launchLocalApplicationServer(globalCtx),
     ]);
     const isOnlyFormation = cliOptions.isOnlyFormation;
