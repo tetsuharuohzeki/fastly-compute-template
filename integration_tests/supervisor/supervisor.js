@@ -2,8 +2,8 @@ import * as assert from 'node:assert/strict';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { isNotNull, isNull } from 'option-t/esm/Nullable';
-import { unwrapOrFromUndefinable } from 'option-t/esm/Undefinable';
+import { isNotNull, isNull } from 'option-t/Nullable';
+import { unwrapOrFromUndefinable } from 'option-t/Undefinable';
 
 import * as logger from '../logger/mod.js';
 import { APP_LOCAL_ORIGIN } from '../url_origin.js';

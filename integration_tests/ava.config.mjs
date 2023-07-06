@@ -1,5 +1,5 @@
 import * as assert from 'node:assert/strict';
-import { unwrapOrFromUndefinable } from 'option-t/esm/Undefinable/unwrapOr';
+import { unwrapOrFromUndefinable } from 'option-t/Undefinable/unwrapOr';
 
 const RELEASE_CHANNEL = unwrapOrFromUndefinable(process.env.RELEASE_CHANNEL, null);
 

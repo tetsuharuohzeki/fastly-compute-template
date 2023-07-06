@@ -1,6 +1,6 @@
 import * as assert from 'node:assert/strict';
 import { parseArgs } from 'node:util';
-import { expectNotUndefined } from 'option-t/esm/Undefinable/expect';
+import { expectNotUndefined } from 'option-t/Undefinable';
 
 const CLI_FLAG_RELEASE_CHANNEL = 'release-channel';
 const CLI_FLAG_UPDATE_SNAPSHOTS = 'update-snapshots';
