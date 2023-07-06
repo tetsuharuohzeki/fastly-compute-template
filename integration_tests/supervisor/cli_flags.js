@@ -27,6 +27,14 @@ const CLI_OPTIONS = {
     },
 };
 
+/**
+ *  @typedef    {object}    CliOptionsArgs
+ *  @property   {boolean}   shouldUpdateSnapshots
+ *  @property   {boolean}   isOnlyFormation
+ *  @property   {string}    releaseChannel
+ *  @property   {boolean}   isVerbose
+ */
+
 class CliOptions {
     /** @type {boolean} */
     shouldUpdateSnapshots;
@@ -37,6 +45,9 @@ class CliOptions {
     /** @type {boolean} */
     isVerbose;
 
+    /**
+     * @param {CliOptionsArgs} param0
+     */
     constructor({ shouldUpdateSnapshots, isOnlyFormation, releaseChannel, isVerbose }) {
         this.shouldUpdateSnapshots = shouldUpdateSnapshots;
         this.isOnlyFormation = isOnlyFormation;
@@ -64,6 +75,9 @@ export function parseCliOptions() {
         values[CLI_FLAG_RELEASE_CHANNEL],
         `--${CLI_FLAG_RELEASE_CHANNEL} must be set`
     );
+    if (typeof releaseChannel !== 'string') {
+        throw new TypeError(`--${CLI_FLAG_RELEASE_CHANNEL} must be string value`);
+    }
     if (releaseChannel === '') {
         throw new RangeError(`--${CLI_FLAG_RELEASE_CHANNEL} must not be empty`);
     }

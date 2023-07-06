@@ -12,6 +12,9 @@ const SIGTERM = 15;
  */
 
 /**
+ *  @param  {string} bin
+ *  @param  {Array.<string>} args
+ *  @param  {import('node:child_process').SpawnOptionsWithoutStdio} option
  *  @returns    {Promise<ProcessExitStatus>}
  */
 export function spawnCancelableChild(bin, args, option) {
@@ -49,6 +52,10 @@ export function spawnCancelableChild(bin, args, option) {
     return process;
 }
 
+/**
+ * @param {Error|null|undefined} err
+ * @returns {boolean}
+ */
 function isAbortError(err) {
     return !!err && err.name === 'AbortError';
 }

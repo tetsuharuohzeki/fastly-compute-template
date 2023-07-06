@@ -13,14 +13,17 @@ export class SuperVisorContext {
         Object.freeze(this);
     }
 
+    /** @type   {AbortController} */
     get aborter() {
         return this.#aborter;
     }
 
+    /** @type   {AbortSignal} */
     get signal() {
         return this.#aborter.signal;
     }
 
+    /** @type   {string} */
     get releaseChannel() {
         return this.cliOptions.releaseChannel;
     }

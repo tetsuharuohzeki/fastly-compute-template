@@ -10,6 +10,12 @@ const INITIAL_WAIT_MS = 1500;
 
 const POLLING_INTERVAL_MS = 100;
 
+/**
+ * @param {AbortSignal} signal
+ * @param {string} url
+ * @param {number} timeoutMillisec
+ * @returns {Promise<boolean>}
+ */
 export async function pollToLaunchApplication(signal, url, timeoutMillisec) {
     assert.ok(signal instanceof AbortSignal);
     assert.ok(typeof url === 'string');
