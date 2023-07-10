@@ -12,6 +12,7 @@ import { parseCliOptions, assertIsCliOptions } from './cli_flags.js';
 import { pollToLaunchApplication } from './poll_to_launch_app.js';
 import { spawnCancelableChild } from './spawn.js';
 import { SuperVisorContext, assertIsSuperVisorContext } from './sv_ctx.js';
+import { assertIsFunction, assertIsNonNullObject, assertIsString, assertIsStringArray } from './assert_types.js';
 
 const THIS_FILENAME = fileURLToPath(import.meta.url);
 const THIS_DIRNAME = path.dirname(THIS_FILENAME);
@@ -46,15 +47,13 @@ async function spawnAndGracefulShutdown(aborter, name, args, option) {
 
 async function launchMockServer(ctx, filename, cliFlags = null) {
     assertIsSuperVisorContext(ctx);
-    assert.strictEqual(typeof filename, 'string');
+    assertIsString(filename);
 
     const nodeOptions = unwrapOrFromUndefinable(cliFlags?.node, []);
-    assert.ok(Array.isArray(nodeOptions));
-    assert.ok(nodeOptions.every((value) => typeof value === 'string'));
+    assertIsStringArray(nodeOptions);
 
     const appOptions = unwrapOrFromUndefinable(cliFlags?.app, []);
-    assert.ok(Array.isArray(appOptions));
-    assert.ok(appOptions.every((value) => typeof value === 'string'));
+    assertIsStringArray(appOptions);
 
     const aborter = ctx.aborter;
     const signal = aborter.signal;
@@ -148,8 +147,8 @@ async function launchTestRunner(ctx) {
  *  @param  {(e: unknown) => void} canceler
  */
 function installShutdownGlobally(process, canceler) {
-    assert.ok(typeof process === 'object' && isNotNull(process));
-    assert.ok(typeof canceler === 'function');
+    assertIsNonNullObject(process);
+    assertIsFunction(canceler);
 
     logger.debug(`Install the global canceler`);
 

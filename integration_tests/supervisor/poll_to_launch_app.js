@@ -2,6 +2,7 @@ import * as assert from 'node:assert/strict';
 import { setMaxListeners } from 'node:events';
 import { setTimeout } from 'node:timers/promises';
 import { fetch } from 'undici';
+import { assertIsNumber, assertIsString } from './assert_types.js';
 
 // This value is just heuristics.
 // We always need to await about 1~ sec to launch a new process for the application.
@@ -18,8 +19,8 @@ const POLLING_INTERVAL_MS = 100;
  */
 export async function pollToLaunchApplication(signal, url, timeoutMillisec) {
     assert.ok(signal instanceof AbortSignal);
-    assert.ok(typeof url === 'string');
-    assert.ok(typeof timeoutMillisec === 'number');
+    assertIsString(url);
+    assertIsNumber(timeoutMillisec);
     assert.ok(timeoutMillisec > INITIAL_WAIT_MS, `timeoutMillisec must be >= ${INITIAL_WAIT_MS}ms`);
 
     // This avoid the waring:
