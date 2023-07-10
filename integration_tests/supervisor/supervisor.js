@@ -2,17 +2,17 @@ import * as assert from 'node:assert/strict';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { isNotNull, isNull } from 'option-t/Nullable';
-import { unwrapOrFromUndefinable } from 'option-t/Undefinable';
+import { isNull } from 'option-t/Nullable';
 
 import * as logger from '../logger/mod.js';
 import { APP_LOCAL_ORIGIN } from '../url_origin.js';
 
+import { assertIsFunction, assertIsNonNullObject, assertIsString, assertIsStringArray } from './assert_types.js';
 import { parseCliOptions, assertIsCliOptions } from './cli_flags.js';
 import { pollToLaunchApplication } from './poll_to_launch_app.js';
+import { APPLICATION, MOCK_SERVER_LIST, TEST_RUNNER, TEST_RUNNER_WITH_UPDATE_SNAPSHOTS } from './process_config.js';
 import { spawnCancelableChild } from './spawn.js';
 import { SuperVisorContext, assertIsSuperVisorContext } from './sv_ctx.js';
-import { assertIsFunction, assertIsNonNullObject, assertIsString, assertIsStringArray } from './assert_types.js';
 
 const THIS_FILENAME = fileURLToPath(import.meta.url);
 const THIS_DIRNAME = path.dirname(THIS_FILENAME);
@@ -45,15 +45,10 @@ async function spawnAndGracefulShutdown(aborter, name, args, option) {
     return status;
 }
 
-async function launchMockServer(ctx, filename, cliFlags = null) {
+async function launchMockServer(ctx, command, cmdArgs) {
     assertIsSuperVisorContext(ctx);
-    assertIsString(filename);
-
-    const nodeOptions = unwrapOrFromUndefinable(cliFlags?.node, []);
-    assertIsStringArray(nodeOptions);
-
-    const appOptions = unwrapOrFromUndefinable(cliFlags?.app, []);
-    assertIsStringArray(appOptions);
+    assertIsString(command);
+    assertIsStringArray(cmdArgs);
 
     const aborter = ctx.aborter;
     const signal = aborter.signal;
@@ -61,8 +56,7 @@ async function launchMockServer(ctx, filename, cliFlags = null) {
         return null;
     }
 
-    const serverPath = path.resolve(INTEGRATION_TESTS_DIR, filename);
-    const status = await spawnAndGracefulShutdown(aborter, 'node', [...nodeOptions, serverPath, ...appOptions], {
+    const status = await spawnAndGracefulShutdown(aborter, command, cmdArgs, {
         cwd: INTEGRATION_TESTS_DIR,
         stdio: 'inherit',
         signal,
@@ -80,16 +74,11 @@ async function launchLocalApplicationServer(ctx) {
         return null;
     }
 
-    const status = await spawnAndGracefulShutdown(
-        aborter,
-        'make',
-        ['run_serve_localy', '-j', 'FASTLY_TOML_ENV=testing'],
-        {
-            cwd: REPOSITORY_ROOT,
-            stdio: 'inherit',
-            signal,
-        }
-    );
+    const status = await spawnAndGracefulShutdown(aborter, APPLICATION.cmd, APPLICATION.args, {
+        cwd: REPOSITORY_ROOT,
+        stdio: 'inherit',
+        signal,
+    });
 
     return status;
 }
@@ -126,9 +115,11 @@ async function launchTestRunner(ctx) {
         RELEASE_CHANNEL,
     };
 
-    const cmd = shouldUpdateSnapshots ? 'test:update_snapshot' : 'test';
+    const { cmd, args } = shouldUpdateSnapshots ? TEST_RUNNER_WITH_UPDATE_SNAPSHOTS : TEST_RUNNER;
+    assertIsString(cmd);
+    assertIsStringArray(args);
 
-    const { code } = await spawnAndGracefulShutdown(aborter, 'npm', ['run', cmd], {
+    const { code } = await spawnAndGracefulShutdown(aborter, cmd, args, {
         cwd: INTEGRATION_TESTS_DIR,
         env,
         stdio: 'inherit',
@@ -184,9 +175,14 @@ export async function main(process) {
     installShutdownGlobally(process, cancelGlobal);
 
     logger.debug('try to launch the target application formation');
+    const mockServerList = MOCK_SERVER_LIST.map((value) => {
+        const { cmd, args } = value;
+        return launchMockServer(globalCtx, cmd, args);
+    });
+
     const serverFormation = Promise.all([
         // @prettier-ignore
-        launchMockServer(globalCtx, './mock_server/main.js'),
+        ...mockServerList,
         launchLocalApplicationServer(globalCtx),
     ]);
     const isOnlyFormation = cliOptions.isOnlyFormation;
