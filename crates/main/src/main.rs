@@ -43,8 +43,5 @@ compile_error!("You must choose any one of release channels.");
 // https://github.com/rust-lang/cargo/issues/2980
 //
 // We need to do same compile-time check by the combination of `#[cfg]`.
-#[cfg(any(
-    all(feature = "production", any(feature = "canary")),
-    all(feature = "canary", any(feature = "production")),
-))]
+#[cfg(all(feature = "production", feature = "canary"))]
 compile_error!("Release channel must be exclusively for each other.");
