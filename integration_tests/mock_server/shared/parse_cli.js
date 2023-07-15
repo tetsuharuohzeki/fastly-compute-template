@@ -16,6 +16,7 @@ export function parseCliOptions() {
     assert.notStrictEqual(portString, '', `must specify --port cli flag`);
 
     const port = +portString;
+    assert.ok(Number.isInteger(port), 'the port must be integer');
 
     return {
         port,
