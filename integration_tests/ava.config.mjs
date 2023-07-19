@@ -1,9 +1,7 @@
-// @ts-nocheck
-
 import * as assert from 'node:assert/strict';
-import { unwrapOrFromUndefinable } from 'option-t/Undefinable/unwrapOr';
+import { toNullableFromUndefinable } from 'option-t/esm/Undefinable/toNullable';
 
-const RELEASE_CHANNEL = unwrapOrFromUndefinable(process.env.RELEASE_CHANNEL, null);
+const RELEASE_CHANNEL = toNullableFromUndefinable(process.env['RELEASE_CHANNEL']);
 
 const ReleaseChannel = Object.freeze({
     Production: 'production',
@@ -22,11 +20,19 @@ const CANARY_ONLY_TEST_PATTERN = [
 ];
 
 function buildTargetPathPatternList() {
+    /**
+     * @param {Array<string>} list
+     * @returns {Array<string>}
+     */
     function ignorePatterns(list) {
         assert.ok(Array.isArray(list));
         return list.map(ignore);
     }
 
+    /**
+     * @param {string} str
+     * @returns {`!${string}`}
+     */
     function ignore(str) {
         assert.ok(typeof str === 'string');
         return `!${str}`;
