@@ -27,7 +27,17 @@ export function createHttpServer(serverName, port, handler, isVerbose = false) {
         const urlPathname = url.pathname;
         logger.info(`request incoming: ${urlPathname}`);
 
-        const ok = await handler(req, res, url);
+        let ok = false;
+        try {
+            ok = await handler(req, res, url);
+        } catch (e) {
+            logger.error(e);
+
+            res.writeHead(HttpStatus.INTERNAL_SERVER_ERROR);
+            res.end();
+            return;
+        }
+
         assert.strictEqual(typeof ok, 'boolean', 'the handler must return boolean');
         if (ok) {
             assert.strictEqual(res.writableEnded, true, 'the handler must call res.end() if it returns true');
