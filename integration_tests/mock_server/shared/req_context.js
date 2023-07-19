@@ -123,6 +123,10 @@ export class RequestContext {
         return aborter.signal;
     }
 
+    get aborted() {
+        return this.abortSignal.aborted;
+    }
+
     onClose() {
         this.finalize();
     }
