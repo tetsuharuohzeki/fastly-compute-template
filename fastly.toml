@@ -16,6 +16,3 @@ language = "other"
 service_id = ""
 
 [local_server]
-    [local_server.backends]
-        [local_server.backends.backend_a]
-        url = "https://developer.fastly.com/"
