@@ -28,6 +28,8 @@ function getFastlyTraceId(req) {
     return value;
 }
 
+const ON_CLOSE_EVENT = 'close';
+
 export class RequestContext {
     /**
      *  @param  {URL}   url
@@ -42,6 +44,7 @@ export class RequestContext {
             `unknown`
         );
         const ctx = new RequestContext(url, fastlyTraceId);
+        ctx.initialize(req);
 
         return ctx;
     }
@@ -62,6 +65,33 @@ export class RequestContext {
         this._aborter = new AbortController();
         this._logger = new ContextLogger(fastlyTraceId);
         Object.seal(this);
+    }
+
+    /**
+     *  @param {import('node:http').IncomingMessage} req
+     *  @returns    {void}
+     *      We cannot stop the prcessing at here. We need return immediately.
+     */
+    initialize(req) {
+        const signal = this.abortSignal;
+        const onClose = this.onClose.bind(this);
+
+        // If the request has been cancelled by the client before the server close it,
+        // onClose will be called first.
+        // Otherwise, this object's finalize is called and teardown this AbortSignal
+        // and call this.
+        // Either way, we remove this onClose listener surely.
+        signal.addEventListener(
+            'abort',
+            () => {
+                req.removeListener(ON_CLOSE_EVENT, onClose);
+            },
+            {
+                once: true,
+            }
+        );
+
+        req.addListener(ON_CLOSE_EVENT, onClose);
     }
 
     _destroy() {
@@ -91,6 +121,10 @@ export class RequestContext {
     get abortSignal() {
         const aborter = this._getAborter();
         return aborter.signal;
+    }
+
+    onClose() {
+        this.finalize();
     }
 
     abort() {
