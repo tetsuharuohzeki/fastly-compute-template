@@ -5,11 +5,14 @@ import { URL } from 'node:url';
 import * as HttpStatus from '../../http_helpers/http_status.js';
 import * as logger from '../../logger/mod.js';
 
+import { RequestContext } from './req_context.js';
+
 /**
  *  @callback   Handler
  *  @param  {http.IncomingMessage}  req
  *  @param  {http.ServerResponse} res
  *  @param  {URL}   url
+ *  @param  {RequestContext=} context
  *  @returns    {Promise<boolean>}
  */
 
@@ -24,17 +27,20 @@ export function createHttpServer(serverName, port, handler, isVerbose = false) {
 
     const server = http.createServer(async (req, res) => {
         const url = new URL(req.url, `http://${req.headers.host}`);
+        const context = RequestContext.fromRequest(url, req);
+
         const urlPathname = url.pathname;
         logger.info(`request incoming: ${urlPathname}`);
 
         let ok = false;
         try {
-            ok = await handler(req, res, url);
+            ok = await handler(req, res, url, context);
         } catch (e) {
             logger.error(e);
 
             res.writeHead(HttpStatus.INTERNAL_SERVER_ERROR);
             res.end();
+            context.finalize();
             return;
         }
 
@@ -46,10 +52,13 @@ export function createHttpServer(serverName, port, handler, isVerbose = false) {
         }
 
         if (ok) {
+            context.finalize();
             return;
         }
         res.writeHead(HttpStatus.NOT_FOUND);
         res.end(`${String(url)} is not found`);
+
+        context.finalize();
     });
     server.listen(port);
     logger.info(`mock server listen on ${String(port)}`);

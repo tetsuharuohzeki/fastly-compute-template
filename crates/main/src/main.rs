@@ -25,6 +25,7 @@
 
 mod application;
 mod build_info;
+mod fastly_trace_id;
 
 use fastly::{Error, Request, Response};
 

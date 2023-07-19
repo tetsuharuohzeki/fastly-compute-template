@@ -34,7 +34,7 @@ export const APPLICATION = new Process('make', ['run_serve_localy', '-j', 'FASTL
 
 export const MOCK_SERVER_LIST = [
     // @prettier-ignore
-    new NodeProcess(['./mock_server/main.js', '--port', '8030']),
+    new NodeProcess(['--inspect', './mock_server/main.js', '--port', '8030']),
 ];
 
 export const TEST_RUNNER = new TestRunner('test');

@@ -79,6 +79,7 @@ export const SERVER = 'server';
 export const SET_COOKIE = 'set-cookie';
 export const STRICT_TRANSPORT_SECURITY = 'strict-transport-security';
 export const TE = 'te';
+
 export const TRAILER = 'trailer';
 export const TRANSFER_ENCODING = 'transfer-encoding';
 export const USER_AGENT = 'user-agent';

@@ -3,6 +3,7 @@ use fastly::mime;
 use fastly::{Error, Request, Response};
 
 use crate::build_info::create_build_info_response;
+use crate::fastly_trace_id::{get_fastly_trace_id, set_fastly_trace_id};
 
 #[cfg(not(feature = "canary"))]
 const EXAMPLE_BODY: &str = "This is production channel!";
@@ -13,8 +14,9 @@ const BACKEND_A: &str = "backend_a";
 
 pub type FastlyResult = Result<Response, Error>;
 
-pub fn main(req: Request) -> FastlyResult {
-    let req_path = req.get_path();
+pub fn main(client_req: Request) -> FastlyResult {
+    let req_path = client_req.get_path();
+    let trace_id = get_fastly_trace_id();
 
     let should_res_directly: Option<FastlyResult> = match req_path {
         "/buildinfo" => {
@@ -24,7 +26,7 @@ pub fn main(req: Request) -> FastlyResult {
         "/" => {
             let mut res =
                 Response::from_status(StatusCode::OK).with_content_type(mime::TEXT_PLAIN_UTF_8);
-            if req.get_query_parameter("release_channel").is_some() {
+            if client_req.get_query_parameter("release_channel").is_some() {
                 res.set_body(EXAMPLE_BODY);
             } else {
                 res.set_body("hello");
@@ -39,10 +41,11 @@ pub fn main(req: Request) -> FastlyResult {
         return res;
     }
 
-    let mut be_req = req.clone_without_body();
-    be_req.set_ttl(60);
-    let be_res = be_req.send(BACKEND_A)?;
-    Ok(be_res)
+    let mut backend_req = client_req.clone_without_body();
+    backend_req.set_ttl(60);
+    set_fastly_trace_id(&mut backend_req, trace_id);
+    let backend_res = backend_req.send(BACKEND_A)?;
+    Ok(backend_res)
 }
 
 #[cfg(test)]
