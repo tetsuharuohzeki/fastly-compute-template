@@ -137,3 +137,13 @@ jobs:
             - uses: ./.github/actions/ci_prepare_npm_for_integration_test
             - shell: bash
               run: make lint_integration_tests -j
+
+    typecheck_integration_tests:
+        needs: [fetch_npm_registry]
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/ci_prepare_npm_for_integration_test
+            - shell: bash
+              run: make typecheck_integration_tests -j

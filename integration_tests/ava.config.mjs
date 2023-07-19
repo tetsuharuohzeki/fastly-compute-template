@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import * as assert from 'node:assert/strict';
 import { unwrapOrFromUndefinable } from 'option-t/Undefinable/unwrapOr';
 

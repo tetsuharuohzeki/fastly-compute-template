@@ -8,6 +8,7 @@
         "__format": "prettier '*/**/*.{js,cjs,mjs}'",
         "format": "npm run __format -- --write",
         "format:check": "npm run __format -- --check",
+        "typecheck": "tsc --project . --noEmit",
         "lint": "eslint .",
         "lint:check": "npm run lint -- --max-warnings 0",
         "lint:fix": "npm run lint -- --fix",
@@ -20,9 +21,12 @@
         "undici": "^5.22.1"
     },
     "devDependencies": {
+        "@tsconfig/strictest": "^2.0.1",
+        "@types/node": "^20.4.2",
         "eslint": "^8.45.0",
         "eslint-config-prettier": "^8.8.0",
         "globals": "^13.20.0",
-        "prettier": "3.0.0"
+        "prettier": "3.0.0",
+        "typescript": "^5.1.6"
     }
 }

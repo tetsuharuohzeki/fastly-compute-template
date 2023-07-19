@@ -14,7 +14,7 @@ const SIGTERM = 15;
 /**
  *  @param  {string} bin
  *  @param  {Array.<string>} args
- *  @param  {import('node:child_process').SpawnOptionsWithoutStdio} option
+ *  @param  {import('node:child_process').SpawnOptions} option
  *  @returns    {Promise<ProcessExitStatus>}
  */
 export function spawnCancelableChild(bin, args, option) {

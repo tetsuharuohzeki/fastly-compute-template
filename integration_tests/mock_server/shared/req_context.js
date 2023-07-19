@@ -3,6 +3,7 @@ import { URL } from 'node:url';
 import { expectNotNull, isNull, unwrapOrFromNullable } from 'option-t/esm/Nullable';
 
 import { ContextLogger } from './context_logger.js';
+import { unwrapOrFromUndefinable } from 'option-t/esm/Undefinable';
 
 // We tried to use `FASTLY_TRACE_ID` envvar to [trace-id](https://www.w3.org/TR/trace-context/#trace-context-http-headers-format)
 // but its value wouls take `0` in the local emulator. So We cannot use the value directly.
@@ -49,15 +50,31 @@ export class RequestContext {
         return ctx;
     }
 
-    /** @type {URL|null} */
+    /**
+     *  @private
+     *  @type {URL|null}
+     */
     _url;
-    /** @type {string} */
+    /**
+     *  @private
+     *  @type {string}
+     */
     _fastlyTraceId;
-    /** @type   {AbortController|null} */
+    /**
+     *  @private
+     *  @type {AbortController|null}
+     */
     _aborter = null;
-    /** @type   {ContextLogger|null} */
+    /**
+     *  @private
+     *  @type {ContextLogger|null}
+     */
     _logger = null;
 
+    /**
+     * @param {URL} url
+     * @param {string} fastlyTraceId
+     */
     constructor(url, fastlyTraceId) {
         assert.ok(url instanceof URL);
         this._url = url;
@@ -94,6 +111,9 @@ export class RequestContext {
         req.addListener(ON_CLOSE_EVENT, onClose);
     }
 
+    /**
+     *  @private
+     */
     _destroy() {
         this._logger = null;
         this._aborter = null;
@@ -109,6 +129,10 @@ export class RequestContext {
         return this._fastlyTraceId;
     }
 
+    /**
+     *  @private
+     *  @returns {AbortController}
+     */
     _getAborter() {
         const aborter = expectNotNull(this._aborter, 'has been disposed');
         return aborter;
@@ -146,4 +170,14 @@ export class RequestContext {
 
         this.abort();
     }
+}
+
+/**
+ *  @param {import('node:http').IncomingMessage} req
+ *  @returns    {URL}
+ */
+export function createURLFromRequest(req) {
+    const reqUrl = unwrapOrFromUndefinable(req.url, '');
+    const url = new URL(reqUrl, `http://${req.headers.host}`);
+    return url;
 }

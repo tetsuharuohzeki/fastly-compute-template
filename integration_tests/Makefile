@@ -41,6 +41,9 @@ update_expectations: ## Run integration tests only with updating expectations.
 ###########################
 # Tools
 ###########################
+typecheck: ## Run type checking
+	$(NPM_RUN) typecheck
+
 lint: ## Run static analysis
 	$(NPM_RUN) lint
 

@@ -2,6 +2,8 @@ import * as assert from 'node:assert/strict';
 import { isNotNull } from 'option-t/Nullable';
 
 let messagePrefix = '';
+
+/** @type   {boolean|null} */
 let isVerboseMode = null;
 
 /**

@@ -4,6 +4,9 @@ import { assertIsCliOptions } from './cli_flags.js';
 export class SuperVisorContext {
     #aborter;
 
+    /**
+     *  @param {import('./cli_flags.js').CliOptionsArgs} cliOptions
+     */
     constructor(cliOptions) {
         assertIsCliOptions(cliOptions);
 

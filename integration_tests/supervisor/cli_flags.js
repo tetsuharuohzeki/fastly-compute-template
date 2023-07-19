@@ -71,7 +71,10 @@ export function parseCliOptions() {
         strict: true,
     });
 
+    /** @type   {string} */
     const releaseChannel = expectNotUndefined(
+        // Avoid the fail to inference
+        // @ts-expect-error
         values[CLI_FLAG_RELEASE_CHANNEL],
         `--${CLI_FLAG_RELEASE_CHANNEL} must be set`
     );
@@ -82,9 +85,18 @@ export function parseCliOptions() {
         throw new RangeError(`--${CLI_FLAG_RELEASE_CHANNEL} must not be empty`);
     }
 
-    const shouldUpdateSnapshots = !!values[CLI_FLAG_UPDATE_SNAPSHOTS];
-    const isOnlyFormation = !!values[CLI_FLAG_IS_ONLY_FORMATION];
-    const isVerbose = !!values[CLI_FLAG_IS_VERBOSE];
+    const shouldUpdateSnapshots =
+        // Avoid the fail to inference
+        // @ts-expect-error
+        !!values[CLI_FLAG_UPDATE_SNAPSHOTS];
+    const isOnlyFormation =
+        // Avoid the fail to inference
+        // @ts-expect-error
+        !!values[CLI_FLAG_IS_ONLY_FORMATION];
+    const isVerbose =
+        // Avoid the fail to inference
+        // @ts-expect-error
+        !!values[CLI_FLAG_IS_VERBOSE];
 
     const options = new CliOptions({
         shouldUpdateSnapshots,

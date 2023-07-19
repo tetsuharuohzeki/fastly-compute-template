@@ -1,6 +1,8 @@
 import * as assert from 'node:assert/strict';
 import { parseArgs } from 'node:util';
 
+import { unwrapUndefinable } from 'option-t/Undefinable';
+
 export function parseCliOptions() {
     const { values } = parseArgs({
         options: {
@@ -12,7 +14,7 @@ export function parseCliOptions() {
         strict: true,
     });
 
-    const portString = values.port;
+    const portString = unwrapUndefinable(values.port);
     assert.notStrictEqual(portString, '', `must specify --port cli flag`);
 
     const port = +portString;

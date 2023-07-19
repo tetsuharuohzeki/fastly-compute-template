@@ -6,6 +6,10 @@ class Process {
     /** @type   {Array<string>} */
     args;
 
+    /**
+     * @param {string} cmd
+     * @param {Array<string>} args
+     */
     constructor(cmd, args) {
         assertIsString(cmd);
         assertIsStringArray(args);
@@ -18,12 +22,18 @@ class Process {
 }
 
 class NodeProcess extends Process {
+    /**
+     * @param {Array<string>} args
+     */
     constructor(args) {
         super('node', args);
     }
 }
 
 class TestRunner extends Process {
+    /**
+     * @param {string} mode
+     */
     constructor(mode) {
         assertIsString(mode);
         super('npm', ['run', mode]);

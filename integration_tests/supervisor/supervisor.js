@@ -22,6 +22,10 @@ const WORKSPACE_ROOT = path.resolve(THIS_DIRNAME, '..');
 const REPOSITORY_ROOT = path.resolve(WORKSPACE_ROOT, '..');
 const INTEGRATION_TESTS_DIR = WORKSPACE_ROOT;
 
+/**
+ *  @param {import('./cli_flags.js').CliOptionsArgs} cliOptions
+ *  @returns    {void}
+ */
 function dumpFlags(cliOptions) {
     assertIsCliOptions(cliOptions);
 
@@ -35,6 +39,13 @@ IS_ONLY_FORMATION: ${cliOptions.isOnlyFormation}
     console.log(txt);
 }
 
+/**
+ * @param {AbortController} aborter
+ * @param {string} name
+ * @param {Array<string>} args
+ * @param {import('node:child_process').SpawnOptions} option
+ *  @returns {Promise<import('./spawn.js').ProcessExitStatus>}
+ */
 async function spawnAndGracefulShutdown(aborter, name, args, option) {
     assert.ok(aborter instanceof AbortController, `aborter must be AbortController`);
     assert.ok(option.signal instanceof AbortSignal, 'option.signal must be set');
@@ -45,6 +56,12 @@ async function spawnAndGracefulShutdown(aborter, name, args, option) {
     return status;
 }
 
+/**
+ *  @param {import('./sv_ctx.js').SuperVisorContext} ctx
+ *  @param  {string}    command
+ *  @param  {Array<string>}  cmdArgs
+ *  @returns {Promise<import('./spawn.js').ProcessExitStatus|null>}
+ */
 async function launchMockServer(ctx, command, cmdArgs) {
     assertIsSuperVisorContext(ctx);
     assertIsString(command);
@@ -65,6 +82,10 @@ async function launchMockServer(ctx, command, cmdArgs) {
     return status;
 }
 
+/**
+ * @param {import('./sv_ctx.js').SuperVisorContext} ctx
+ * @returns {Promise<import('./spawn.js').ProcessExitStatus|null>}
+ */
 async function launchLocalApplicationServer(ctx) {
     assertIsSuperVisorContext(ctx);
 
@@ -85,6 +106,10 @@ async function launchLocalApplicationServer(ctx) {
 
 const TIMEOUT_MS_DEADLINE_TO_WAIT_APPLICATION = 15 * 1000;
 
+/**
+ * @param {import('./sv_ctx.js').SuperVisorContext} ctx
+ * @returns {Promise<boolean|null>}
+ */
 async function launchTestRunner(ctx) {
     assertIsSuperVisorContext(ctx);
 
@@ -160,7 +185,8 @@ export async function main(process) {
 
     const globalCtx = new SuperVisorContext(cliOptions);
     const globalAborter = globalCtx.aborter;
-    const cancelGlobal = (e /** @type {unknown} */) => {
+    /** @type {(e: unknown) => void} */
+    const cancelGlobal = (e) => {
         logger.debug(`the supervisor is cancelled now globally`);
         logger.error(e);
 

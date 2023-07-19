@@ -1,11 +1,10 @@
 import * as assert from 'node:assert/strict';
 import * as http from 'node:http';
-import { URL } from 'node:url';
 
 import * as HttpStatus from '../../http_helpers/http_status.js';
 import * as logger from '../../logger/mod.js';
 
-import { RequestContext } from './req_context.js';
+import { RequestContext, createURLFromRequest } from './req_context.js';
 
 /**
  *  @callback   Handler
@@ -26,7 +25,7 @@ export function createHttpServer(serverName, port, handler, isVerbose = false) {
     logger.setupLogger(`mock_server::${serverName}`, isVerbose);
 
     const server = http.createServer(async (req, res) => {
-        const url = new URL(req.url, `http://${req.headers.host}`);
+        const url = createURLFromRequest(req);
         const context = RequestContext.fromRequest(url, req);
 
         const urlPathname = url.pathname;

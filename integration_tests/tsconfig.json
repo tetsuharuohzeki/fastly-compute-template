@@ -1,0 +1,25 @@
+{
+    "extends": "@tsconfig/strictest/tsconfig.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "outDir": "__dist",
+
+        "module": "ES2022",
+        "moduleResolution": "node16",
+        "moduleDetection": "force",
+        "target": "ES2022",
+
+        "allowJs": true,
+        "checkJs": true,
+
+        "verbatimModuleSyntax": true,
+        "esModuleInterop": false
+    },
+    "exclude": [
+        // @prettier-ignore
+        "__dist/",
+        "node_modules/",
+        "tools/",
+        "eslint.config.js"
+    ]
+}

@@ -1,29 +1,51 @@
 import * as logger from '../../logger/mod.js';
 
 export class ContextLogger {
-    /** @type   {string} */
+    /**
+     *  @private
+     *  @type   {string}
+     */
     _fastlyTraceId;
 
+    /**
+     * @param {string} fastlyTraceId
+     */
     constructor(fastlyTraceId) {
         this._fastlyTraceId = fastlyTraceId;
         Object.seal(this);
     }
 
+    /**
+     *  @param {unknown} message
+     *  @returns    {void}
+     */
     debug(message) {
         const fastlyTraceId = this._fastlyTraceId;
         logger.debug(`{id={${fastlyTraceId}} ${message}`);
     }
 
+    /**
+     *  @param {unknown} message
+     *  @returns    {void}
+     */
     info(message) {
         const fastlyTraceId = this._fastlyTraceId;
         logger.info(`{id={${fastlyTraceId}} ${message}`);
     }
 
+    /**
+     *  @param {unknown} message
+     *  @returns    {void}
+     */
     warn(message) {
         const fastlyTraceId = this._fastlyTraceId;
         logger.warn(`{id={${fastlyTraceId}} ${message}`);
     }
 
+    /**
+     *  @param {unknown} message
+     *  @returns    {void}
+     */
     error(message) {
         const fastlyTraceId = this._fastlyTraceId;
         logger.error(`{id={${fastlyTraceId}} ${message}`);

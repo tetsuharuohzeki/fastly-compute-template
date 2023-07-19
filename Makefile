@@ -186,6 +186,9 @@ lint_check_integration_tests: ## Run static analysis under integration_tests/ an
 lint_fix_integration_tests: ## Try to fix problems found by static analytics under integration_tests/
 	$(MAKE) lint_fix -C $(INTEGRATION_TESTS_DIR)
 
+typecheck_integration_tests: ## Validate type and semantics for whole of codes under integration_tests/
+	$(MAKE) typecheck -C $(INTEGRATION_TESTS_DIR)
+
 
 ###########################
 # Unit Test
