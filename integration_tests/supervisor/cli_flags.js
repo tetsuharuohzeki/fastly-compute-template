@@ -11,7 +11,7 @@ const CLI_FLAG_IS_VERBOSE = 'verbose';
  * @typedef {import('node:util').ParseArgsConfig} ParseArgsConfig
  */
 
-/** @type {ParseArgsConfig['options']} */
+/** @satisfies  {ParseArgsConfig['options']} */
 const CLI_OPTIONS = {
     [CLI_FLAG_RELEASE_CHANNEL]: {
         type: 'string',
@@ -66,15 +66,15 @@ export function assertIsCliOptions(value) {
 }
 
 export function parseCliOptions() {
+    /** @satisfies  {ParseArgsConfig['options']} */
+    const options = CLI_OPTIONS;
     const { values } = parseArgs({
-        options: CLI_OPTIONS,
+        options,
         strict: true,
     });
 
     /** @type   {string} */
     const releaseChannel = expectNotUndefined(
-        // Avoid the fail to inference
-        // @ts-expect-error
         values[CLI_FLAG_RELEASE_CHANNEL],
         `--${CLI_FLAG_RELEASE_CHANNEL} must be set`
     );
@@ -85,24 +85,15 @@ export function parseCliOptions() {
         throw new RangeError(`--${CLI_FLAG_RELEASE_CHANNEL} must not be empty`);
     }
 
-    const shouldUpdateSnapshots =
-        // Avoid the fail to inference
-        // @ts-expect-error
-        !!values[CLI_FLAG_UPDATE_SNAPSHOTS];
-    const isOnlyFormation =
-        // Avoid the fail to inference
-        // @ts-expect-error
-        !!values[CLI_FLAG_IS_ONLY_FORMATION];
-    const isVerbose =
-        // Avoid the fail to inference
-        // @ts-expect-error
-        !!values[CLI_FLAG_IS_VERBOSE];
+    const shouldUpdateSnapshots = !!values[CLI_FLAG_UPDATE_SNAPSHOTS];
+    const isOnlyFormation = !!values[CLI_FLAG_IS_ONLY_FORMATION];
+    const isVerbose = !!values[CLI_FLAG_IS_VERBOSE];
 
-    const options = new CliOptions({
+    const o = new CliOptions({
         shouldUpdateSnapshots,
         isOnlyFormation,
         releaseChannel,
         isVerbose,
     });
-    return options;
+    return o;
 }
