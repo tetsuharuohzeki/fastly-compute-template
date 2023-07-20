@@ -142,6 +142,9 @@ export class RequestContext {
         return expectNotNull(this._logger, 'has been disposed');
     }
 
+    /**
+     *  @returns    {AbortSignal}
+     */
     get abortSignal() {
         const aborter = this._getAborter();
         return aborter.signal;
@@ -155,7 +158,12 @@ export class RequestContext {
         this.finalize();
     }
 
-    abort() {
+    /**
+     *  @private
+     *  @param {unknown=} reason
+     *  @returns {void}
+     */
+    _abort(reason) {
         const aborter = this._aborter;
         if (isNull(aborter)) {
             // Allow to call `.abort()` mutltiple times
@@ -163,9 +171,21 @@ export class RequestContext {
             return;
         }
 
-        aborter.abort();
+        aborter.abort(reason);
 
         this._destroy();
+    }
+
+    abort() {
+        this._abort();
+    }
+
+    /**
+     * @param {unknown} reason
+     * @returns {void}
+     */
+    abortWithReason(reason) {
+        this._abort(reason);
     }
 
     finalize() {
