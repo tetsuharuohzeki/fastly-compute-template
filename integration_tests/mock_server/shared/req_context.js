@@ -31,6 +31,12 @@ function getFastlyTraceId(req) {
 
 const ON_CLOSE_EVENT = 'close';
 
+/** @enum {string} */
+export const RequestContextAbortedReason = Object.freeze({
+    RequestClosed: 'REQ_CTX_ABORTED_BY_REQUEST_CLOSED',
+    ResponseHandlerEnded: 'REQ_CTX_ABORTED_BY_RES_HANDLER_ENDED',
+});
+
 export class RequestContext {
     /**
      *  @param  {URL}   url
@@ -155,7 +161,7 @@ export class RequestContext {
     }
 
     onClose() {
-        this.finalize();
+        this.finalize(RequestContextAbortedReason.RequestClosed);
     }
 
     /**
@@ -188,13 +194,17 @@ export class RequestContext {
         this._abort(reason);
     }
 
-    finalize() {
+    /**
+     *  @param {RequestContextAbortedReason} reason
+     *  @returns    {void}
+     */
+    finalize(reason) {
         if (isNull(this._aborter)) {
             // we treat this object has been finialized.
             return;
         }
 
-        this.abort();
+        this.abortWithReason(reason);
     }
 }
 
