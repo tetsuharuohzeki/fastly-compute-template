@@ -156,7 +156,13 @@ export class RequestContext {
     }
 
     abort() {
-        const aborter = this._getAborter();
+        const aborter = this._aborter;
+        if (isNull(aborter)) {
+            // Allow to call `.abort()` mutltiple times
+            // to sort the behavior with `AbortController`.
+            return;
+        }
+
         aborter.abort();
 
         this._destroy();
