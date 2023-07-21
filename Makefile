@@ -174,7 +174,7 @@ lint_check: ## Run static analysis and fail if there are some warnings.
 lint_fix: ## Try to fix problems found by static analytics
 	$(CARGO_BIN) clippy --fix --workspace --all-targets $(CARGO_FEATURES_CLI_FLAGS) -- $(CLIPPY_RULES)
 
-check_integrity: ## Validate type and semantics for whole of codes by `cargo check`.
+typecheck: ## Validate type and semantics for whole of codes by `cargo check`.
 	$(CARGO_BIN) check --workspace --all-targets --target=$(COMPILE_TARGET_WASM32_WASI) $(CARGO_FEATURES_CLI_FLAGS)
 
 lint_integration_tests: ## Run static analysis under integration_tests/
