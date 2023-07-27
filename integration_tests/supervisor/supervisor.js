@@ -222,7 +222,8 @@ export async function main(process) {
     const testResult = await launchTestRunner(globalCtx);
     if (isNull(testResult)) {
         logger.debug('global aborter has been aborted before to launch the test runner.');
-        process.exit(1);
+        process.exitCode = 1;
+        return;
     }
 
     logger.debug('Wait to shutdown all background processes...');
@@ -232,7 +233,8 @@ export async function main(process) {
     const ok = testResult;
     if (!ok) {
         logger.debug('the test runner is totally faild.');
-        process.exit(1);
+        process.exitCode = 1;
+        return;
     }
 
     logger.debug('Finish integration test successfully.');
