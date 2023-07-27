@@ -10,6 +10,14 @@ export default [
         languageOptions: {
             globals: {
                 ...globals.nodeBuiltin,
+                // Use globalThis instead.
+                global: false,
+                // Use undici instead.
+                fetch: false,
+                FormData: false,
+                Headers: false,
+                Request: false,
+                Response: false,
             },
         },
 
