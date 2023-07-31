@@ -22,7 +22,7 @@
     },
     "devDependencies": {
         "@tsconfig/strictest": "^2.0.1",
-        "@types/node": "^20.4.4",
+        "@types/node": "^20.4.5",
         "eslint": "^8.45.0",
         "eslint-config-prettier": "^8.8.0",
         "globals": "^13.20.0",
