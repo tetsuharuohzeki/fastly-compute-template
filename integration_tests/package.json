@@ -21,6 +21,7 @@
         "undici": "^5.22.1"
     },
     "devDependencies": {
+        "@eslint/js": "^8.46.0",
         "@tsconfig/strictest": "^2.0.1",
         "@types/node": "^20.4.5",
         "eslint": "^8.46.0",

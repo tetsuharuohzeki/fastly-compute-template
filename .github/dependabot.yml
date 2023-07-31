@@ -29,3 +29,8 @@ updates:
       labels:
           - "A-dependency/gardening"
           - I-enhancement
+      groups:
+          eslint:
+              patterns:
+                  - eslint
+                  - "@eslint/*"
