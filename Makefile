@@ -238,12 +238,6 @@ format_check_integration_tests: ## Check code formatting under integration_tests
 ###########################
 # Local Server
 ###########################
-serve_localy_with_release_build: build_release ## Alias to `make build_release && make run_serve_localy`.
-	$(MAKE) run_serve_localy -C $(CURDIR)
-
-serve_localy_with_debug_build: build_debug ## Alias to `make build_debug && make run_serve_localy`.
-	$(MAKE) run_serve_localy -C $(CURDIR)
-
 run_serve_localy: ## Run local development server without build an application code.
 	$(FASTLY_CLI) serve --skip-build --file=$(GENERATED_WASM_BINARY) --env=$(FASTLY_TOML_ENV)
 
