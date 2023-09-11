@@ -21,10 +21,10 @@
         "undici": "^5.24.0"
     },
     "devDependencies": {
-        "@eslint/js": "^8.48.0",
+        "@eslint/js": "^8.49.0",
         "@tsconfig/strictest": "^2.0.2",
         "@types/node": "^20.6.0",
-        "eslint": "^8.48.0",
+        "eslint": "^8.49.0",
         "eslint-config-prettier": "^9.0.0",
         "globals": "^13.21.0",
         "prettier": "3.0.3",
