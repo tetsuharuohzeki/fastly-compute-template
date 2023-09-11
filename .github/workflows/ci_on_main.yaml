@@ -37,7 +37,7 @@ jobs:
             matrix:
                 release_channel: ["canary"]
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
             - uses: ./.github/actions/download_build_artifacts
               with:
                   git-sha: ${{ github.sha }}
