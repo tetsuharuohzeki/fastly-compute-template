@@ -161,7 +161,9 @@ export class RequestContext {
     }
 
     onClose() {
-        this.finalize(RequestContextAbortedReason.RequestClosed);
+        // Do only abort. Do not finalize the object
+        // because this object is owned by request handler, not by the request.
+        this.abortWithReason(RequestContextAbortedReason.RequestClosed);
     }
 
     /**
@@ -198,6 +200,7 @@ export class RequestContext {
      *  @param {RequestContextAbortedReason} reason
      *  @returns    {void}
      */
+    // FIXME: This should be replace with explict resource management.
     finalize(reason) {
         if (isNull(this._aborter)) {
             // we treat this object has been finialized.
