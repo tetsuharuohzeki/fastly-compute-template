@@ -12,15 +12,6 @@ updates:
           - I-enhancement
       versioning-strategy: auto
 
-    - package-ecosystem: github-actions
-      directory: "/"
-      schedule:
-          interval: weekly
-      open-pull-requests-limit: 99
-      labels:
-          - "A-dependency/gardening"
-          - I-enhancement
-
     - package-ecosystem: npm
       directory: "/integration_tests"
       schedule:
@@ -34,3 +25,51 @@ updates:
               patterns:
                   - eslint
                   - "@eslint/*"
+
+    #####################################################
+    #   In-repository composite actions
+    #####################################################
+    - package-ecosystem: github-actions
+      directory: "/.github/actions/ci_prepare_npm_for_integration_test"
+      schedule:
+          interval: weekly
+      open-pull-requests-limit: 99
+      labels:
+          - "A-dependency/gardening"
+          - I-enhancement
+
+    - package-ecosystem: github-actions
+      directory: "/.github/actions/ci_prepare_to_compile"
+      schedule:
+          interval: weekly
+      open-pull-requests-limit: 99
+      labels:
+          - "A-dependency/gardening"
+          - I-enhancement
+
+    - package-ecosystem: github-actions
+      directory: "/.github/actions/download_build_artifacts"
+      schedule:
+          interval: weekly
+      open-pull-requests-limit: 99
+      labels:
+          - "A-dependency/gardening"
+          - I-enhancement
+
+    - package-ecosystem: github-actions
+      directory: "/.github/actions/rust_toolchain"
+      schedule:
+          interval: weekly
+      open-pull-requests-limit: 99
+      labels:
+          - "A-dependency/gardening"
+          - I-enhancement
+
+    - package-ecosystem: github-actions
+      directory: "/.github/actions/upload_build_artifacts"
+      schedule:
+          interval: weekly
+      open-pull-requests-limit: 99
+      labels:
+          - "A-dependency/gardening"
+          - I-enhancement
