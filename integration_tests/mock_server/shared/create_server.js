@@ -11,7 +11,7 @@ import { RequestContext, createURLFromRequest, RequestContextAbortedReason } fro
  *  @param  {http.IncomingMessage}  req
  *  @param  {http.ServerResponse} res
  *  @param  {URL}   url
- *  @param  {RequestContext=} context
+ *  @param  {RequestContext} context
  *  @returns    {Promise<boolean>}
  */
 
