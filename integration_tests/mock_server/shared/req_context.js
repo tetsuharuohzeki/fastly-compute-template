@@ -1,6 +1,6 @@
 import * as assert from 'node:assert/strict';
 import { URL } from 'node:url';
-import { expectNotNull, isNull, unwrapOrFromNullable } from 'option-t/esm/Nullable';
+import { expectNotNull, isNotNull, isNull, unwrapOrFromNullable } from 'option-t/esm/Nullable';
 
 import { ContextLogger } from './context_logger.js';
 import { unwrapOrFromUndefinable } from 'option-t/esm/Undefinable';
@@ -180,10 +180,12 @@ export class RequestContext {
         }
 
         aborter.abort(reason);
-
-        this._destroy();
     }
 
+    /**
+     *  If you have any explict abort reason,
+     *  you should use {@link abortWithReason}
+     */
     abort() {
         this._abort();
     }
@@ -201,13 +203,11 @@ export class RequestContext {
      *  @returns    {void}
      */
     // FIXME: This should be replace with explict resource management.
-    finalize(reason) {
-        if (isNull(this._aborter)) {
-            // we treat this object has been finialized.
-            return;
-        }
+    finalizeWithReason(reason) {
+        assert.ok(isNotNull(this._aborter), 'Do not call finalizer twice');
 
         this.abortWithReason(reason);
+        this._destroy();
     }
 }
 

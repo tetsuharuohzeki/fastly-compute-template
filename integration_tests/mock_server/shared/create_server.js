@@ -39,7 +39,7 @@ export function createHttpServer(serverName, port, handler, isVerbose = false) {
 
             res.writeHead(HttpStatus.INTERNAL_SERVER_ERROR);
             res.end();
-            context.finalize(RequestContextAbortedReason.ResponseHandlerEnded);
+            context.finalizeWithReason(RequestContextAbortedReason.ResponseHandlerEnded);
             return;
         }
 
@@ -51,13 +51,13 @@ export function createHttpServer(serverName, port, handler, isVerbose = false) {
         }
 
         if (ok) {
-            context.finalize(RequestContextAbortedReason.ResponseHandlerEnded);
+            context.finalizeWithReason(RequestContextAbortedReason.ResponseHandlerEnded);
             return;
         }
         res.writeHead(HttpStatus.NOT_FOUND);
         res.end(`${String(url)} is not found`);
 
-        context.finalize(RequestContextAbortedReason.ResponseHandlerEnded);
+        context.finalizeWithReason(RequestContextAbortedReason.ResponseHandlerEnded);
     });
     server.listen(port);
     logger.info(`mock server listen on ${String(port)}`);
