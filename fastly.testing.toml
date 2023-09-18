@@ -4,6 +4,8 @@
 manifest_version = 3
 
 [local_server]
+    viceroy_version = "0.8.1"
+
     [local_server.backends]
         [local_server.backends.backend_a]
         url = "http://localhost:8030"
