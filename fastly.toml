@@ -15,4 +15,6 @@ language = "other"
 
 service_id = ""
 
+# We use fastly.testing.toml for integration tests.
+# We don't use this field.
 [local_server]
