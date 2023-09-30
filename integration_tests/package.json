@@ -5,7 +5,7 @@
     "version": "0.0.0",
     "description": "",
     "scripts": {
-        "__format": "prettier '*/**/*.{js,cjs,mjs}'",
+        "__format": "prettier '**/**/*.{js,cjs,mjs}'",
         "format": "npm run __format -- --write",
         "format:check": "npm run __format -- --check",
         "typecheck": "tsc --project . --noEmit",
