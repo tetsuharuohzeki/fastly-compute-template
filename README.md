@@ -1,4 +1,4 @@
-# Fastly Compute@Edge template kit for Rust
+# [Fastly Compute](https://docs.fastly.com/products/compute) template kit for Rust
 
 [![CI on main branch](https://github.com/tetsuharuohzeki/fastly-compute-at-edge-template/actions/workflows/ci_on_main.yaml/badge.svg)](https://github.com/tetsuharuohzeki/fastly-compute-at-edge-template/actions/workflows/ci_on_main.yaml)
 
@@ -50,7 +50,7 @@ You can write unit test per function level with [a language integrated way by Ru
 
 However, we can write only limited case by this way
 [as what fasly's document said](https://developer.fastly.com/learning/compute/rust/#unit-testing).
-This limitation comes from Compute@Edge WASM binary requirements.
+This limitation comes from Fastly Compute's WASM binary requirements.
 
 Typical failure case is compile (link) error because core parts of `fasly` crates requires
 some special wasi system call as a external function but they are not resolved in non `wasm32-wasi` target
@@ -67,3 +67,8 @@ Our test _supervisor_ make a formation of them.
 Of course, this supports `RELEASE_CHANNEL`.
 
 For more details, see [`integration_tests/`](./integration_tests).
+
+
+## See also
+
+- [Compute services | Fastly Developer Hub](https://developer.fastly.com/learning/compute/)
