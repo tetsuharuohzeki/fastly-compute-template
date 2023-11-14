@@ -10,5 +10,8 @@ runs:
               node-version: 21
               cache: "npm"
               cache-dependency-path: integration_tests/package-lock.json
+        - name: Enable corepack
+          run: corepack enable
+          shell: bash
         - run: make setup_integration_tests -j
           shell: bash
