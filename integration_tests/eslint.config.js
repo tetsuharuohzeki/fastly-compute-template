@@ -5,7 +5,6 @@ import * as prettierConfig from './tools/eslint/prettier_ovrride.js';
 
 export default [
     js.configs.recommended,
-    ...prettierConfig.configs,
     {
         languageOptions: {
             globals: {
@@ -57,4 +56,5 @@ export default [
             ],
         },
     },
+    ...prettierConfig.configs,
 ];
