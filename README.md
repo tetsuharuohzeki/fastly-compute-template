@@ -1,6 +1,6 @@
 # [Fastly Compute](https://docs.fastly.com/products/compute) template kit for Rust
 
-[![CI on main branch](https://github.com/tetsuharuohzeki/fastly-compute-at-edge-template/actions/workflows/ci_on_main.yaml/badge.svg)](https://github.com/tetsuharuohzeki/fastly-compute-at-edge-template/actions/workflows/ci_on_main.yaml)
+[![CI on main branch](https://github.com/tetsuharuohzeki/fastly-compute-template/actions/workflows/ci_on_main.yaml/badge.svg)](https://github.com/tetsuharuohzeki/fastly-compute-template/actions/workflows/ci_on_main.yaml)
 
 ## Prerequisites
 

@@ -2,7 +2,7 @@
 # https://developer.fastly.com/reference/fastly-toml/
 
 manifest_version = 3
-name = "fastly-compute-at-edge-template"
+name = "fastly-compute-template"
 authors = [""]
 description = "An empty starter kit project template."
 

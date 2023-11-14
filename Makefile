@@ -33,7 +33,7 @@ CARGO_WASI_BIN := cargo wasi
 FASTLY_CLI := fastly compute
 
 APPLICATION_NAME := c_at_e_main
-FASTLY_COMPUTE_AT_EDGE_SERVICE_PKG_NAME := fastly-compute-at-edge-template
+FASTLY_COMPUTE_SERVICE_PKG_NAME := fastly-compute-template
 
 COMPILE_TARGET_WASM32_WASI := wasm32-wasi
 
@@ -70,7 +70,7 @@ CARGO_FEATURES_CLI_FLAGS := \
     --features $(RELEASE_CHANNEL_FEATURES),$(ADDITIONAL_FEATURES)
 
 # We enable clippy rules as same level as `clippy:all` except `clippy:style`.
-# See https://github.com/tetsuharuohzeki/fastly-compute-at-edge-template/issues/119
+# See https://github.com/tetsuharuohzeki/fastly-compute-template/issues/119
 #
 # I think rust-clippy's style rules a bit opinionated
 # and I guess we don't have to enable about it. Hence, we disable it.

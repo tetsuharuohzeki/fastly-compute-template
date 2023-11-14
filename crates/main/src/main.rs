@@ -3,7 +3,7 @@
     // See https://doc.rust-lang.org/rustc/lints/groups.html
     rust_2018_idioms,
     // We enable clippy rules as same level as `clippy:all` except `clippy:style`.
-    // See hhttps://github.com/tetsuharuohzeki/fastly-compute-at-edge-template/issues/119
+    // See https://github.com/tetsuharuohzeki/fastly-compute-template/issues/119
     //
     // I think rust-clippy's style rules a bit opinionated
     // and I guess we don't have to enable about it. Hence, we disable it.
