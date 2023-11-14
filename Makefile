@@ -123,6 +123,9 @@ __clean_integration_tests:
 ###########################
 # Setup
 ###########################
+.PHONY: setup
+setup: setup_integration_tests ## Setup toolchain and dependencies
+
 setup_integration_tests: ## Setup integration tests including install dependencies.
 	$(MAKE) setup -C $(INTEGRATION_TESTS_DIR)
 
