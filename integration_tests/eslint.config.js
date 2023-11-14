@@ -1,11 +1,11 @@
 import js from '@eslint/js';
 import globals from 'globals';
 
-import prettierOverride from './tools/eslint/prettier_ovrride.js';
+import * as prettierConfig from './tools/eslint/prettier_ovrride.js';
 
 export default [
     js.configs.recommended,
-    ...prettierOverride,
+    ...prettierConfig.configs,
     {
         languageOptions: {
             globals: {

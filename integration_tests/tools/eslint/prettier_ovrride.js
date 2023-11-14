@@ -1,6 +1,11 @@
-import prettierConfig from 'eslint-config-prettier/index.js';
+import prettierConfig from 'eslint-config-prettier';
 
-export default [
+/**
+ *  @typedef  {import('eslint').Linter.FlatConfig}  FlatConfig
+ */
+
+/** @type {ReadonlyArray<FlatConfig>} */
+export const configs = [
     prettierConfig,
     {
         rules: {
