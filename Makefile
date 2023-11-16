@@ -69,13 +69,9 @@ endif
 CARGO_FEATURES_CLI_FLAGS := \
     --features $(RELEASE_CHANNEL_FEATURES),$(ADDITIONAL_FEATURES)
 
-CLIPPY_RULES :=
-
-
 # We pass `-Dwarnings` flag to fail all warnings.
 # see https://doc.rust-lang.org/clippy/usage.html#command-line
 CLIPPY_RULES_FAIL_IF_WARNINGS :=\
-    $(CLIPPY_RULES) \
     -Dwarnings
 
 
@@ -157,13 +153,13 @@ __cp_debug_build_to_pkg_dir_in_root: __cargo_build_debug __clean_generated_by_fa
 # Static Analysis
 ###########################
 lint: ## Run static analysis.
-	$(CARGO_BIN) clippy --workspace --all-targets $(CARGO_FEATURES_CLI_FLAGS) -- $(CLIPPY_RULES)
+	$(CARGO_BIN) clippy --workspace --all-targets $(CARGO_FEATURES_CLI_FLAGS)
 
 lint_check: ## Run static analysis and fail if there are some warnings.
 	$(CARGO_BIN) clippy --workspace --all-targets $(CARGO_FEATURES_CLI_FLAGS) -- $(CLIPPY_RULES_FAIL_IF_WARNINGS)
 
 lint_fix: ## Try to fix problems found by static analytics
-	$(CARGO_BIN) clippy --fix --workspace --all-targets $(CARGO_FEATURES_CLI_FLAGS) -- $(CLIPPY_RULES)
+	$(CARGO_BIN) clippy --fix --workspace --all-targets $(CARGO_FEATURES_CLI_FLAGS)
 
 typecheck: ## Validate type and semantics for whole of codes by `cargo check`.
 	$(CARGO_BIN) check --workspace --all-targets --target=$(COMPILE_TARGET_WASM32_WASI) $(CARGO_FEATURES_CLI_FLAGS)
