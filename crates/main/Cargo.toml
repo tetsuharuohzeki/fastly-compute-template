@@ -8,8 +8,10 @@ rust-version.workspace = true
 [dependencies]
 fastly.workspace = true
 
-[features]
+[lints]
+workspace = true
 
+[features]
 # These feature flags represents _release channel_.
 # These are mutually exclusive. You cannot enable both of them.
 production = []

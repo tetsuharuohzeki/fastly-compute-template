@@ -1,28 +1,3 @@
-#![warn(
-    // We would like to more recommend to use rust 2018 idioms
-    // See https://doc.rust-lang.org/rustc/lints/groups.html
-    rust_2018_idioms,
-    // We enable clippy rules as same level as `clippy:all` except `clippy:style`.
-    // See https://github.com/tetsuharuohzeki/fastly-compute-template/issues/119
-    //
-    // I think rust-clippy's style rules a bit opinionated
-    // and I guess we don't have to enable about it. Hence, we disable it.
-    //
-    // If we face some problems about sorting a style,
-    // then we should rethink to enable `clippy:style`.
-    clippy::complexity,
-    clippy::correctness,
-    clippy::perf,
-    clippy::suspicious,
-)]
-#![allow(
-    // We would like to write annotate explicitly.
-    clippy::needless_lifetimes,
-    // We would like to create a return value variable.
-    // That makes it easy to add a break point for the return value by debugger.
-    clippy::let_and_return,
-)]
-
 mod application;
 mod build_info;
 mod fastly_trace_id;
