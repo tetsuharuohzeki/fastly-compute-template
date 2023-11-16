@@ -11,6 +11,27 @@ rust-version = "1.74"
 [workspace.dependencies]
 fastly = "^0.9.9"
 
+
+[workspace.lints.rust]
+# We would like to more recommend to use rust 2018 idioms
+# See https://doc.rust-lang.org/rustc/lints/groups.html
+rust_2018_idioms = "warn"
+
+[workspace.lints.clippy]
+# We enable clippy rules as same level as `clippy:all` except `clippy:style`.
+# See https://github.com/tetsuharuohzeki/fastly-compute-template/issues/119
+#
+# I think rust-clippy's style rules a bit opinionated
+# and I guess we don't have to enable about it. Hence, we disable it.
+#
+# If we face some problems about sorting a style,
+# then we should rethink to enable `clippy:style`.
+complexity = "warn"
+correctness = "warn"
+suspicious = "warn"
+perf = "warn"
+
+
 [profile]
 [profile.release]
 debug = 1

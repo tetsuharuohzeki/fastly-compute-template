@@ -69,19 +69,7 @@ endif
 CARGO_FEATURES_CLI_FLAGS := \
     --features $(RELEASE_CHANNEL_FEATURES),$(ADDITIONAL_FEATURES)
 
-# We enable clippy rules as same level as `clippy:all` except `clippy:style`.
-# See https://github.com/tetsuharuohzeki/fastly-compute-template/issues/119
-#
-# I think rust-clippy's style rules a bit opinionated
-# and I guess we don't have to enable about it. Hence, we disable it.
-# If we face some problems about sorting a style,
-# then we should rethink to enable `clippy:style`.
-CLIPPY_RULES := \
-    -W rust-2018-idioms \
-    -W clippy::correctness \
-    -W clippy::suspicious \
-    -W clippy::complexity \
-    -W clippy::perf
+CLIPPY_RULES :=
 
 
 # We pass `-Dwarnings` flag to fail all warnings.
