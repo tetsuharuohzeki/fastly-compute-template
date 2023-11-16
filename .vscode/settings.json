@@ -4,6 +4,9 @@
     // See https://github.com/microsoft/vscode-eslint/issues/1620
     "eslint.workingDirectories": ["integration_tests/"],
 
+    // Display rust-clippy warning & error on the editor.
+    "rust-analyzer.check.command": "clippy",
+
     "rust-analyzer.cargo.features": [
         // We want to be able to rollout this application to production at all
         // Thus we use _production_ as our default build feature set.
