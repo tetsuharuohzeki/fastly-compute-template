@@ -1,11 +1,3 @@
-#![allow(
-    // We would like to write annotate explicitly.
-    clippy::needless_lifetimes,
-    // We would like to create a return value variable.
-    // That makes it easy to add a break point for the return value by debugger.
-    clippy::let_and_return,
-)]
-
 mod application;
 mod build_info;
 mod fastly_trace_id;

@@ -30,6 +30,11 @@ complexity = "warn"
 correctness = "warn"
 suspicious = "warn"
 perf = "warn"
+# We would like to create a return value variable.
+# That makes it easy to add a break point for the return value by debugger.
+let_and_return = { level = "allow", priority = 2 }
+# We would like to write annotate explicitly.
+needless_lifetimes = { level = "allow", priority = 2 }
 
 
 [profile]
