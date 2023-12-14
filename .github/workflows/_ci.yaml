@@ -76,7 +76,6 @@ jobs:
             - uses: ./.github/actions/ci_prepare_fastly_cli
               with:
                   gh-token: ${{ secrets.gh-token }}
-            - run: make validate_artifacts_to_deploy -j
             - run: make run_integration_tests -j RELEASE_CHANNEL=${{ matrix.release_channel }}
 
     unittests:

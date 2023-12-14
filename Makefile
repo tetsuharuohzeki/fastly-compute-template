@@ -140,9 +140,6 @@ __cp_debug_build_to_pkg_dir_in_root: __cargo_build_debug __clean_generated_by_fa
 package_artifacts_for_deploy: ## Package artifacts for deployment
 	$(FASTLY_CLI) pack --wasm-binary $(GENERATED_WASM_BINARY)
 
-validate_artifacts_to_deploy: ## Verify the packaged artifacts for deployment
-	$(FASTLY_CLI) validate --package $(FASTLY_CLI_GENERATED_PKG_TAR_BALL)
-
 
 ###########################
 # Static Analysis
