@@ -1,0 +1,16 @@
+name: Prepare fastly CLI in CI
+description: This action prepare fastly CLI with the specified version.
+
+inputs:
+    gh-token:
+        required: true
+
+runs:
+    using: composite
+    steps:
+        # https://github.com/fastly/compute-actions
+        - name: Set up fastly CLI
+          uses: fastly/compute-actions/setup@c2f38daa58a1a6562575c9665f13b080803b8989
+          with:
+              cli_version: "10.7.0"
+              token: ${{ inputs.gh-token }}
