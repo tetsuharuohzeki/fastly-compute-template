@@ -117,36 +117,28 @@ setup_integration_tests: ## Setup integration tests including install dependenci
 ###########################
 # Build
 ###########################
-build_release: __fastly_compute_validate_relase_build __cp_release_build_to_pkg_dir_in_root ## Create the release build
+build_release: __cp_release_build_to_pkg_dir_in_root ## Create the release build
 
 __cargo_build_release:
 	$(CARGO_BIN) build --release --target=$(COMPILE_TARGET_WASM32_WASI) $(CARGO_FEATURES_CLI_FLAGS)
-
-__fastly_compute_pack_release_build: __cargo_build_release __clean_generated_by_fastly
-	$(FASTLY_CLI) pack --wasm-binary $(CARGO_GENERATED_RELEASE_WASM_BINARY)
-
-__fastly_compute_validate_relase_build: __fastly_compute_pack_release_build __clean_generated_by_fastly
-	$(FASTLY_CLI) validate --package $(FASTLY_CLI_GENERATED_PKG_TAR_BALL)
 
 __cp_release_build_to_pkg_dir_in_root: __cargo_build_release __clean_generated_by_fastly
 	mkdir -p $(FASTLY_CLI_GENERATED_PKG_DIR)
 	cp $(CARGO_GENERATED_RELEASE_WASM_BINARY) $(GENERATED_WASM_BINARY)
 
 
-build_debug: __fastly_compute_validate_debug_build __cp_debug_build_to_pkg_dir_in_root ## Create the debug build
+build_debug: __cp_debug_build_to_pkg_dir_in_root ## Create the debug build
 
 __cargo_build_debug:
 	$(CARGO_BIN) build --target=$(COMPILE_TARGET_WASM32_WASI) $(CARGO_FEATURES_CLI_FLAGS)
 
-__fastly_compute_pack_debug_build: __cargo_build_debug __clean_generated_by_fastly
-	$(FASTLY_CLI) pack --wasm-binary $(CARGO_GENERATED_DEBUG_WASM_BINARY)
-
-__fastly_compute_validate_debug_build: __fastly_compute_pack_debug_build __clean_generated_by_fastly
-	$(FASTLY_CLI) validate --package $(FASTLY_CLI_GENERATED_PKG_TAR_BALL)
-
 __cp_debug_build_to_pkg_dir_in_root: __cargo_build_debug __clean_generated_by_fastly
 	mkdir -p $(FASTLY_CLI_GENERATED_PKG_DIR)
 	cp $(CARGO_GENERATED_DEBUG_WASM_BINARY) $(GENERATED_WASM_BINARY)
+
+
+package_artifacts_for_deploy: ## Package artifacts for deployment
+	$(FASTLY_CLI) pack --wasm-binary $(GENERATED_WASM_BINARY)
 
 
 ###########################

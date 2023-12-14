@@ -35,16 +35,15 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             - uses: ./.github/actions/ci_prepare_to_compile
-
-            - name: Set up Fastly CLI
-              # https://github.com/fastly/compute-actions
-              uses: fastly/compute-actions/setup@v5
+            - uses: ./.github/actions/ci_prepare_fastly_cli
               with:
-                  cli_version: "10.7.0"
-                  token: ${{ secrets.GITHUB_TOKEN }}
+                  gh-token: ${{ secrets.gh-token }}
 
             - shell: bash
               run: make build_${{ matrix.build_type }} -j RELEASE_CHANNEL=${{ matrix.release_channel }}
+
+            - shell: bash
+              run: make package_artifacts_for_deploy -j
 
             - uses: ./.github/actions/upload_build_artifacts
               with:
@@ -74,11 +73,9 @@ jobs:
                   release-channel: ${{ matrix.release_channel }}
                   build-type: ${{ matrix.build_type }}
             - uses: ./.github/actions/ci_prepare_npm_for_integration_test
-            - name: Set up Fastly CLI
-              uses: fastly/compute-actions/setup@v5
+            - uses: ./.github/actions/ci_prepare_fastly_cli
               with:
-                  cli_version: "10.7.0"
-                  token: ${{ secrets.GITHUB_TOKEN }}
+                  gh-token: ${{ secrets.gh-token }}
             - run: make run_integration_tests -j RELEASE_CHANNEL=${{ matrix.release_channel }}
 
     unittests:
