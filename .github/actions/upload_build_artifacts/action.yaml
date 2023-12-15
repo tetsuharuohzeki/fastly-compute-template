@@ -15,7 +15,7 @@ inputs:
 runs:
     using: composite
     steps:
-        - uses: actions/upload-artifact@v3
+        - uses: actions/upload-artifact@v4
           with:
               name: application-${{ inputs.git-sha }}-${{ inputs.release-channel }}-${{ inputs.build-type }}
               path: ${{ inputs.working-directory }}/pkg
