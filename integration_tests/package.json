@@ -16,7 +16,7 @@
         "test:update_snapshot": "ava --update-snapshots"
     },
     "dependencies": {
-        "ava": "^6.1.0",
+        "ava": "^6.1.1",
         "option-t": "^39.0.1",
         "undici": "^6.5.0"
     },
