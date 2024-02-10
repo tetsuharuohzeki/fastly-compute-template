@@ -144,3 +144,23 @@ jobs:
             - uses: ./.github/actions/ci_prepare_npm_for_integration_test
             - shell: bash
               run: make typecheck_integration_tests -j
+
+    sentinel:
+        needs:
+            # application
+            - build
+            - unittests
+            - lint_check
+            - format_check
+            # integration testing
+            - integration_tests
+            - lint_check_integration_tests
+            - format_check_integration_tests
+            - typecheck_integration_tests
+        runs-on: ubuntu-latest
+        if: ${{ always() }}
+        steps:
+            - name: Check whether required jobs are successful
+              if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+              # Fail this job
+              run: exit 1
