@@ -1,5 +1,5 @@
 import * as assert from 'node:assert/strict';
-import { toNullableFromUndefinable } from 'option-t/esm/Undefinable/toNullable';
+import { toNullableFromUndefinable } from 'option-t/Undefinable/toNullable';
 
 const RELEASE_CHANNEL = toNullableFromUndefinable(process.env['RELEASE_CHANNEL']);
 

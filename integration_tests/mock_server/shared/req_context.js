@@ -1,9 +1,9 @@
 import * as assert from 'node:assert/strict';
 import { URL } from 'node:url';
-import { expectNotNull, isNotNull, isNull, unwrapOrFromNullable } from 'option-t/esm/Nullable';
+import { expectNotNull, isNotNull, isNull, unwrapOrFromNullable } from 'option-t/Nullable';
 
 import { ContextLogger } from './context_logger.js';
-import { unwrapOrFromUndefinable } from 'option-t/esm/Undefinable';
+import { unwrapOrFromUndefinable } from 'option-t/Undefinable';
 
 // We tried to use `FASTLY_TRACE_ID` envvar to [trace-id](https://www.w3.org/TR/trace-context/#trace-context-http-headers-format)
 // but its value wouls take `0` in the local emulator. So We cannot use the value directly.
