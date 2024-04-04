@@ -1,9 +1,9 @@
 import * as assert from 'node:assert/strict';
 import { URL } from 'node:url';
-import { expectNotNull, isNotNull, isNull, unwrapOrFromNullable } from 'option-t/Nullable';
+import { expectNotNull, isNotNull, isNull, unwrapOrForNullable } from 'option-t/Nullable';
 
 import { ContextLogger } from './context_logger.js';
-import { unwrapOrFromUndefinable } from 'option-t/Undefinable';
+import { unwrapOrForUndefinable } from 'option-t/Undefinable';
 
 // We tried to use `FASTLY_TRACE_ID` envvar to [trace-id](https://www.w3.org/TR/trace-context/#trace-context-http-headers-format)
 // but its value wouls take `0` in the local emulator. So We cannot use the value directly.
@@ -44,7 +44,7 @@ export class RequestContext {
      *  @returns    {RequestContext}
      */
     static fromRequest(url, req) {
-        const fastlyTraceId = unwrapOrFromNullable(
+        const fastlyTraceId = unwrapOrForNullable(
             getFastlyTraceId(req),
             // could not get ${HTTP_FASTLY_TRACE_HEADER} req header.
             // e.g. on the startup healthcheck from Viceroy.
@@ -216,7 +216,7 @@ export class RequestContext {
  *  @returns    {URL}
  */
 export function createURLFromRequest(req) {
-    const reqUrl = unwrapOrFromUndefinable(req.url, '');
+    const reqUrl = unwrapOrForUndefinable(req.url, '');
     const url = new URL(reqUrl, `http://${req.headers.host}`);
     return url;
 }
