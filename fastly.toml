@@ -8,7 +8,7 @@ description = "An empty starter kit project template."
 
 # If we set this to `rust`, we can do almost operation easily.
 # But then we cannot run `cargo test` without [cargo-wasi](https://github.com/bytecodealliance/cargo-wasi).
-# On the other hand, `cargo wasi test` (`cargo test --target wasm32-wasi` + run test codes with wasmtime)
+# On the other hand, `cargo wasi test` (`cargo test --target wasm32-wasip1` + run test codes with wasmtime)
 # would be fail if we try to run unit tests which uses `fastly::Response`.
 # So we give up to use fastly CLI's preset...
 language = "other"

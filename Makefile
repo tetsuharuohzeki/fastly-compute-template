@@ -35,7 +35,7 @@ FASTLY_CLI := fastly compute
 APPLICATION_NAME := c_at_e_main
 FASTLY_COMPUTE_SERVICE_PKG_NAME := fastly-compute-template
 
-COMPILE_TARGET_WASM32_WASI := wasm32-wasi
+COMPILE_TARGET_WASM32_WASI := wasm32-wasip1
 
 CARGO_TARGET_DIR := $(CURDIR)/target
 CARGO_TARGET_WASM32_WASI_DIR := $(CURDIR)/target/$(COMPILE_TARGET_WASM32_WASI)
@@ -176,9 +176,9 @@ typecheck_integration_tests: ## Validate type and semantics for whole of codes u
 unittests: ## Build and run unit tests via `cargo test`
 	$(CARGO_BIN) test --workspace $(CARGO_FEATURES_CLI_FLAGS)
 
-# FIXME: Ideally, we should run unittests with wasm32-wasi target.
+# FIXME: Ideally, we should run unittests with wasm32-wasip1 target.
 # But then we cannot write some test cases. So we give up run with that target for the present...
-unittests_on_wasm32-wasi: __clean_cargo ## Run unit tests with target=wasm32-wasi
+unittests_on_wasm32-wasi: __clean_cargo ## Run unit tests with target=wasm32-wasip1
 	$(CARGO_WASI_BIN) test --workspace $(CARGO_FEATURES_CLI_FLAGS)
 
 
