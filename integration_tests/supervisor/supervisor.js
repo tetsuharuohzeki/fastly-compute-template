@@ -14,6 +14,14 @@ import { APPLICATION, MOCK_SERVER_LIST, TEST_RUNNER, TEST_RUNNER_WITH_UPDATE_SNA
 import { spawnCancelableChild } from './spawn.js';
 import { SuperVisorContext, assertIsSuperVisorContext } from './sv_ctx.js';
 
+/**
+ *  @typedef    {import('option-t/Nullable').Nullable<T>}  Nullable
+ *  @template   T
+ */
+/**
+ *  @typedef    {import('./spawn.js').ProcessExitStatus}  ProcessExitStatus
+ */
+
 const THIS_FILENAME = fileURLToPath(import.meta.url);
 const THIS_DIRNAME = path.dirname(THIS_FILENAME);
 
@@ -44,7 +52,7 @@ IS_ONLY_FORMATION: ${cliOptions.isOnlyFormation}
  * @param {string} name
  * @param {Array<string>} args
  * @param {import('node:child_process').SpawnOptions} option
- *  @returns {Promise<import('./spawn.js').ProcessExitStatus>}
+ * @returns {Promise<ProcessExitStatus>}
  */
 async function spawnAndGracefulShutdown(aborter, name, args, option) {
     assert.ok(aborter instanceof AbortController, `aborter must be AbortController`);
@@ -57,10 +65,10 @@ async function spawnAndGracefulShutdown(aborter, name, args, option) {
 }
 
 /**
- *  @param {import('./sv_ctx.js').SuperVisorContext} ctx
+ *  @param {SuperVisorContext} ctx
  *  @param  {string}    command
  *  @param  {Array<string>}  cmdArgs
- *  @returns {Promise<import('./spawn.js').ProcessExitStatus|null>}
+ *  @returns {Promise<Nullable<ProcessExitStatus>>}
  */
 async function launchMockServer(ctx, command, cmdArgs) {
     assertIsSuperVisorContext(ctx);
@@ -83,8 +91,8 @@ async function launchMockServer(ctx, command, cmdArgs) {
 }
 
 /**
- * @param {import('./sv_ctx.js').SuperVisorContext} ctx
- * @returns {Promise<import('./spawn.js').ProcessExitStatus|null>}
+ * @param {SuperVisorContext} ctx
+ * @returns {Promise<Nullable<ProcessExitStatus>>}
  */
 async function launchLocalApplicationServer(ctx) {
     assertIsSuperVisorContext(ctx);
@@ -107,8 +115,8 @@ async function launchLocalApplicationServer(ctx) {
 const TIMEOUT_MS_DEADLINE_TO_WAIT_APPLICATION = 15 * 1000;
 
 /**
- * @param {import('./sv_ctx.js').SuperVisorContext} ctx
- * @returns {Promise<boolean|null>}
+ * @param {SuperVisorContext} ctx
+ * @returns {Promise<Nullable<boolean>>}
  */
 async function launchTestRunner(ctx) {
     assertIsSuperVisorContext(ctx);

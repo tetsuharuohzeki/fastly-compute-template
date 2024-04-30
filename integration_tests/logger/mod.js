@@ -1,9 +1,14 @@
 import * as assert from 'node:assert/strict';
 import { isNotNull } from 'option-t/Nullable';
 
+/**
+ *  @typedef    {import('option-t/Nullable').Nullable<T>}  Nullable
+ *  @template   T
+ */
+
 let messagePrefix = '';
 
-/** @type   {boolean|null} */
+/** @type   {Nullable<boolean>} */
 let isVerboseMode = null;
 
 /**

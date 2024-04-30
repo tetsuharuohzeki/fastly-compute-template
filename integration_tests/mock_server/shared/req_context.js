@@ -5,6 +5,11 @@ import { expectNotNull, isNotNull, isNull, unwrapOrForNullable } from 'option-t/
 import { ContextLogger } from './context_logger.js';
 import { unwrapOrForUndefinable } from 'option-t/Undefinable';
 
+/**
+ *  @typedef    {import('option-t/Nullable').Nullable<T>}  Nullable
+ *  @template   T
+ */
+
 // We tried to use `FASTLY_TRACE_ID` envvar to [trace-id](https://www.w3.org/TR/trace-context/#trace-context-http-headers-format)
 // but its value wouls take `0` in the local emulator. So We cannot use the value directly.
 // But we would like to carry information for debugging.
@@ -12,8 +17,12 @@ import { unwrapOrForUndefinable } from 'option-t/Undefinable';
 const HTTP_FASTLY_TRACE_HEADER = 'FASTLY_TRACE_ID'.toLowerCase();
 
 /**
- *  @param {import('node:http').IncomingMessage} req
- *  @returns    {string|null}
+ * @typedef {import('node:http').IncomingMessage} IncomingMessage
+ */
+
+/**
+ *  @param {IncomingMessage} req
+ *  @returns    {Nullable<string>}
  */
 function getFastlyTraceId(req) {
     const headers = req.headers;
@@ -40,7 +49,7 @@ export const RequestContextAbortedReason = Object.freeze({
 export class RequestContext {
     /**
      *  @param  {URL}   url
-     *  @param {import('node:http').IncomingMessage} req
+     *  @param  {IncomingMessage} req
      *  @returns    {RequestContext}
      */
     static fromRequest(url, req) {
@@ -58,7 +67,7 @@ export class RequestContext {
 
     /**
      *  @private
-     *  @type {URL|null}
+     *  @type {Nullable<URL>}
      */
     _url;
     /**
@@ -68,12 +77,12 @@ export class RequestContext {
     _fastlyTraceId;
     /**
      *  @private
-     *  @type {AbortController|null}
+     *  @type {Nullable<AbortController>}
      */
     _aborter = null;
     /**
      *  @private
-     *  @type {ContextLogger|null}
+     *  @type {Nullable<ContextLogger>}
      */
     _logger = null;
 
@@ -91,7 +100,7 @@ export class RequestContext {
     }
 
     /**
-     *  @param {import('node:http').IncomingMessage} req
+     *  @param {IncomingMessage} req
      *  @returns    {void}
      *      We cannot stop the prcessing at here. We need return immediately.
      */
@@ -212,7 +221,7 @@ export class RequestContext {
 }
 
 /**
- *  @param {import('node:http').IncomingMessage} req
+ *  @param {IncomingMessage} req
  *  @returns    {URL}
  */
 export function createURLFromRequest(req) {

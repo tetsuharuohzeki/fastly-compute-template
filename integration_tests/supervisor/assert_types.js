@@ -1,5 +1,9 @@
 import * as assert from 'node:assert/strict';
 import { isNotNull } from 'option-t/Nullable';
+/**
+ *  @typedef {import('option-t/Nullable').NotNull<T>} NotNull
+ *  @template T
+ */
 
 /**
  *  @param {unknown} value
@@ -55,7 +59,7 @@ export function assertIsStringArray(value) {
 
 /**
  *  @param {unknown} value
- *  @returns    {asserts value is import('option-t/Nullable').NotNull<object>}
+ *  @returns    {asserts value is NotNull<object>}
  */
 export function assertIsNonNullObject(value) {
     assert.strictEqual(typeof value, 'object');
