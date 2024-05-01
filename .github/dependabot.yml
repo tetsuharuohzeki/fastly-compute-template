@@ -44,3 +44,8 @@ updates:
       labels:
           - "A-dependency/gardening"
           - I-enhancement
+      groups:
+          "actions/~artifact":
+              petterns:
+                  - "actions/upload-artifact"
+                  - "actions/download-artifact"
