@@ -53,7 +53,7 @@ However, we can write only limited case by this way
 This limitation comes from Fastly Compute's WASM binary requirements.
 
 Typical failure case is compile (link) error because core parts of `fasly` crates requires
-some special wasi system call as a external function but they are not resolved in non `wasm32-wasi` target
+some special wasi system call as a external function but they are not resolved in non `wasm32-wasip1` target
 or a normal wasm runtime environment like plain [wasmtime](https://github.com/bytecodealliance/wasmtime).
 
 __So you should write a unit test only if you need to test a platform agnostic logic like parsing a string__.
