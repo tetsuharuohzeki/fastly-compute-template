@@ -1,6 +1,6 @@
 NODE_BIN := node
-NPM_BIN := npm
-NPM_RUN := $(NPM_BIN) run
+NPM_BIN := pnpm
+NPM_RUN := pnpm run
 
 SRC_DIR := $(CURDIR)/src
 SUPERVISOR_SRC_DIR := $(CURDIR)/supervisor
@@ -25,7 +25,7 @@ clean: ## Clean Artifacts.
 # Setup
 ###########################
 setup: ## Setup with install dependencies.
-	$(NPM_BIN) ci
+	$(NPM_BIN) install
 
 
 ###########################

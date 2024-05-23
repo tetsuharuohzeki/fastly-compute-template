@@ -1,4 +1,4 @@
-name: Prepare npm for Integration Test CI job
+name: Prepare Node.js package manager for Integration Test CI job
 description: This action prepare the integration test dir for CI job
 
 runs:
@@ -8,10 +8,22 @@ runs:
           uses: actions/setup-node@v4
           with:
               node-version: 22
-              cache: "npm"
-              cache-dependency-path: integration_tests/package-lock.json
         - name: Enable corepack
           run: corepack enable
           shell: bash
+        - name: Get package manager's cache directory
+          id: npm-cache-dir
+          shell: bash
+          run: echo "dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+          # This step should run with pkg manager specied by corepack.
+          working-directory: ./integration_tests
+        - name: cache dependencies
+          uses: actions/cache@v4
+          id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+          with:
+              path: ${{ steps.npm-cache-dir.outputs.dir }}
+              key: build-v1-${{ runner.os }}-node-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+              restore-keys: |
+                  build-v1-${{ runner.os }}-node-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
         - run: make setup_integration_tests -j
           shell: bash
