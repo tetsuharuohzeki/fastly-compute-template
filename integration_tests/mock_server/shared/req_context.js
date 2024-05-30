@@ -1,12 +1,12 @@
 import * as assert from 'node:assert/strict';
 import { URL } from 'node:url';
-import { expectNotNull, isNotNull, isNull, unwrapOrForNullable } from 'option-t/Nullable';
+import { expectNotNull, isNotNull, isNull, unwrapOrForNullable } from 'option-t/nullable';
 
 import { ContextLogger } from './context_logger.js';
-import { unwrapOrForUndefinable } from 'option-t/Undefinable';
+import { unwrapOrForUndefinable } from 'option-t/undefinable';
 
 /**
- *  @typedef    {import('option-t/Nullable').Nullable<T>}  Nullable
+ *  @typedef    {import('option-t/nullable').Nullable<T>}  Nullable
  *  @template   T
  */
 

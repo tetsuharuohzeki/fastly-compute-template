@@ -4,11 +4,11 @@ import { spawn } from 'node:child_process';
 import * as logger from '../logger/mod.js';
 
 /**
- *  @typedef    {import('option-t/Nullable').Nullable<T>}  Nullable
+ *  @typedef    {import('option-t/nullable').Nullable<T>}  Nullable
  *  @template   T
  */
 /**
- *  @typedef    {import('option-t/Maybe').Maybe<T>}  Maybe
+ *  @typedef    {import('option-t/maybe').Maybe<T>}  Maybe
  *  @template   T
  */
 
