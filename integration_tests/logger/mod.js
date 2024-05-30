@@ -1,5 +1,5 @@
 import * as assert from 'node:assert/strict';
-import { isNotNull } from 'option-t/Nullable';
+import { isNotNull } from 'option-t/nullable';
 
 /**
  *  @typedef    {import('option-t/Nullable').Nullable<T>}  Nullable

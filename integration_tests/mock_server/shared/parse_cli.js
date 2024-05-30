@@ -1,7 +1,7 @@
 import * as assert from 'node:assert/strict';
 import { parseArgs } from 'node:util';
 
-import { unwrapUndefinable } from 'option-t/Undefinable';
+import { unwrapUndefinable } from 'option-t/undefinable';
 
 export function parseCliOptions() {
     const { values } = parseArgs({
