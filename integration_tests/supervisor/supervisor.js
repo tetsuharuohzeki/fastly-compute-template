@@ -2,7 +2,7 @@ import * as assert from 'node:assert/strict';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { isNull } from 'option-t/nullable';
+import { isNull } from 'option-t/Nullable';
 
 import * as logger from '../logger/mod.js';
 import { APP_LOCAL_ORIGIN } from '../url_origin.js';
