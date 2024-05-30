@@ -2,7 +2,7 @@ import * as assert from 'node:assert/strict';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { isNull } from 'option-t/Nullable';
+import { isNull } from 'option-t/nullable';
 
 import * as logger from '../logger/mod.js';
 import { APP_LOCAL_ORIGIN } from '../url_origin.js';
@@ -15,7 +15,7 @@ import { spawnCancelableChild } from './spawn.js';
 import { SuperVisorContext, assertIsSuperVisorContext } from './sv_ctx.js';
 
 /**
- *  @typedef    {import('option-t/Nullable').Nullable<T>}  Nullable
+ *  @typedef    {import('option-t/nullable').Nullable<T>}  Nullable
  *  @template   T
  */
 /**
