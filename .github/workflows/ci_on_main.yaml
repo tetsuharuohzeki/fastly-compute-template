@@ -28,6 +28,8 @@ permissions:
 jobs:
     ci:
         uses: ./.github/workflows/_ci.yaml
+        secrets:
+            gh-token: ${{ secrets.GITHUB_TOKEN }}
 
     deploy:
         needs: [ci]
