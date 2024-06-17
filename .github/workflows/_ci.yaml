@@ -1,7 +1,19 @@
+# we need separate CI workflow template to achieve that a CI
+# for each of PRs cancellable and one for default branch should run on every commits
+# because the runner will use `concurrency.group` in the callee worfklow which is
+# configured as cancellable if we don't set `concurrency.group` to caller workflow.
 name: Shared CI workflow
 
 on:
     workflow_call:
+        secrets:
+            # We would like to use `GITHUB_TOKEN` name.
+            # But it will be an error since it would collide with system reserved name.
+            gh-token:
+                description: |
+                    We can use `secrets.GITHUB_TOKEN` implicitly,
+                    but this require to pass it explicitly to make the workflow simply.
+                required: true
 
 permissions:
     contents: read
