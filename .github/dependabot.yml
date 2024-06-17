@@ -15,7 +15,8 @@ updates:
     - package-ecosystem: npm
       directory: "/integration_tests"
       schedule:
-          interval: weekly
+          # We would not like to receive the notifications frequently for this.
+          interval: monthly
       open-pull-requests-limit: 99
       labels:
           - "A-dependency/gardening"
