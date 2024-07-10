@@ -2,9 +2,6 @@
 # https://developer.fastly.com/reference/fastly-toml/
 
 manifest_version = 3
-name = "fastly-compute-template"
-authors = [""]
-description = "An empty starter kit project template."
 
 # If we set this to `rust`, we can do almost operation easily.
 # But then we cannot run `cargo test` without [cargo-wasi](https://github.com/bytecodealliance/cargo-wasi).
@@ -12,8 +9,6 @@ description = "An empty starter kit project template."
 # would be fail if we try to run unit tests which uses `fastly::Response`.
 # So we give up to use fastly CLI's preset...
 language = "other"
-
-service_id = ""
 
 # We use fastly.testing.toml for integration tests.
 # We don't use this field.
