@@ -100,6 +100,15 @@ jobs:
             - shell: bash
               run: make unittests -j
 
+    build_benchmark:
+        needs: [fetch_cargo_registry]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/ci_prepare_to_compile
+            - shell: bash
+              run: make benchmark_only_build -j
+
     lint_check:
         needs: [fetch_cargo_registry]
         runs-on: ubuntu-latest
