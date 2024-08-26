@@ -40,7 +40,7 @@ export function spawnCancelableChild(bin, args, option) {
         logger.info(`spawn: ${command}`);
 
         proc.on('close', function (code, signal) {
-            logger.debug(`on close: ${command}`);
+            logger.debug(`on closed: ${command}`);
             resolve({
                 code,
                 signal,
