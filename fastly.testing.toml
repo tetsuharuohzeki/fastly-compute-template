@@ -4,6 +4,16 @@
 manifest_version = 3
 
 [local_server]
+    # By the CLI source code, fastly CLI always attempt to check the update of Viceory
+    # even if there is a latest Viceroy.
+    # https://github.com/fastly/cli/blob/8d58ba09aaff2af9d4875b8bafe6b7b651694b6d/pkg/commands/compute/serve.go#L445-L524
+    #
+    # This sometime causes a flaky behavior for CI, and also requires that local
+    # machine always connect to a network.
+    #
+    # To make more reliable, we specify a viceroy_version for integration test.
+    viceroy_version = "0.10.1"
+
     [local_server.backends]
         [local_server.backends.backend_a]
         url = "http://localhost:8030"
