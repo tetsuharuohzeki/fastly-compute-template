@@ -13,17 +13,39 @@ runs:
               override: true
               cache: true
 
-        - uses: actions/cache@v4
+        - name: Restore dependency caches
+          uses: actions/cache/restore@v4
           with:
               # We can cache ./target/ directory to cache a build intermediate artifacts
               # but then we must add rust toolchain's hash to the cache key.
               # And also, we need to think to add the key to indicate a build profile
+              # CAUTION: Match this on the later step.
               path: |
                   ~/.cargo/
                   !~/.cargo/bin
                   !~/.cargo/env
+              # We use an exact match to avoid to store unnecessary dependencies in the later step.
+              # CAUTION: Match the key name on the later step.
               key: rev1-cargo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
 
         - name: Fetch dependency packages
           shell: bash
           run: cargo fetch --locked
+
+        - name: Save dependency caches
+          uses: actions/cache/save@v4
+          # We run this step only on _trunk_ to aim to improve a cache hit.
+          # For example, dependabot's pull requests sometimes shoot down a cache hit ratio
+          # by changing a lock file with multiple variants.
+          # Then we cannot reuse cache ideally because the lockfile is changed high frequently under such situation.
+          # Cache utilization is down.
+          # So we give up to save the cache on each of pull requests.
+          if: github.ref == 'refs/heads/main'
+          with:
+              # CAUTION: Match this on the above step.
+              path: |
+                  ~/.cargo/
+                  !~/.cargo/bin
+                  !~/.cargo/env
+              # CAUTION: Match the key name on the above step.
+              key: rev1-cargo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
