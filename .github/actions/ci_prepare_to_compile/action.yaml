@@ -13,6 +13,11 @@ runs:
               override: true
               cache: true
 
+        - name: Get cache unique key
+          id: cargo-cache-key
+          shell: bash
+          run: echo "id=${{ hashFiles('Cargo.lock') }}" >> $GITHUB_OUTPUT
+
         - name: Restore dependency caches
           uses: actions/cache/restore@v4
           with:
@@ -26,7 +31,7 @@ runs:
                   !~/.cargo/env
               # We use an exact match to avoid to store unnecessary dependencies in the later step.
               # CAUTION: Match the key name on the later step.
-              key: rev1-cargo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
+              key: rev1-cargo-${{ runner.os }}-${{ runner.arch }}-${{ steps.cargo-cache-key.outputs.id }}
 
         - name: Fetch dependency packages
           shell: bash
@@ -48,4 +53,4 @@ runs:
                   !~/.cargo/bin
                   !~/.cargo/env
               # CAUTION: Match the key name on the above step.
-              key: rev1-cargo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
+              key: rev1-cargo-${{ runner.os }}-${{ runner.arch }}-${{ steps.cargo-cache-key.outputs.id }}

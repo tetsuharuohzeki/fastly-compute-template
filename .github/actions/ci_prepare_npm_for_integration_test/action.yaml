@@ -20,6 +20,11 @@ runs:
           # This step should run with pkg manager specied by corepack.
           working-directory: ./integration_tests
 
+        - name: Get cache unique key
+          id: npm-cache-key
+          shell: bash
+          run: echo "id=${{ hashFiles('**/pnpm-lock.yaml') }}" >> $GITHUB_OUTPUT
+
         - name: Restore dependency caches
           uses: actions/cache/restore@v4
           id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
@@ -28,7 +33,7 @@ runs:
               path: ${{ steps.npm-cache-dir.outputs.dir }}
               # We use an exact match to avoid to store unnecessary dependencies in the later step.
               # CAUTION: Match the key name on the later step.
-              key: rev1-node-pnpm-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+              key: rev1-node-pnpm-${{ runner.os }}-${{ steps.npm-cache-key.outputs.id }}
 
         - run: make setup_integration_tests -j
           shell: bash
@@ -46,4 +51,4 @@ runs:
               # CAUTION: Match this on the above step.
               path: ${{ steps.npm-cache-dir.outputs.dir }}
               # CAUTION: Match the key name on the above step.
-              key: rev1-node-pnpm-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+              key: rev1-node-pnpm-${{ runner.os }}-${{ steps.npm-cache-key.outputs.id }}
