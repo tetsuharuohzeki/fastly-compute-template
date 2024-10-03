@@ -46,7 +46,7 @@ runs:
           # Then we cannot reuse cache ideally because the lockfile is changed high frequently under such situation.
           # Cache utilization is down.
           # So we give up to save the cache on each of pull requests.
-          if: ${{ (steps.npm-cache.outputs.cache-hit != 'true') && (github.ref == 'refs/heads/main') }}
+          if: github.ref == 'refs/heads/main'
           with:
               # CAUTION: Match this on the above step.
               path: ${{ steps.npm-cache-dir.outputs.dir }}
