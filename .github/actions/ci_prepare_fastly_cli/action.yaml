@@ -10,7 +10,7 @@ runs:
     steps:
         # https://github.com/fastly/compute-actions
         - name: Set up fastly CLI
-          uses: fastly/compute-actions/setup@ddbd065e9086971625670158fe6cc9811264168a
+          uses: fastly/compute-actions/setup@ca26cccf1fa541576c6fbdf50d62feb6db6ba181
           with:
               cli_version: "10.15.0"
               viceroy_version: "0.12.1"
