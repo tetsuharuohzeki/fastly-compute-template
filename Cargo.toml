@@ -6,7 +6,7 @@ resolver = "2"
 publish = false
 version = "0.0.0"
 edition = "2021"
-rust-version = "1.83"
+rust-version = "1.84"
 
 [workspace.dependencies]
 fastly = "^0.11.2"
