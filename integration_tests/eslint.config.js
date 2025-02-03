@@ -20,6 +20,11 @@ export default [
             },
         },
 
+        linterOptions: {
+            reportUnusedDisableDirectives: 'warn',
+            reportUnusedInlineConfigs: 'warn',
+        },
+
         rules: {
             // Not covered by js.configs.recommended,
             strict: ['error', 'global'],
