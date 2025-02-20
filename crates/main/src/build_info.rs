@@ -1,6 +1,6 @@
+use fastly::Response;
 use fastly::http::StatusCode;
 use fastly::mime;
-use fastly::Response;
 
 const GIT_COMMIT_HASH: &str = env!("GIT_HASH");
 const BUILD_DATE: &str = env!("BUILD_DATE");
