@@ -17,7 +17,7 @@
     },
     "dependencies": {
         "ava": "^6.2.0",
-        "option-t": "^51.0.1",
+        "option-t": "^51.1.0",
         "undici": "^7.3.0"
     },
     "devDependencies": {
