@@ -50,3 +50,7 @@ updates:
               petterns:
                   - "actions/upload-artifact"
                   - "actions/download-artifact"
+          "actions/cache":
+              patterns:
+                  - "actions/cache/restore"
+                  - "actions/cache/save"
