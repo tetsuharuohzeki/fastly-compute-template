@@ -33,12 +33,7 @@ updates:
     - package-ecosystem: github-actions
       directories:
           - "/"
-          - "/.github/actions/ci_prepare_fastly_cli"
-          - "/.github/actions/ci_prepare_npm_for_integration_test"
-          - "/.github/actions/ci_prepare_to_compile"
-          - "/.github/actions/download_build_artifacts"
-          - "/.github/actions/rust_toolchain"
-          - "/.github/actions/upload_build_artifacts"
+          - "/.github/actions/*"
       schedule:
           interval: weekly
       open-pull-requests-limit: 99
