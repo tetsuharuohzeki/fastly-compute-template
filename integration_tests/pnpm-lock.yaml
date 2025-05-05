@@ -12,8 +12,8 @@ importers:
         specifier: ^6.3.0
         version: 6.3.0
       option-t:
-        specifier: ^52.1.0
-        version: 52.1.0
+        specifier: ^53.0.0
+        version: 53.0.0
       undici:
         specifier: ^7.8.0
         version: 7.8.0
@@ -911,8 +911,8 @@ packages:
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
 
-  option-t@52.1.0:
-    resolution: {integrity: sha512-ITKfvdV0jBf+zSKZJkbh2hGFMManH96Ldug2VYHeO51Co3NIYwn5T0IXq5+2ocea8WfJI4m2m4WwDGtnYXUM9A==}
+  option-t@53.0.0:
+    resolution: {integrity: sha512-qsyo1cFXfUN1MVnxTrpcy+V4tJYEBvEQmeiDkC6m5W/V2JiNfs4V/qXmDGZg4k9XRR1EWkv3jT8TXSZnhGPBLA==}
     engines: {node: '>=16.20.0'}
 
   optionator@0.9.4:
@@ -2158,7 +2158,7 @@ snapshots:
     dependencies:
       wrappy: 1.0.2
 
-  option-t@52.1.0: {}
+  option-t@53.0.0: {}
 
   optionator@0.9.4:
     dependencies:
