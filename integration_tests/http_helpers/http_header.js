@@ -94,3 +94,13 @@ export const X_CONTENT_TYPE_OPTIONS = 'x-content-type-options';
 export const X_DNS_PREFETCH_CONTROL = 'x-dns-prefetch-control';
 export const X_FRAME_OPTIONS = 'x-frame-options';
 export const X_XSS_PROTECTION = 'x-xss-protection';
+
+/**
+ *  This is the special header to allow to check transparently
+ *  whether the response is replied (generated) from the backend origin without modifying CDN application layer.
+ *
+ *  This header is not represent on the actual production server. You must not touch this in the CDN application.
+ *
+ *  If this does not set, E2E testing can treat as it's generated on the CDN application.
+ */
+export const X_DEBUG_BACKEND_SERVER_NAME = 'x-debug-backend-server-name';

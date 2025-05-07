@@ -5,6 +5,7 @@ import * as HttpStatus from '../../http_helpers/http_status.js';
 import * as logger from '../../logger/mod.js';
 
 import { RequestContext, createURLFromRequest, RequestContextAbortedReason } from './req_context.js';
+import { X_DEBUG_BACKEND_SERVER_NAME } from '../../http_helpers/http_header.js';
 
 /**
  *  @callback   Handler
@@ -25,6 +26,8 @@ export function createHttpServer(serverName, port, handler, isVerbose = false) {
     logger.setupLogger(`mock_server::${serverName}`, isVerbose);
 
     const server = http.createServer(async (req, res) => {
+        res.setHeader(X_DEBUG_BACKEND_SERVER_NAME, serverName);
+
         const url = createURLFromRequest(req);
         const context = RequestContext.fromRequest(url, req);
 
