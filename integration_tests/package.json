@@ -6,12 +6,12 @@
     "description": "",
     "scripts": {
         "__format": "prettier '**/**/*.{js,cjs,mjs}'",
-        "format": "pnpm run __format --write",
-        "format:check": "pnpm run __format --check",
+        "format": "node --run __format -- --write",
+        "format:check": "node --run __format -- --check",
         "typecheck": "tsc --project . --noEmit",
         "lint": "eslint .",
-        "lint:check": "pnpm run lint --max-warnings 0",
-        "lint:fix": "pnpm run lint --fix",
+        "lint:check": "node --run lint -- --max-warnings 0",
+        "lint:fix": "node --run lint -- --fix",
         "test": "ava",
         "test:update_snapshot": "ava --update-snapshots"
     },

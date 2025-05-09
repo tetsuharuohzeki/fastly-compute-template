@@ -1,6 +1,6 @@
 NODE_BIN := node
 NPM_BIN := pnpm
-NPM_RUN := pnpm run
+NPM_RUN := $(NODE_BIN) --run
 
 SRC_DIR := $(CURDIR)/src
 SUPERVISOR_SRC_DIR := $(CURDIR)/supervisor

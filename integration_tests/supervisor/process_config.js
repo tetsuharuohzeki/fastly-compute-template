@@ -1,7 +1,5 @@
 import { assertIsStringArray, assertIsString } from './assert_types.js';
 
-const NPM_CLI = 'pnpm';
-
 class Process {
     /** @type   {string} */
     cmd;
@@ -38,7 +36,7 @@ class TestRunner extends Process {
      */
     constructor(mode) {
         assertIsString(mode);
-        super(NPM_CLI, ['run', mode]);
+        super('node', ['--run', mode]);
     }
 }
 
