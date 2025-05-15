@@ -111,9 +111,9 @@ checksum = "877a4ace8713b0bcf2a4e7eec82529c029f1d0619886d18145fea96c3ffe5c0f"
 
 [[package]]
 name = "fastly"
-version = "0.11.3"
+version = "0.11.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "263eea7ceb6bc4d28a98006586004eb3a6694d3a7b8a9030d4f37601fe3b9a85"
+checksum = "b0f0d6baa01213290eeeb8742bbff3cbd2abc447e360bf2a96a911b58412424c"
 dependencies = [
  "anyhow",
  "bytes",
@@ -139,9 +139,9 @@ dependencies = [
 
 [[package]]
 name = "fastly-macros"
-version = "0.11.3"
+version = "0.11.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "59c481088d79c3c386ef0766ed9761acb426526a75278158ecf29c8f466dc27d"
+checksum = "8875b8f730b58b079c52f3a9a92ece72e8d0787f1a1db84bff883f444be19fa2"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -150,9 +150,9 @@ dependencies = [
 
 [[package]]
 name = "fastly-shared"
-version = "0.11.3"
+version = "0.11.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "076e38ea5ef68f5c73772bc9da8969a81574355dc455a10bbb4b8ad3865aefee"
+checksum = "4a47030cf7bae93c0305f76541896c1b86dbf3edde21bb1cf938e05f1fb30f78"
 dependencies = [
  "bitflags",
  "http",
@@ -160,9 +160,9 @@ dependencies = [
 
 [[package]]
 name = "fastly-sys"
-version = "0.11.3"
+version = "0.11.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6b986842c5e71e9fa50ff78157b834f21f68e37b333041713f11f0d8df43d9d4"
+checksum = "d7adecc36f6d3abfa28312c54dd816743bf989a957f085d8a71f05009a8380c6"
 dependencies = [
  "bitflags",
  "fastly-shared",
