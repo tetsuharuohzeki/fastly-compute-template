@@ -7,7 +7,7 @@ runs:
         - name: Install Rust toolchain
           uses: ./.github/actions/rust_toolchain
           with:
-              toolchain: "1.86"
+              toolchain: "1.87"
               profile: default
               target: wasm32-wasip1
               override: true
