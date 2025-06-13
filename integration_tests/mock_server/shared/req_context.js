@@ -130,6 +130,9 @@ export class RequestContext {
      *  @private
      */
     _destroy() {
+        const aborter = expectNotNull(this._aborter, 'has been disposed');
+        assert.strictEqual(aborter.signal.aborted, true, `the aborter have not called .abort() yet`);
+
         this._logger = null;
         this._aborter = null;
         this._fastlyTraceId = '';
