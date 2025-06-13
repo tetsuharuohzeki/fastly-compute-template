@@ -1,9 +1,10 @@
 import js from '@eslint/js';
+import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 
 import * as prettierConfig from './tools/eslint/prettier_ovrride.js';
 
-export default [
+export default defineConfig([
     js.configs.recommended,
     {
         languageOptions: {
@@ -18,6 +19,7 @@ export default [
                 Request: false,
                 Response: false,
             },
+            ecmaVersion: 'latest',
         },
 
         linterOptions: {
@@ -62,4 +64,4 @@ export default [
         },
     },
     ...prettierConfig.configs,
-];
+]);
