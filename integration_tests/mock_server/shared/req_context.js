@@ -192,14 +192,6 @@ export class RequestContext {
     }
 
     /**
-     *  If you have any explict abort reason,
-     *  you should use {@link abortWithReason}
-     */
-    abort() {
-        this._abort();
-    }
-
-    /**
      * @param {unknown} reason
      * @returns {void}
      */
@@ -208,14 +200,20 @@ export class RequestContext {
     }
 
     /**
+     *  @private
      *  @param {RequestContextAbortedReason} reason
      *  @returns    {void}
      */
-    // FIXME: This should be replace with explict resource management.
-    finalizeWithReason(reason) {
+    _finalizeWithReason(reason) {
         assert.ok(isNotNull(this._aborter), 'Do not call finalizer twice');
-
         this.abortWithReason(reason);
+    }
+
+    /**
+     *  @returns    {void}
+     */
+    [Symbol.dispose]() {
+        this._finalizeWithReason(RequestContextAbortedReason.ResponseHandlerEnded);
         this._destroy();
     }
 }

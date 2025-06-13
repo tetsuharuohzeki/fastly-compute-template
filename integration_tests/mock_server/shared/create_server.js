@@ -4,7 +4,7 @@ import * as http from 'node:http';
 import * as HttpStatus from '../../http_helpers/http_status.js';
 import * as logger from '../../logger/mod.js';
 
-import { RequestContext, createURLFromRequest, RequestContextAbortedReason } from './req_context.js';
+import { RequestContext, createURLFromRequest } from './req_context.js';
 import { X_DEBUG_BACKEND_SERVER_NAME } from '../../http_helpers/http_header.js';
 
 /**
@@ -29,7 +29,7 @@ export function createHttpServer(serverName, port, handler, isVerbose = false) {
         res.setHeader(X_DEBUG_BACKEND_SERVER_NAME, serverName);
 
         const url = createURLFromRequest(req);
-        const context = RequestContext.fromRequest(url, req);
+        using context = RequestContext.fromRequest(url, req);
 
         const urlPathname = url.pathname;
         logger.info(`request incoming: ${urlPathname}`);
@@ -42,7 +42,6 @@ export function createHttpServer(serverName, port, handler, isVerbose = false) {
 
             res.writeHead(HttpStatus.INTERNAL_SERVER_ERROR);
             res.end();
-            context.finalizeWithReason(RequestContextAbortedReason.ResponseHandlerEnded);
             return;
         }
 
@@ -54,13 +53,10 @@ export function createHttpServer(serverName, port, handler, isVerbose = false) {
         }
 
         if (ok) {
-            context.finalizeWithReason(RequestContextAbortedReason.ResponseHandlerEnded);
             return;
         }
         res.writeHead(HttpStatus.NOT_FOUND);
         res.end(`${String(url)} is not found`);
-
-        context.finalizeWithReason(RequestContextAbortedReason.ResponseHandlerEnded);
     });
     server.listen(port);
     logger.info(`mock server listen on ${String(port)}`);
