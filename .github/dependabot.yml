@@ -42,7 +42,7 @@ updates:
           - I-enhancement
       groups:
           "actions/~artifact":
-              petterns:
+              patterns:
                   - "actions/upload-artifact"
                   - "actions/download-artifact"
           "actions/cache":
