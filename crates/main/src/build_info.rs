@@ -7,9 +7,8 @@ const BUILD_DATE: &str = env!("BUILD_DATE");
 
 pub fn create_build_info_response() -> Response {
     let body = format!(
-        "git revision: {}
-build date: {}",
-        GIT_COMMIT_HASH, BUILD_DATE
+        "git revision: {GIT_COMMIT_HASH}
+build date: {BUILD_DATE}"
     );
 
     Response::from_status(StatusCode::OK)
