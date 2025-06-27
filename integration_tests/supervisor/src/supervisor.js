@@ -30,7 +30,7 @@ const WORKSPACE_ROOT = path.resolve(THIS_DIRNAME, '../..');
 const REPOSITORY_ROOT = path.resolve(WORKSPACE_ROOT, '..');
 const INTEGRATION_TESTS_DIR = WORKSPACE_ROOT;
 
-const TESTCASES_WS_ROOT_DIR = path.resolve(WORKSPACE_ROOT, './testcases');
+const TESTCASES_WS_ROOT_DIR = path.resolve(WORKSPACE_ROOT, './auto_tests');
 
 /**
  *  @param {import('./cli_flags.js').CliOptionsArgs} cliOptions

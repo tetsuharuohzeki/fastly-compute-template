@@ -1,5 +1,5 @@
 {
-    "name": "@c_at_e_integration_tests/testcases",
+    "name": "@c_at_e_integration_tests/auto_tests",
     "private": true,
     "type": "module",
     "version": "0.0.0",

@@ -1,12 +1,12 @@
 # https://pnpm.io/pnpm-workspace_yaml
 packages:
+    - auto_tests
     - config
     - eslint_config
     - http_helpers
     - logger
     - mock_server
     - supervisor
-    - testcases
     - tools
 
 catalog:
