@@ -5,3 +5,7 @@ packages:
     - logger
     - mock_server
     - supervisor
+
+catalog:
+    option-t: ^53.0.0
+    undici: ^7.10.0

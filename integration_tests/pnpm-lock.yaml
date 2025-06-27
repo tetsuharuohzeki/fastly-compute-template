@@ -4,6 +4,15 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    option-t:
+      specifier: ^53.0.0
+      version: 53.0.0
+    undici:
+      specifier: ^7.10.0
+      version: 7.10.0
+
 importers:
 
   .:
@@ -12,11 +21,8 @@ importers:
         specifier: ^6.4.0
         version: 6.4.0
       option-t:
-        specifier: ^53.0.0
+        specifier: 'catalog:'
         version: 53.0.0
-      undici:
-        specifier: ^7.10.0
-        version: 7.10.0
     devDependencies:
       '@eslint/js':
         specifier: ^9.29.0
@@ -48,10 +54,20 @@ importers:
       '@c_at_e/integration_http_helpers':
         specifier: workspace:*
         version: link:../http_helpers
+      option-t:
+        specifier: 'catalog:'
+        version: 53.0.0
+      undici:
+        specifier: 'catalog:'
+        version: 7.10.0
 
   http_helpers: {}
 
-  logger: {}
+  logger:
+    dependencies:
+      option-t:
+        specifier: 'catalog:'
+        version: 53.0.0
 
   mock_server:
     dependencies:
@@ -61,12 +77,21 @@ importers:
       '@c_at_e/integration_tests_logger':
         specifier: workspace:*
         version: link:../logger
+      option-t:
+        specifier: 'catalog:'
+        version: 53.0.0
 
   supervisor:
     dependencies:
       '@c_at_e/integration_tests_logger':
         specifier: workspace:*
         version: link:../logger
+      option-t:
+        specifier: 'catalog:'
+        version: 53.0.0
+      undici:
+        specifier: 'catalog:'
+        version: 7.10.0
 
 packages:
 

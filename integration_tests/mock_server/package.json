@@ -12,7 +12,8 @@
     "scripts": {},
     "dependencies": {
         "@c_at_e/integration_http_helpers": "workspace:*",
-        "@c_at_e/integration_tests_logger": "workspace:*"
+        "@c_at_e/integration_tests_logger": "workspace:*",
+        "option-t": "catalog:"
     },
     "devDependencies": {}
 }
