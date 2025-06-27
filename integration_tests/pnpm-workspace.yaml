@@ -6,6 +6,7 @@ packages:
     - logger
     - mock_server
     - supervisor
+    - tools
 
 catalog:
     option-t: ^53.0.0

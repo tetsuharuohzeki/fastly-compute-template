@@ -17,6 +17,9 @@ importers:
 
   .:
     dependencies:
+      '@c_at_e/integration_tests_tools':
+        specifier: 'workspace:'
+        version: link:tools
       ava:
         specifier: ^6.4.0
         version: 6.4.0
@@ -36,9 +39,6 @@ importers:
       eslint:
         specifier: ^9.29.0
         version: 9.29.0
-      eslint-config-prettier:
-        specifier: ^10.1.5
-        version: 10.1.5(eslint@9.29.0)
       globals:
         specifier: ^16.2.0
         version: 16.2.0
@@ -64,11 +64,7 @@ importers:
         specifier: 'catalog:'
         version: 7.10.0
 
-  config:
-    dependencies:
-      option-t:
-        specifier: 'catalog:'
-        version: 53.0.0
+  config: {}
 
   http_helpers: {}
 
@@ -104,6 +100,12 @@ importers:
       undici:
         specifier: 'catalog:'
         version: 7.10.0
+
+  tools:
+    dependencies:
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@9.29.0)
 
 packages:
 

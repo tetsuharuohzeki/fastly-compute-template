@@ -1,0 +1,20 @@
+{
+    "name": "@c_at_e/integration_tests_tools",
+    "private": true,
+    "type": "module",
+    "version": "0.0.0",
+    "description": "",
+    "exports": {
+        ".": {
+            "default": "./src/lib.js"
+        },
+        "./eslint/prettier_ovrride": {
+            "default": "./src/eslint/prettier_ovrride.js"
+        }
+    },
+    "scripts": {},
+    "dependencies": {
+        "eslint-config-prettier": "^10.1.5"
+    },
+    "devDependencies": {}
+}
