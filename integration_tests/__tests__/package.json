@@ -7,10 +7,14 @@
     "exports": {
         ".": {}
     },
-    "scripts": {},
+    "scripts": {
+        "test": "ava",
+        "test:update_snapshot": "ava --update-snapshots"
+    },
     "dependencies": {
         "@c_at_e/integration_tests_config": "workspace:*",
         "@c_at_e/integration_http_helpers": "workspace:*",
+        "ava": "^6.4.0",
         "option-t": "catalog:",
         "undici": "catalog:"
     },

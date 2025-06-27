@@ -11,14 +11,10 @@
         "typecheck": "tsc --project . --noEmit",
         "lint": "eslint .",
         "lint:check": "node --run lint -- --max-warnings 0",
-        "lint:fix": "node --run lint -- --fix",
-        "test": "ava",
-        "test:update_snapshot": "ava --update-snapshots"
+        "lint:fix": "node --run lint -- --fix"
     },
     "dependencies": {
-        "@c_at_e/integration_tests_tools": "workspace:",
-        "ava": "^6.4.0",
-        "option-t": "catalog:"
+        "@c_at_e/integration_tests_tools": "workspace:"
     },
     "devDependencies": {
         "@eslint/js": "^9.29.0",
