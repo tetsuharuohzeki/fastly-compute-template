@@ -1,10 +1,13 @@
 import * as assert from 'node:assert/strict';
-import * as path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 import { isNull } from 'option-t/nullable';
 
-import { APP_LOCAL_ORIGIN } from '@c_at_e_integration_tests/config';
+import {
+    APP_LOCAL_ORIGIN,
+    AUTO_TESTS_PKG_ROOT_DIR,
+    INTEGRATION_TESTS_DIR,
+    REPOSITORY_ROOT_DIR,
+} from '@c_at_e_integration_tests/config';
 import * as logger from '@c_at_e_integration_tests/logger';
 
 import { assertIsFunction, assertIsNonNullObject, assertIsString, assertIsStringArray } from './assert_types.js';
@@ -21,16 +24,6 @@ import { SuperVisorContext, assertIsSuperVisorContext } from './sv_ctx.js';
 /**
  *  @typedef    {import('./spawn.js').ProcessExitStatus}  ProcessExitStatus
  */
-
-const THIS_FILENAME = fileURLToPath(import.meta.url);
-const THIS_DIRNAME = path.dirname(THIS_FILENAME);
-
-const WORKSPACE_ROOT = path.resolve(THIS_DIRNAME, '../../..');
-
-const REPOSITORY_ROOT = path.resolve(WORKSPACE_ROOT, '..');
-const INTEGRATION_TESTS_DIR = WORKSPACE_ROOT;
-
-const TESTCASES_WS_ROOT_DIR = path.resolve(WORKSPACE_ROOT, './pkgs/auto_tests');
 
 /**
  *  @param {import('./cli_flags.js').CliOptionsArgs} cliOptions
@@ -106,7 +99,7 @@ async function launchLocalApplicationServer(ctx) {
     }
 
     const status = await spawnAndGracefulShutdown(aborter, APPLICATION.cmd, APPLICATION.args, {
-        cwd: REPOSITORY_ROOT,
+        cwd: REPOSITORY_ROOT_DIR,
         stdio: 'inherit',
         signal,
     });
@@ -155,7 +148,7 @@ async function launchTestRunner(ctx) {
     assertIsStringArray(args);
 
     const { code } = await spawnAndGracefulShutdown(aborter, cmd, args, {
-        cwd: TESTCASES_WS_ROOT_DIR,
+        cwd: AUTO_TESTS_PKG_ROOT_DIR,
         env,
         stdio: 'inherit',
         signal,
