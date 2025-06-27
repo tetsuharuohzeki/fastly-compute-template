@@ -1,7 +1,7 @@
 import test from 'ava';
 import { fetch } from 'undici';
 
-import { HttpHeader, HttpStatus, Mime } from '@c_at_e/integration_http_helpers';
+import { HttpHeader, HttpStatus, Mime } from '@c_at_e_integration_tests/http_helpers';
 
 import { constructUrl } from './__helpers__/domain.js';
 

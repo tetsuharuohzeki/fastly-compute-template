@@ -1,5 +1,5 @@
 {
-    "name": "@c_at_e/integration_tests_config",
+    "name": "@c_at_e_integration_tests/config",
     "private": true,
     "type": "module",
     "version": "0.0.0",

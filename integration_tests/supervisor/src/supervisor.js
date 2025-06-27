@@ -4,8 +4,8 @@ import { fileURLToPath } from 'node:url';
 
 import { isNull } from 'option-t/nullable';
 
-import { APP_LOCAL_ORIGIN } from '@c_at_e/integration_tests_config';
-import * as logger from '@c_at_e/integration_tests_logger';
+import { APP_LOCAL_ORIGIN } from '@c_at_e_integration_tests/config';
+import * as logger from '@c_at_e_integration_tests/logger';
 
 import { assertIsFunction, assertIsNonNullObject, assertIsString, assertIsStringArray } from './assert_types.js';
 import { parseCliOptions, assertIsCliOptions } from './cli_flags.js';

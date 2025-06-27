@@ -1,5 +1,5 @@
 {
-    "name": "@c_at_e/integration_tests_logger",
+    "name": "@c_at_e_integration_tests/logger",
     "private": true,
     "type": "module",
     "version": "0.0.0",

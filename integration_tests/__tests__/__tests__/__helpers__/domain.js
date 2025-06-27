@@ -1,6 +1,6 @@
 import * as assert from 'node:assert/strict';
 
-import { APP_LOCAL_ORIGIN } from '@c_at_e/integration_tests_config';
+import { APP_LOCAL_ORIGIN } from '@c_at_e_integration_tests/config';
 
 export const ORIGIN = APP_LOCAL_ORIGIN;
 

@@ -1,5 +1,5 @@
 {
-    "name": "@c_at_e/integration_tests",
+    "name": "@c_at_e_integration_tests/root",
     "private": true,
     "type": "module",
     "version": "0.0.0",
@@ -14,7 +14,7 @@
         "lint:fix": "node --run lint -- --fix"
     },
     "dependencies": {
-        "@c_at_e/integration_tests_tools": "workspace:"
+        "@c_at_e_integration_tests/tools": "workspace:"
     },
     "devDependencies": {
         "@eslint/js": "^9.29.0",
