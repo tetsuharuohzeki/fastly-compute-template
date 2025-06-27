@@ -1,15 +1,14 @@
 import test from 'ava';
 import { fetch } from 'undici';
 
-import * as HttpHeader from '../http_helpers/http_header.js';
-import * as Mime from '../http_helpers/mime.js';
+import { HttpHeader, Mime } from '@c_at_e_integration_tests/http_helpers';
 
 import { constructUrl } from './__helpers__/domain.js';
 
 const CONTENT_TYPE_HEADER = HttpHeader.CONTENT_TYPE;
 const MIME_TEXT_PLAIN_UTF_8 = Mime.TEXT_PLAIN_UTF_8;
 
-const PATH = '/buildinfo';
+const PATH = '/';
 const URL = constructUrl(PATH);
 
 test(PATH, async (t) => {
@@ -18,6 +17,5 @@ test(PATH, async (t) => {
     t.is(headers.get(CONTENT_TYPE_HEADER), MIME_TEXT_PLAIN_UTF_8, `${CONTENT_TYPE_HEADER} header value`);
 
     const body = await res.text();
-    t.true(body.includes('git revision:'), 'contains git revision info');
-    t.true(body.includes('build date:'), 'contains build date info');
+    t.is(body, 'hello', 'response body');
 });

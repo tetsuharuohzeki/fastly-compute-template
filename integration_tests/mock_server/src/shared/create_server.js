@@ -1,11 +1,12 @@
 import * as assert from 'node:assert/strict';
 import * as http from 'node:http';
 
-import * as HttpStatus from '../../http_helpers/http_status.js';
-import * as logger from '../../logger/mod.js';
+import { HttpStatus, HttpHeader } from '@c_at_e_integration_tests/http_helpers';
+import * as logger from '@c_at_e_integration_tests/logger';
 
 import { RequestContext, createURLFromRequest } from './req_context.js';
-import { X_DEBUG_BACKEND_SERVER_NAME } from '../../http_helpers/http_header.js';
+
+const X_DEBUG_BACKEND_SERVER_NAME = HttpHeader.X_DEBUG_BACKEND_SERVER_NAME;
 
 /**
  *  @callback   Handler

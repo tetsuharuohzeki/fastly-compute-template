@@ -1,4 +1,4 @@
-import * as logger from '../../logger/mod.js';
+import * as logger from '@c_at_e_integration_tests/logger';
 
 export class ContextLogger {
     /**

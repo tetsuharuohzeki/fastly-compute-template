@@ -1,0 +1,20 @@
+{
+    "name": "@c_at_e_integration_tests/supervisor",
+    "private": true,
+    "type": "module",
+    "version": "0.0.0",
+    "description": "",
+    "exports": {
+        ".": {
+            "default": "./src/main.js"
+        }
+    },
+    "scripts": {},
+    "dependencies": {
+        "@c_at_e_integration_tests/config": "workspace:*",
+        "@c_at_e_integration_tests/logger": "workspace:*",
+        "option-t": "catalog:",
+        "undici": "catalog:"
+    },
+    "devDependencies": {}
+}

@@ -1,0 +1,22 @@
+{
+    "name": "@c_at_e_integration_tests/auto_tests",
+    "private": true,
+    "type": "module",
+    "version": "0.0.0",
+    "description": "",
+    "exports": {
+        ".": {}
+    },
+    "scripts": {
+        "test": "ava",
+        "test:update_snapshot": "ava --update-snapshots"
+    },
+    "dependencies": {
+        "@c_at_e_integration_tests/config": "workspace:*",
+        "@c_at_e_integration_tests/http_helpers": "workspace:*",
+        "ava": "^6.4.0",
+        "option-t": "catalog:",
+        "undici": "catalog:"
+    },
+    "devDependencies": {}
+}

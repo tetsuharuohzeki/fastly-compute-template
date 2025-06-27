@@ -1,0 +1,17 @@
+{
+    "name": "@c_at_e_integration_tests/logger",
+    "private": true,
+    "type": "module",
+    "version": "0.0.0",
+    "description": "",
+    "exports": {
+        ".": {
+            "default": "./src/lib.js"
+        }
+    },
+    "scripts": {},
+    "dependencies": {
+        "option-t": "catalog:"
+    },
+    "devDependencies": {}
+}

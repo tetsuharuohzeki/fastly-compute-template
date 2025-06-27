@@ -2,7 +2,7 @@ import js from '@eslint/js';
 import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 
-import * as prettierConfig from './tools/eslint/prettier_ovrride.js';
+import * as prettierConfig from '@c_at_e_integration_tests/eslint_config/prettier_ovrride';
 
 export default defineConfig([
     js.configs.recommended,

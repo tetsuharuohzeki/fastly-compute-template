@@ -1,0 +1,14 @@
+# https://pnpm.io/pnpm-workspace_yaml
+packages:
+    - auto_tests
+    - config
+    - eslint_config
+    - http_helpers
+    - logger
+    - mock_server
+    - supervisor
+    - tools
+
+catalog:
+    option-t: ^53.0.0
+    undici: ^7.10.0

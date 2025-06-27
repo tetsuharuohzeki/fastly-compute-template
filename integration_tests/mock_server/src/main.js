@@ -1,6 +1,4 @@
-import * as HttpHeader from '../http_helpers/http_header.js';
-import * as HttpStatus from '../http_helpers/http_status.js';
-import * as Mime from '../http_helpers/mime.js';
+import { HttpHeader, HttpStatus, Mime } from '@c_at_e_integration_tests/http_helpers';
 
 import { createHttpServer } from './shared/create_server.js';
 import { parseCliOptions } from './shared/parse_cli.js';

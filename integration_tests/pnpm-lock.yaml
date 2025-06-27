@@ -4,19 +4,22 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    option-t:
+      specifier: ^53.0.0
+      version: 53.0.0
+    undici:
+      specifier: ^7.10.0
+      version: 7.10.0
+
 importers:
 
   .:
     dependencies:
-      ava:
-        specifier: ^6.4.0
-        version: 6.4.0
-      option-t:
-        specifier: ^53.0.0
-        version: 53.0.0
-      undici:
-        specifier: ^7.10.0
-        version: 7.10.0
+      '@c_at_e_integration_tests/eslint_config':
+        specifier: 'workspace:'
+        version: link:eslint_config
     devDependencies:
       '@eslint/js':
         specifier: ^9.29.0
@@ -30,9 +33,6 @@ importers:
       eslint:
         specifier: ^9.29.0
         version: 9.29.0
-      eslint-config-prettier:
-        specifier: ^10.1.5
-        version: 10.1.5(eslint@9.29.0)
       globals:
         specifier: ^16.2.0
         version: 16.2.0
@@ -42,6 +42,69 @@ importers:
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
+
+  auto_tests:
+    dependencies:
+      '@c_at_e_integration_tests/config':
+        specifier: workspace:*
+        version: link:../config
+      '@c_at_e_integration_tests/http_helpers':
+        specifier: workspace:*
+        version: link:../http_helpers
+      ava:
+        specifier: ^6.4.0
+        version: 6.4.0
+      option-t:
+        specifier: 'catalog:'
+        version: 53.0.0
+      undici:
+        specifier: 'catalog:'
+        version: 7.10.0
+
+  config: {}
+
+  eslint_config:
+    dependencies:
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@9.29.0)
+
+  http_helpers: {}
+
+  logger:
+    dependencies:
+      option-t:
+        specifier: 'catalog:'
+        version: 53.0.0
+
+  mock_server:
+    dependencies:
+      '@c_at_e_integration_tests/http_helpers':
+        specifier: workspace:*
+        version: link:../http_helpers
+      '@c_at_e_integration_tests/logger':
+        specifier: workspace:*
+        version: link:../logger
+      option-t:
+        specifier: 'catalog:'
+        version: 53.0.0
+
+  supervisor:
+    dependencies:
+      '@c_at_e_integration_tests/config':
+        specifier: workspace:*
+        version: link:../config
+      '@c_at_e_integration_tests/logger':
+        specifier: workspace:*
+        version: link:../logger
+      option-t:
+        specifier: 'catalog:'
+        version: 53.0.0
+      undici:
+        specifier: 'catalog:'
+        version: 7.10.0
+
+  tools: {}
 
 packages:
 
@@ -136,8 +199,8 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
-  '@rollup/pluginutils@5.1.4':
-    resolution: {integrity: sha512-USm05zrsFxYLPdWWq+K3STlWiT/3ELn3RcV5hJMghpeAIhxfsUIg6mt12CBJBInWMV4VneoV7SfGv8xIwo2qNQ==}
+  '@rollup/pluginutils@5.2.0':
+    resolution: {integrity: sha512-qWJ2ZTbmumwiLFomfzTyt5Kng4hwPi9rwCYN4SHb6eaRU1KNO4ccxINHr/VhH4GgPlt1XfSTLX2LBTme8ne4Zw==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
@@ -364,8 +427,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  emittery@1.1.0:
-    resolution: {integrity: sha512-rsX7ktqARv/6UQDgMaLfIqUWAEzzbCQiVh7V9rhDXp6c37yoJcks12NVD+XPkgl4AEavmNhVfrhGoqYwIsMYYA==}
+  emittery@1.2.0:
+    resolution: {integrity: sha512-KxdRyyFcS85pH3dnU8Y5yFUm2YJdaHwcBZWrfG8o89ZY9a13/f9itbN+YG3ELbBo9Pg5zvIozstmuV8bX13q6g==}
     engines: {node: '>=14.16'}
 
   emoji-regex@10.4.0:
@@ -1102,7 +1165,7 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@rollup/pluginutils@5.1.4':
+  '@rollup/pluginutils@5.2.0':
     dependencies:
       '@types/estree': 1.0.8
       estree-walker: 2.0.2
@@ -1123,7 +1186,7 @@ snapshots:
   '@vercel/nft@0.29.4':
     dependencies:
       '@mapbox/node-pre-gyp': 2.0.0
-      '@rollup/pluginutils': 5.1.4
+      '@rollup/pluginutils': 5.2.0
       acorn: 8.15.0
       acorn-import-attributes: 1.9.5(acorn@8.15.0)
       async-sema: 3.1.1
@@ -1208,7 +1271,7 @@ snapshots:
       concordance: 5.0.4
       currently-unhandled: 0.4.1
       debug: 4.4.1
-      emittery: 1.1.0
+      emittery: 1.2.0
       figures: 6.1.0
       globby: 14.1.0
       ignore-by-default: 2.1.0
@@ -1343,7 +1406,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  emittery@1.1.0: {}
+  emittery@1.2.0: {}
 
   emoji-regex@10.4.0: {}
 
