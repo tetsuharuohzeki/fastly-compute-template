@@ -1,11 +1,11 @@
 # https://pnpm.io/pnpm-workspace_yaml
 packages:
-    - __tests__
     - config
     - http_helpers
     - logger
     - mock_server
     - supervisor
+    - testcases
     - tools
 
 catalog:

@@ -43,24 +43,6 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
-  __tests__:
-    dependencies:
-      '@c_at_e_integration_tests/config':
-        specifier: workspace:*
-        version: link:../config
-      '@c_at_e_integration_tests/http_helpers':
-        specifier: workspace:*
-        version: link:../http_helpers
-      ava:
-        specifier: ^6.4.0
-        version: 6.4.0
-      option-t:
-        specifier: 'catalog:'
-        version: 53.0.0
-      undici:
-        specifier: 'catalog:'
-        version: 7.10.0
-
   config: {}
 
   http_helpers: {}
@@ -91,6 +73,24 @@ importers:
       '@c_at_e_integration_tests/logger':
         specifier: workspace:*
         version: link:../logger
+      option-t:
+        specifier: 'catalog:'
+        version: 53.0.0
+      undici:
+        specifier: 'catalog:'
+        version: 7.10.0
+
+  testcases:
+    dependencies:
+      '@c_at_e_integration_tests/config':
+        specifier: workspace:*
+        version: link:../config
+      '@c_at_e_integration_tests/http_helpers':
+        specifier: workspace:*
+        version: link:../http_helpers
+      ava:
+        specifier: ^6.4.0
+        version: 6.4.0
       option-t:
         specifier: 'catalog:'
         version: 53.0.0
