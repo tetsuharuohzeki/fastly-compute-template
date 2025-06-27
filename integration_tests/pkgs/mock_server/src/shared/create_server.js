@@ -2,7 +2,7 @@ import * as assert from 'node:assert/strict';
 import * as http from 'node:http';
 
 import { HttpStatus, HttpHeader } from '@c_at_e_integration_tests/http_helpers';
-import * as logger from '@c_at_e_integration_tests/logger';
+import { logger } from '@c_at_e_integration_tests/logger';
 
 import { RequestContext, createURLFromRequest } from './req_context.js';
 

@@ -8,7 +8,7 @@ import {
     INTEGRATION_TESTS_DIR,
     REPOSITORY_ROOT_DIR,
 } from '@c_at_e_integration_tests/config';
-import * as logger from '@c_at_e_integration_tests/logger';
+import { logger } from '@c_at_e_integration_tests/logger';
 
 import { assertIsFunction, assertIsNonNullObject, assertIsString, assertIsStringArray } from './assert_types.js';
 import { parseCliOptions, assertIsCliOptions } from './cli_flags.js';
