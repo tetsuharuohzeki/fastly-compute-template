@@ -54,12 +54,21 @@ importers:
       '@c_at_e/integration_http_helpers':
         specifier: workspace:*
         version: link:../http_helpers
+      '@c_at_e/integration_tests_config':
+        specifier: workspace:*
+        version: link:../config
       option-t:
         specifier: 'catalog:'
         version: 53.0.0
       undici:
         specifier: 'catalog:'
         version: 7.10.0
+
+  config:
+    dependencies:
+      option-t:
+        specifier: 'catalog:'
+        version: 53.0.0
 
   http_helpers: {}
 
@@ -83,6 +92,9 @@ importers:
 
   supervisor:
     dependencies:
+      '@c_at_e/integration_tests_config':
+        specifier: workspace:*
+        version: link:../config
       '@c_at_e/integration_tests_logger':
         specifier: workspace:*
         version: link:../logger

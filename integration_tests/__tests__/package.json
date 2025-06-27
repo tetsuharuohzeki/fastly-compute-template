@@ -9,6 +9,7 @@
     },
     "scripts": {},
     "dependencies": {
+        "@c_at_e/integration_tests_config": "workspace:*",
         "@c_at_e/integration_http_helpers": "workspace:*",
         "option-t": "catalog:",
         "undici": "catalog:"
