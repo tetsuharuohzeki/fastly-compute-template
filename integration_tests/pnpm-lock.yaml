@@ -19,7 +19,7 @@ importers:
     dependencies:
       '@c_at_e_integration_tests/eslint_config':
         specifier: 'workspace:'
-        version: link:eslint_config
+        version: link:pkgs/eslint_config
     devDependencies:
       '@eslint/js':
         specifier: ^9.29.0
@@ -43,7 +43,7 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
-  auto_tests:
+  pkgs/auto_tests:
     dependencies:
       '@c_at_e_integration_tests/config':
         specifier: workspace:*
@@ -61,23 +61,23 @@ importers:
         specifier: 'catalog:'
         version: 7.10.0
 
-  config: {}
+  pkgs/config: {}
 
-  eslint_config:
+  pkgs/eslint_config:
     dependencies:
       eslint-config-prettier:
         specifier: ^10.1.5
         version: 10.1.5(eslint@9.29.0)
 
-  http_helpers: {}
+  pkgs/http_helpers: {}
 
-  logger:
+  pkgs/logger:
     dependencies:
       option-t:
         specifier: 'catalog:'
         version: 53.0.0
 
-  mock_server:
+  pkgs/mock_server:
     dependencies:
       '@c_at_e_integration_tests/http_helpers':
         specifier: workspace:*
@@ -89,7 +89,7 @@ importers:
         specifier: 'catalog:'
         version: 53.0.0
 
-  supervisor:
+  pkgs/supervisor:
     dependencies:
       '@c_at_e_integration_tests/config':
         specifier: workspace:*
@@ -104,7 +104,7 @@ importers:
         specifier: 'catalog:'
         version: 7.10.0
 
-  tools: {}
+  pkgs/tools: {}
 
 packages:
 

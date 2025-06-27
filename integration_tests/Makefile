@@ -3,7 +3,7 @@ NPM_BIN := pnpm
 NPM_RUN := $(NODE_BIN) --run
 
 SRC_DIR := $(CURDIR)/src
-SUPERVISOR_SRC_DIR := $(CURDIR)/supervisor/src
+SUPERVISOR_SRC_DIR := $(CURDIR)/pkgs/supervisor/src
 NODE_MODULES_DIR := $(CURDIR)/node_modules
 
 all: help

@@ -19,7 +19,6 @@
         // @prettier-ignore
         "__dist/",
         "node_modules/",
-        "tools/",
         "eslint.config.js"
     ]
 }
