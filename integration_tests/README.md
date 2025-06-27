@@ -21,7 +21,7 @@ or `make run_integration_tests_with_update_expectations`.
 ## How To Write a Test
 
 You can write a test case with using [ava](https://github.com/avajs/ava) on Node.js.
-Please place your test case under [`__tests__/`](./__tests__).
+Please place your test case under [`pkgs/auto_tests/`](./pkgs/auto_tests/).
 
 ### _Release Channel_ specific test.
 
