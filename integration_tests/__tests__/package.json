@@ -1,0 +1,13 @@
+{
+    "name": "@c_at_e/integration_tests_testcases",
+    "private": true,
+    "type": "module",
+    "version": "0.0.0",
+    "description": "",
+    "exports": {},
+    "scripts": {},
+    "dependencies": {
+        "@c_at_e/integration_http_helpers": "workspace:*"
+    },
+    "devDependencies": {}
+}

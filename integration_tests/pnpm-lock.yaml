@@ -43,6 +43,31 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
+  __tests__:
+    dependencies:
+      '@c_at_e/integration_http_helpers':
+        specifier: workspace:*
+        version: link:../http_helpers
+
+  http_helpers: {}
+
+  logger: {}
+
+  mock_server:
+    dependencies:
+      '@c_at_e/integration_http_helpers':
+        specifier: workspace:*
+        version: link:../http_helpers
+      '@c_at_e/integration_tests_logger':
+        specifier: workspace:*
+        version: link:../logger
+
+  supervisor:
+    dependencies:
+      '@c_at_e/integration_tests_logger':
+        specifier: workspace:*
+        version: link:../logger
+
 packages:
 
   '@eslint-community/eslint-utils@4.7.0':

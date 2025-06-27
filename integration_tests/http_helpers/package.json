@@ -1,0 +1,15 @@
+{
+    "name": "@c_at_e/integration_http_helpers",
+    "private": true,
+    "type": "module",
+    "version": "0.0.0",
+    "description": "",
+    "exports": {
+        ".": {
+            "default": "./src/lib.js"
+        }
+    },
+    "scripts": {},
+    "dependencies": {},
+    "devDependencies": {}
+}

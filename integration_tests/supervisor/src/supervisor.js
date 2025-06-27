@@ -4,8 +4,8 @@ import { fileURLToPath } from 'node:url';
 
 import { isNull } from 'option-t/nullable';
 
-import * as logger from '../logger/mod.js';
-import { APP_LOCAL_ORIGIN } from '../url_origin.js';
+import * as logger from '@c_at_e/integration_tests_logger';
+import { APP_LOCAL_ORIGIN } from '../../url_origin.js';
 
 import { assertIsFunction, assertIsNonNullObject, assertIsString, assertIsStringArray } from './assert_types.js';
 import { parseCliOptions, assertIsCliOptions } from './cli_flags.js';
@@ -25,7 +25,7 @@ import { SuperVisorContext, assertIsSuperVisorContext } from './sv_ctx.js';
 const THIS_FILENAME = fileURLToPath(import.meta.url);
 const THIS_DIRNAME = path.dirname(THIS_FILENAME);
 
-const WORKSPACE_ROOT = path.resolve(THIS_DIRNAME, '..');
+const WORKSPACE_ROOT = path.resolve(THIS_DIRNAME, '../..');
 
 const REPOSITORY_ROOT = path.resolve(WORKSPACE_ROOT, '..');
 const INTEGRATION_TESTS_DIR = WORKSPACE_ROOT;

@@ -1,7 +1,7 @@
 import * as assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 
-import * as logger from '../logger/mod.js';
+import * as logger from '@c_at_e/integration_tests_logger';
 
 /**
  *  @typedef    {import('option-t/nullable').Nullable<T>}  Nullable
