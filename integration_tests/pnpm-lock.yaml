@@ -17,9 +17,9 @@ importers:
 
   .:
     dependencies:
-      '@c_at_e_integration_tests/tools':
+      '@c_at_e_integration_tests/eslint_config':
         specifier: 'workspace:'
-        version: link:tools
+        version: link:eslint_config
     devDependencies:
       '@eslint/js':
         specifier: ^9.29.0
@@ -44,6 +44,12 @@ importers:
         version: 5.8.3
 
   config: {}
+
+  eslint_config:
+    dependencies:
+      eslint-config-prettier:
+        specifier: ^10.1.5
+        version: 10.1.5(eslint@9.29.0)
 
   http_helpers: {}
 
@@ -98,11 +104,7 @@ importers:
         specifier: 'catalog:'
         version: 7.10.0
 
-  tools:
-    dependencies:
-      eslint-config-prettier:
-        specifier: ^10.1.5
-        version: 10.1.5(eslint@9.29.0)
+  tools: {}
 
 packages:
 

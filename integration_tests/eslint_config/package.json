@@ -1,5 +1,5 @@
 {
-    "name": "@c_at_e_integration_tests/tools",
+    "name": "@c_at_e_integration_tests/eslint_config",
     "private": true,
     "type": "module",
     "version": "0.0.0",
@@ -7,9 +7,14 @@
     "exports": {
         ".": {
             "default": "./src/lib.js"
+        },
+        "./prettier_ovrride": {
+            "default": "./src/prettier_ovrride.js"
         }
     },
     "scripts": {},
-    "dependencies": {},
+    "dependencies": {
+        "eslint-config-prettier": "^10.1.5"
+    },
     "devDependencies": {}
 }
