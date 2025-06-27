@@ -4,7 +4,9 @@
     "type": "module",
     "version": "0.0.0",
     "description": "",
-    "exports": {},
+    "exports": {
+        ".": {}
+    },
     "scripts": {},
     "dependencies": {
         "@c_at_e/integration_http_helpers": "workspace:*",
