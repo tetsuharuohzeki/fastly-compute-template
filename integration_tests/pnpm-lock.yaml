@@ -18,7 +18,7 @@ importers:
   .:
     dependencies:
       '@c_at_e_integration_tests/eslint_config':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:pkgs/eslint_config
     devDependencies:
       '@eslint/js':

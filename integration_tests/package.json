@@ -14,7 +14,7 @@
         "lint:fix": "node --run lint -- --fix"
     },
     "dependencies": {
-        "@c_at_e_integration_tests/eslint_config": "workspace:"
+        "@c_at_e_integration_tests/eslint_config": "workspace:*"
     },
     "devDependencies": {
         "@eslint/js": "^9.30.0",
