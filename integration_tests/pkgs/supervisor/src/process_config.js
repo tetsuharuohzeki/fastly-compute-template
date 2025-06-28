@@ -1,3 +1,4 @@
+import * as assert from 'node:assert/strict';
 import { assertIsStringArray, assertIsString } from './assert_types.js';
 
 class Process {
@@ -11,6 +12,7 @@ class Process {
      * @param {Array<string>} args
      */
     constructor(cmd, args) {
+        assert.notStrictEqual(new.target, Process, 'this class is designed as abstract class');
         assertIsString(cmd);
         assertIsStringArray(args);
 
@@ -18,6 +20,15 @@ class Process {
         this.args = args;
 
         Object.freeze(this);
+    }
+}
+
+class MakeProcess extends Process {
+    /**
+     * @param {Array<string>} args
+     */
+    constructor(args) {
+        super('make', args);
     }
 }
 
@@ -40,7 +51,7 @@ class TestRunner extends Process {
     }
 }
 
-export const APPLICATION = new Process('make', ['run_serve_localy', '-j', 'FASTLY_TOML_ENV=testing']);
+export const APPLICATION = new MakeProcess(['run_serve_localy', '-j', 'FASTLY_TOML_ENV=testing']);
 
 export const MOCK_SERVER_LIST = [
     // @prettier-ignore
