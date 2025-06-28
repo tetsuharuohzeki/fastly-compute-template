@@ -61,6 +61,9 @@ export default defineConfig([
                     caughtErrorsIgnorePattern: '^_', // Allow `catch (_e) {...}`
                 },
             ],
+
+            // We don't have any strong motivation to allow `var` to declare a variable.
+            'no-var': 'error',
         },
     },
     ...prettierConfig.configs,
