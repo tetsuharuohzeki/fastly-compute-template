@@ -1,7 +1,7 @@
 import prettierConfig from 'eslint-config-prettier';
 
 /**
- *  @typedef  {import('eslint').Linter.FlatConfig}  FlatConfig
+ *  @typedef  {import('eslint').Linter.Config}  FlatConfig
  */
 
 /** @type {ReadonlyArray<FlatConfig>} */
