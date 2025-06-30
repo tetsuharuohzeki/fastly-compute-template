@@ -1,4 +1,4 @@
-import prettierConfig from 'eslint-config-prettier';
+import prettierConfig from 'eslint-config-prettier/flat';
 
 /**
  *  @typedef  {import('eslint').Linter.Config}  FlatConfig
