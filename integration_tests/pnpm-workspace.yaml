@@ -5,4 +5,4 @@ packages:
 catalog:
     eslint: ^9.30.0
     option-t: ^53.0.0
-    undici: ^7.11.0
+    undici: ^7.13.0
