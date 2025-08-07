@@ -13,8 +13,8 @@ catalogs:
       specifier: ^53.0.0
       version: 53.0.0
     undici:
-      specifier: ^7.11.0
-      version: 7.11.0
+      specifier: ^7.13.0
+      version: 7.13.0
 
 importers:
 
@@ -56,7 +56,7 @@ importers:
         version: 53.0.0
       undici:
         specifier: 'catalog:'
-        version: 7.11.0
+        version: 7.13.0
 
   pkgs/config: {}
 
@@ -108,7 +108,7 @@ importers:
         version: 53.0.0
       undici:
         specifier: 'catalog:'
-        version: 7.11.0
+        version: 7.13.0
 
   pkgs/tools: {}
 
@@ -1005,8 +1005,8 @@ packages:
   undici-types@7.8.0:
     resolution: {integrity: sha512-9UJ2xGDvQ43tYyVMpuHlsgApydB8ZKfVYTsLDhXkFL/6gfkp+U8xTGdh8pMJv1SpZna0zxG1DwsKZsreLbXBxw==}
 
-  undici@7.11.0:
-    resolution: {integrity: sha512-heTSIac3iLhsmZhUCjyS3JQEkZELateufzZuBaVM5RHXdSBMb1LPMQf5x+FH7qjsZYDP0ttAc3nnVpUB+wYbOg==}
+  undici@7.13.0:
+    resolution: {integrity: sha512-l+zSMssRqrzDcb3fjMkjjLGmuiiK2pMIcV++mJaAc9vhjSGpvM7h43QgP+OAMb1GImHmbPyG2tBXeuyG5iY4gA==}
     engines: {node: '>=20.18.1'}
 
   unicorn-magic@0.3.0:
@@ -1911,7 +1911,7 @@ snapshots:
 
   undici-types@7.8.0: {}
 
-  undici@7.11.0: {}
+  undici@7.13.0: {}
 
   unicorn-magic@0.3.0: {}
 
