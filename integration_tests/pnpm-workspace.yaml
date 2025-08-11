@@ -3,7 +3,7 @@ packages:
     - pkgs/*
 
 catalog:
-    '@eslint/js': ^9.32.0
-    eslint: ^9.32.0
+    '@eslint/js': ^9.33.0
+    eslint: ^9.33.0
     option-t: ^53.0.0
     undici: ^7.13.0
