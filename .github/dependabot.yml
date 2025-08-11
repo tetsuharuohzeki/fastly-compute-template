@@ -11,6 +11,11 @@ updates:
           - "A-dependency/gardening"
           - I-enhancement
       versioning-strategy: auto
+      groups:
+          serde:
+              patterns:
+                  - serde
+                  - serde_json
 
     - package-ecosystem: npm
       directory: "/integration_tests"
