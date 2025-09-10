@@ -73,6 +73,9 @@ export default defineConfig([
 
             // We don't have any strong motivation to allow `var` to declare a variable.
             'no-var': 'error',
+
+            // We should keep and propagate the source error.
+            'preserve-caught-error': 'warn',
         },
     },
     ...prettierConfig.configs,
