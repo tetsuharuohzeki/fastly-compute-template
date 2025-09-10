@@ -14,7 +14,7 @@
     "dependencies": {
         "@c_at_e_integration_tests/config": "workspace:*",
         "@c_at_e_integration_tests/http_helpers": "workspace:*",
-        "ava": "^6.4.1",
+        "ava": "catalog:",
         "option-t": "catalog:",
         "undici": "catalog:"
     },
