@@ -6,6 +6,10 @@ updates:
       directory: "/"
       schedule:
           interval: weekly
+      cooldown:
+          default-days: 7 # This 1-week delay is just by my intuition.
+          include:
+              - "*"
       open-pull-requests-limit: 99
       labels:
           - "A-dependency/gardening"
@@ -22,6 +26,10 @@ updates:
       schedule:
           # We would not like to receive the notifications frequently for this.
           interval: monthly
+      cooldown:
+          default-days: 7 # This 1-week delay is just by my intuition.
+          include:
+              - "*"
       open-pull-requests-limit: 99
       labels:
           - "A-dependency/gardening"
@@ -41,6 +49,10 @@ updates:
           - "/.github/actions/*"
       schedule:
           interval: weekly
+      cooldown:
+          default-days: 7 # This 1-week delay is just by my intuition.
+          include:
+              - "*"
       open-pull-requests-limit: 99
       labels:
           - "A-dependency/gardening"
