@@ -1,9 +1,9 @@
 import * as assert from 'node:assert/strict';
 import { URL } from 'node:url';
-import { expectNotNull, isNotNull, isNull, unwrapOrForNullable } from 'option-t/nullable';
+import { expectNotNull, isNotNull, isNull, NullableOperator } from 'option-t/nullable';
 
 import { ContextLogger } from './context_logger.js';
-import { unwrapOrForUndefinable } from 'option-t/undefinable';
+import { UndefinableOperator } from 'option-t/undefinable';
 
 /**
  *  @typedef    {import('option-t/nullable').Nullable<T>}  Nullable
@@ -53,7 +53,7 @@ export class RequestContext {
      *  @returns    {RequestContext}
      */
     static fromRequest(url, req) {
-        const fastlyTraceId = unwrapOrForNullable(
+        const fastlyTraceId = NullableOperator.unwrapOr(
             getFastlyTraceId(req),
             // could not get ${HTTP_FASTLY_TRACE_HEADER} req header.
             // e.g. on the startup healthcheck from Viceroy.
@@ -226,7 +226,7 @@ export class RequestContext {
  *  @returns    {URL}
  */
 export function createURLFromRequest(req) {
-    const reqUrl = unwrapOrForUndefinable(req.url, '');
+    const reqUrl = UndefinableOperator.unwrapOr(req.url, '');
     const url = new URL(reqUrl, `http://${req.headers.host}`);
     return url;
 }

@@ -28,8 +28,8 @@ catalogs:
       specifier: ^16.3.0
       version: 16.4.0
     option-t:
-      specifier: ^54.2.3
-      version: 54.2.3
+      specifier: ^55.1.0
+      version: 55.1.0
     prettier:
       specifier: ^3.6.2
       version: 3.6.2
@@ -77,7 +77,7 @@ importers:
         version: 6.4.1
       option-t:
         specifier: 'catalog:'
-        version: 54.2.3
+        version: 55.1.0
       undici:
         specifier: 'catalog:'
         version: 7.16.0
@@ -105,7 +105,7 @@ importers:
     dependencies:
       option-t:
         specifier: 'catalog:'
-        version: 54.2.3
+        version: 55.1.0
 
   pkgs/mock_server:
     dependencies:
@@ -117,7 +117,7 @@ importers:
         version: link:../logger
       option-t:
         specifier: 'catalog:'
-        version: 54.2.3
+        version: 55.1.0
 
   pkgs/supervisor:
     dependencies:
@@ -129,7 +129,7 @@ importers:
         version: link:../logger
       option-t:
         specifier: 'catalog:'
-        version: 54.2.3
+        version: 55.1.0
       undici:
         specifier: 'catalog:'
         version: 7.16.0
@@ -816,8 +816,8 @@ packages:
     engines: {node: ^18.17.0 || >=20.5.0}
     hasBin: true
 
-  option-t@54.2.3:
-    resolution: {integrity: sha512-dFyvHsYd416+PW8HMby+vvN3zVL/OOQZj3evQTdy35Sz100JpQZAYCeV7NmiwINzxqVlkpj5FBKV28WoTvtEfA==}
+  option-t@55.1.0:
+    resolution: {integrity: sha512-9zYDDLVyGXhhnJJyeZpzwqce0T5JP0tmAfxY4/uVq7b9SRa91jEANYgWXqNDJiewP78OhGYsRz8kB/2TnGfQFw==}
     engines: {node: '>=24.5.0'}
 
   optionator@0.9.4:
@@ -1751,7 +1751,7 @@ snapshots:
     dependencies:
       abbrev: 3.0.1
 
-  option-t@54.2.3: {}
+  option-t@55.1.0: {}
 
   optionator@0.9.4:
     dependencies:
