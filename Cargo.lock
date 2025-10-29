@@ -119,9 +119,9 @@ checksum = "877a4ace8713b0bcf2a4e7eec82529c029f1d0619886d18145fea96c3ffe5c0f"
 
 [[package]]
 name = "fastly"
-version = "0.11.6"
+version = "0.11.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "32bf4378516eedd385f5d78f265435a1c4168bc89d5ee8d8841585c65bc50a34"
+checksum = "ac590af69cdea42ebbbaa566d0e603c6c0d7d6f53a507fe82cea65260419ab88"
 dependencies = [
  "anyhow",
  "bytes",
@@ -147,9 +147,9 @@ dependencies = [
 
 [[package]]
 name = "fastly-macros"
-version = "0.11.6"
+version = "0.11.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1d660b3a381c826932eae09717b7590ad26040e97b1f5f9bf4f38ec0b3ad5bf3"
+checksum = "b012bd5c924ede9a1363ad29a232c4e95c9eb520a124979ad06043a6e44025dc"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -158,9 +158,9 @@ dependencies = [
 
 [[package]]
 name = "fastly-shared"
-version = "0.11.6"
+version = "0.11.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a88b1ac0732d9e909b351f7bd5c734a9d7d05ca9d74b716cc904726451c029f7"
+checksum = "fe8aaf17b8c0b689ce8370052e129c7722f3bd9c5ca27790db7624cf64b8c9b1"
 dependencies = [
  "bitflags 1.3.2",
  "http",
@@ -168,14 +168,14 @@ dependencies = [
 
 [[package]]
 name = "fastly-sys"
-version = "0.11.6"
+version = "0.11.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dce393925aac0c1a7728c2c5a43d8c53e8ed63730a2c369504b71dacb8211bbf"
+checksum = "a784af8ed4e5f3d32aac54f687b6a2dd844af304390d3bc70d50cbe6a772c1a7"
 dependencies = [
  "bitflags 1.3.2",
  "fastly-shared",
- "wasi",
- "wit-bindgen-rt 0.42.1",
+ "wasip2",
+ "wit-bindgen",
 ]
 
 [[package]]
@@ -688,28 +688,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
 
 [[package]]
-name = "wasi"
-version = "0.14.2+wasi-0.2.4"
+name = "wasip2"
+version = "1.0.1+wasi-0.2.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9683f9a5a998d873c0d21fcbe3c083009670149a8fab228644b8bd36b2c48cb3"
+checksum = "0562428422c63773dad2c345a1882263bbf4d65cf3f42e90921f787ef5ad58e7"
 dependencies = [
- "wit-bindgen-rt 0.39.0",
+ "wit-bindgen",
 ]
 
 [[package]]
-name = "wit-bindgen-rt"
-version = "0.39.0"
+name = "wit-bindgen"
+version = "0.46.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6f42320e61fe2cfd34354ecb597f86f413484a798ba44a8ca1165c58d42da6c1"
-dependencies = [
- "bitflags 2.9.1",
-]
-
-[[package]]
-name = "wit-bindgen-rt"
-version = "0.42.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "051105bab12bc78e161f8dfb3596e772dd6a01ebf9c4840988e00347e744966a"
+checksum = "f17a85883d4e6d00e8a97c586de764dabcc06133f7f1d55dce5cdc070ad7fe59"
 dependencies = [
  "bitflags 2.9.1",
 ]
