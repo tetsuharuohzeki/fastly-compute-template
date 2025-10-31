@@ -119,7 +119,7 @@ jobs:
             - name: Install Rust toolchain
               uses: ./.github/actions/rust_toolchain
               with:
-                  toolchain: "1.91"
+                  toolchain: "1.90"
                   profile: default
                   override: true
                   cache: true
