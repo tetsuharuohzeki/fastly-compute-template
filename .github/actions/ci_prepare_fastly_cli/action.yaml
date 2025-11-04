@@ -12,6 +12,6 @@ runs:
         - name: Set up fastly CLI
           uses: fastly/compute-actions/setup@3b4355cb74cc7428a92dad1194bd564898372d55
           with:
-              cli_version: "12.1.0"
+              cli_version: "13.0.0"
               viceroy_version: "0.15.0"
               token: ${{ inputs.gh-token }}
