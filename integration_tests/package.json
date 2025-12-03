@@ -9,7 +9,6 @@
         "format": "node --run __format -- --write",
         "format:check": "node --run __format -- --check",
         "typecheck": "tsc --project . --noEmit",
-        "typecheck:go": "tsgo --project . --noEmit",
         "lint": "eslint .",
         "lint:check": "node --run lint -- --max-warnings 0",
         "lint:fix": "node --run lint -- --fix"
@@ -20,7 +19,6 @@
     "devDependencies": {
         "@tsconfig/strictest": "catalog:",
         "@types/node": "catalog:",
-        "@typescript/native-preview": "catalog:",
         "eslint": "catalog:",
         "prettier": "catalog:",
         "typescript": "catalog:"

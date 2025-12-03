@@ -2,7 +2,8 @@ import * as assert from 'node:assert/strict';
 import { isNotNull } from 'option-t/nullable';
 
 /**
- *  @import { Nullable } from 'option-t/nullable'
+ *  @typedef    {import('option-t/nullable').Nullable<T>}  Nullable
+ *  @template   T
  */
 
 let messagePrefix = '';

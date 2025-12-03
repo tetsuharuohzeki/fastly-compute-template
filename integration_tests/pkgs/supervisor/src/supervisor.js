@@ -18,7 +18,8 @@ import { spawnCancelableChild } from './spawn.js';
 import { SuperVisorContext, assertIsSuperVisorContext } from './sv_ctx.js';
 
 /**
- *  @import { Nullable } from 'option-t/nullable'
+ *  @typedef    {import('option-t/nullable').Nullable<T>}  Nullable
+ *  @template   T
  */
 /**
  *  @typedef    {import('./spawn.js').ProcessExitStatus}  ProcessExitStatus

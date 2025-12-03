@@ -6,7 +6,8 @@ import { ContextLogger } from './context_logger.js';
 import { UndefinableOperator } from 'option-t/undefinable';
 
 /**
- *  @import { Nullable } from 'option-t/nullable'
+ *  @typedef    {import('option-t/nullable').Nullable<T>}  Nullable
+ *  @template   T
  */
 
 // We tried to use `FASTLY_TRACE_ID` envvar to [trace-id](https://www.w3.org/TR/trace-context/#trace-context-http-headers-format)
@@ -39,7 +40,7 @@ function getFastlyTraceId(req) {
 
 const ON_CLOSE_EVENT = 'close';
 
-/** @typedef {string} RequestContextAbortedReasonValue */
+/** @enum {string} */
 export const RequestContextAbortedReason = Object.freeze({
     RequestClosed: 'REQ_CTX_ABORTED_BY_REQUEST_CLOSED',
     ResponseHandlerEnded: 'REQ_CTX_ABORTED_BY_RES_HANDLER_ENDED',
@@ -203,7 +204,7 @@ export class RequestContext {
 
     /**
      *  @private
-     *  @param {RequestContextAbortedReasonValue} reason
+     *  @param {RequestContextAbortedReason} reason
      *  @returns    {void}
      */
     _finalizeWithReason(reason) {

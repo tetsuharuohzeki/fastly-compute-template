@@ -4,17 +4,18 @@ import { spawn } from 'node:child_process';
 import { logger } from '@c_at_e_integration_tests/logger';
 
 /**
- *  @import { Nullable } from 'option-t/nullable'
+ *  @typedef    {import('option-t/nullable').Nullable<T>}  Nullable
+ *  @template   T
  */
-
 /**
- *  @import { Maybe } from 'option-t/maybe'
+ *  @typedef    {import('option-t/maybe').Maybe<T>}  Maybe
+ *  @template   T
  */
 
 const SIGTERM = 15;
 
 /**
- *  @typedef    {object}    ProcessExitStatus
+ *  @typedef    {Object}    ProcessExitStatus
  *  @property   {Nullable<number>}    code
  *  @property   {Nullable<NodeJS.Signals>}    signal
  */
@@ -26,7 +27,6 @@ const SIGTERM = 15;
  *  @returns    {Promise<ProcessExitStatus>}
  */
 export function spawnCancelableChild(bin, args, option) {
-    /** @type   {Promise<ProcessExitStatus>} */
     const process = new Promise((resolve, reject) => {
         const signal = option.signal;
         if (signal instanceof AbortSignal) {
