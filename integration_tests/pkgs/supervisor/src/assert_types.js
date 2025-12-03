@@ -1,8 +1,7 @@
 import * as assert from 'node:assert/strict';
 import { isNotNull } from 'option-t/nullable';
 /**
- *  @typedef {import('option-t/nullable').NotNull<T>} NotNull
- *  @template T
+ *  @import { NotNull } from 'option-t/nullable'
  */
 
 /**
