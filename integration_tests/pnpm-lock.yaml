@@ -13,8 +13,8 @@ catalogs:
       specifier: ^2.0.6
       version: 2.0.6
     '@types/node':
-      specifier: ^24.9.2
-      version: 24.9.2
+      specifier: ^24.10.1
+      version: 24.10.1
     '@typescript/native-preview':
       specifier: 7.0.0-dev.20251202.1
       version: 7.0.0-dev.20251202.1
@@ -56,7 +56,7 @@ importers:
         version: 2.0.6
       '@types/node':
         specifier: 'catalog:'
-        version: 24.9.2
+        version: 24.10.1
       '@typescript/native-preview':
         specifier: 'catalog:'
         version: 7.0.0-dev.20251202.1
@@ -249,8 +249,8 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
-  '@types/node@24.9.2':
-    resolution: {integrity: sha512-uWN8YqxXxqFMX2RqGOrumsKeti4LlmIMIyV0lgut4jx7KQBcBiW6vkDtIBvHnHIquwNfJhk8v2OtmO8zXWHfPA==}
+  '@types/node@24.10.1':
+    resolution: {integrity: sha512-GNWcUTRBgIRJD5zj+Tq0fKOJ5XZajIiBroOF0yvj2bSU1WvNdYS/dn9UxwsujGW4JX06dnHyjV2y9rRaybH0iQ==}
 
   '@typescript/native-preview-darwin-arm64@7.0.0-dev.20251202.1':
     resolution: {integrity: sha512-zcyBNJm0PW4H/yE6Q67/8iKn0iHH1PPV/Wm0MaermgLFgvDc684RFrC7QDRaykxD8+GnrKii+94fq22wCXwNYw==}
@@ -1237,7 +1237,7 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
-  '@types/node@24.9.2':
+  '@types/node@24.10.1':
     dependencies:
       undici-types: 7.16.0
 
