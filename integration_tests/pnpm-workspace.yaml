@@ -12,4 +12,4 @@ catalog:
   option-t: ^55.1.0
   prettier: ^3.7.3
   typescript: ^5.9.3
-  undici: ^7.16.0
+  undici: ^7.18.2
