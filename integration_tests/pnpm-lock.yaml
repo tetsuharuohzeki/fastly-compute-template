@@ -28,8 +28,8 @@ catalogs:
       specifier: ^16.5.0
       version: 16.5.0
     option-t:
-      specifier: ^55.1.0
-      version: 55.1.0
+      specifier: ^55.1.1
+      version: 55.1.1
     prettier:
       specifier: ^3.7.4
       version: 3.7.4
@@ -77,7 +77,7 @@ importers:
         version: 6.4.1
       option-t:
         specifier: 'catalog:'
-        version: 55.1.0
+        version: 55.1.1
       undici:
         specifier: 'catalog:'
         version: 7.18.2
@@ -105,7 +105,7 @@ importers:
     dependencies:
       option-t:
         specifier: 'catalog:'
-        version: 55.1.0
+        version: 55.1.1
 
   pkgs/mock_server:
     dependencies:
@@ -117,7 +117,7 @@ importers:
         version: link:../logger
       option-t:
         specifier: 'catalog:'
-        version: 55.1.0
+        version: 55.1.1
 
   pkgs/supervisor:
     dependencies:
@@ -129,7 +129,7 @@ importers:
         version: link:../logger
       option-t:
         specifier: 'catalog:'
-        version: 55.1.0
+        version: 55.1.1
       undici:
         specifier: 'catalog:'
         version: 7.18.2
@@ -807,8 +807,8 @@ packages:
     engines: {node: ^18.17.0 || >=20.5.0}
     hasBin: true
 
-  option-t@55.1.0:
-    resolution: {integrity: sha512-9zYDDLVyGXhhnJJyeZpzwqce0T5JP0tmAfxY4/uVq7b9SRa91jEANYgWXqNDJiewP78OhGYsRz8kB/2TnGfQFw==}
+  option-t@55.1.1:
+    resolution: {integrity: sha512-ziEKvr/12Yta8rSSvs01W8I+FfhVMhvnEKX6c34FDGLHIl2EunrRBVhg5KomDTUnNxQ3ks6Qsz8vrAh+Py0lVA==}
     engines: {node: '>=24.5.0'}
 
   optionator@0.9.4:
@@ -984,6 +984,7 @@ packages:
   tar@7.5.2:
     resolution: {integrity: sha512-7NyxrTE4Anh8km8iEy7o0QYPs+0JKBTj5ZaqHg6B39erLg0qYXN3BijtShwbsNSvQ+LN75+KV+C4QR/f6Gwnpg==}
     engines: {node: '>=18'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exhorbitant rates) by contacting i@izs.me
 
   temp-dir@3.0.0:
     resolution: {integrity: sha512-nHc6S/bwIilKHNRgK/3jlhDoIHcp45YgyiwcAk46Tr0LfEqGBVpmiAyuiuxeVE44m3mXnEeVhaipLOEWmH+Njw==}
@@ -1739,7 +1740,7 @@ snapshots:
     dependencies:
       abbrev: 3.0.1
 
-  option-t@55.1.0: {}
+  option-t@55.1.1: {}
 
   optionator@0.9.4:
     dependencies:
