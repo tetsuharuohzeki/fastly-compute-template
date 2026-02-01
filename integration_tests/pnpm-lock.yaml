@@ -37,8 +37,8 @@ catalogs:
       specifier: ^5.9.3
       version: 5.9.3
     undici:
-      specifier: ^7.18.2
-      version: 7.18.2
+      specifier: ^7.19.1
+      version: 7.19.2
 
 importers:
 
@@ -80,7 +80,7 @@ importers:
         version: 55.1.0
       undici:
         specifier: 'catalog:'
-        version: 7.18.2
+        version: 7.19.2
 
   pkgs/config: {}
 
@@ -132,7 +132,7 @@ importers:
         version: 55.1.0
       undici:
         specifier: 'catalog:'
-        version: 7.18.2
+        version: 7.19.2
 
   pkgs/tools: {}
 
@@ -984,6 +984,7 @@ packages:
   tar@7.5.2:
     resolution: {integrity: sha512-7NyxrTE4Anh8km8iEy7o0QYPs+0JKBTj5ZaqHg6B39erLg0qYXN3BijtShwbsNSvQ+LN75+KV+C4QR/f6Gwnpg==}
     engines: {node: '>=18'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exhorbitant rates) by contacting i@izs.me
 
   temp-dir@3.0.0:
     resolution: {integrity: sha512-nHc6S/bwIilKHNRgK/3jlhDoIHcp45YgyiwcAk46Tr0LfEqGBVpmiAyuiuxeVE44m3mXnEeVhaipLOEWmH+Njw==}
@@ -1016,8 +1017,8 @@ packages:
   undici-types@7.16.0:
     resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
-  undici@7.18.2:
-    resolution: {integrity: sha512-y+8YjDFzWdQlSE9N5nzKMT3g4a5UBX1HKowfdXh0uvAnTaqqwqB92Jt4UXBAeKekDs5IaDKyJFR4X1gYVCgXcw==}
+  undici@7.19.2:
+    resolution: {integrity: sha512-4VQSpGEGsWzk0VYxyB/wVX/Q7qf9t5znLRgs0dzszr9w9Fej/8RVNQ+S20vdXSAyra/bJ7ZQfGv6ZMj7UEbzSg==}
     engines: {node: '>=20.18.1'}
 
   unicorn-magic@0.3.0:
@@ -1914,7 +1915,7 @@ snapshots:
 
   undici-types@7.16.0: {}
 
-  undici@7.18.2: {}
+  undici@7.19.2: {}
 
   unicorn-magic@0.3.0: {}
 
