@@ -11,5 +11,5 @@ catalog:
   globals: ^16.5.0
   option-t: ^55.1.0
   prettier: ^3.7.4
-  typescript: ^5.9.3
+  typescript: ^6.0.2
   undici: ^7.18.2
