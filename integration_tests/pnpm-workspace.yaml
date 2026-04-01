@@ -13,3 +13,9 @@ catalog:
   prettier: ^3.7.4
   typescript: ^5.9.3
   undici: ^7.18.2
+
+minimumReleaseAge: 8400 # 60min * 24 * 7. This should be matched with dependabot's cooldown setting.
+minimumReleaseAgeExclude:
+
+trustPolicy: no-downgrade
+trustPolicyExclude:
