@@ -13,5 +13,5 @@ runs:
           uses: fastly/compute-actions/setup@9ca64d641e165464cd4c0c988f2e549dc7d43b49 # v13
           with:
               cli_version: "14.2.0"
-              viceroy_version: "0.16.2"
+              viceroy_version: "0.16.5"
               token: ${{ inputs.gh-token }}
