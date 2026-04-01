@@ -35,6 +35,7 @@ export function createHttpServer(serverName, port, handler, isVerbose = false) {
         const urlPathname = url.pathname;
         logger.info(`request incoming: ${urlPathname}`);
 
+        // eslint-disable-next-line no-useless-assignment
         let ok = false;
         try {
             ok = await handler(req, res, url, context);
