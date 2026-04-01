@@ -9,7 +9,7 @@ edition = "2024"
 rust-version = "1.94"
 
 [workspace.dependencies]
-fastly = "^0.11.13"
+fastly = "^0.12.0"
 
 
 [workspace.lints.rust]
