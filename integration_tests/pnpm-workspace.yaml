@@ -11,7 +11,7 @@ catalog:
   globals: ^17.4.0
   option-t: ^56.0.0
   prettier: ^3.8.3
-  typescript: ^6.0.2
+  typescript: ^6.0.3
   undici: ^7.24.6
 
 minimumReleaseAge: 8400 # 60min * 24 * 7. This should be matched with dependabot's cooldown setting.
