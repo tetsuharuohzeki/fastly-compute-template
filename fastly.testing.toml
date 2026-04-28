@@ -12,7 +12,7 @@ manifest_version = 3
     # machine always connect to a network.
     #
     # To make more reliable, we specify a viceroy_version for integration test.
-    viceroy_version = "0.16.5"
+    viceroy_version = "0.17.0"
 
     [local_server.backends]
         [local_server.backends.backend_a]
