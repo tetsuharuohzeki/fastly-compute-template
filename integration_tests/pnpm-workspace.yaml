@@ -15,5 +15,13 @@ catalog:
   undici: ^8.1.0
 
 minimumReleaseAge: 8400 # 60min * 24 * 7. This should be matched with dependabot's cooldown setting.
+minimumReleaseAgeExclude:
 
 trustPolicy: no-downgrade
+trustPolicyIgnoreAfter: 43200 # 60min * 24 * 30
+
+# Mitigate an attack vector for a typical supply chain attack.
+blockExoticSubdeps: true
+
+strictDepBuilds: true
+allowBuilds:
