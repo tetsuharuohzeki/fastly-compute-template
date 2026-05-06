@@ -1,26 +1,12 @@
-import * as assert from 'node:assert/strict';
 import { ReleaseChannel } from '@c_at_e_integration_tests/config';
 
 const TEST_TARGET_DIR_GLOB_PREFIX = `**/__tests__/**`;
-
-/**
- * @param {string} str
- * @returns {`!${string}`}
- */
-function ignore(str) {
-    assert.ok(typeof str === 'string');
-    return `!${str}`;
-}
 
 // https://github.com/avajs/ava/blob/main/docs/06-configuration.md
 export default function resolveAvaConfig() {
     ReleaseChannel.verifyReleaseChannelIsExpected();
 
-    const files = [
-        `${TEST_TARGET_DIR_GLOB_PREFIX}/*`,
-        ignore(`${TEST_TARGET_DIR_GLOB_PREFIX}/__helpers__/**/*`),
-        ignore(`${TEST_TARGET_DIR_GLOB_PREFIX}/__fixtures__/**/*`),
-    ];
+    const files = [`${TEST_TARGET_DIR_GLOB_PREFIX}/*.test.*`];
 
     console.log(`
 ============ Configurations for avajs ============
