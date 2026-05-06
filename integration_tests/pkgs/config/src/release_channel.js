@@ -10,13 +10,15 @@ const ReleaseChannel = Object.freeze({
     Canary: 'canary',
 });
 
-const IS_PRODUCTION = RELEASE_CHANNEL === ReleaseChannel.Production;
-const IS_CANARY = RELEASE_CHANNEL === ReleaseChannel.Canary;
+const RELEASE_CHANNEL_IS_PRODUCTION = RELEASE_CHANNEL === ReleaseChannel.Production;
+const RELEASE_CHANNEL_IS_CANARY = RELEASE_CHANNEL === ReleaseChannel.Canary;
 
 export {
     // @prettier-ignore
     RELEASE_CHANNEL,
     ReleaseChannel as Channel,
-    IS_PRODUCTION,
-    IS_CANARY,
+    RELEASE_CHANNEL_IS_PRODUCTION as IS_PRODUCTION,
+    RELEASE_CHANNEL_IS_CANARY as IS_CANARY,
+    RELEASE_CHANNEL_IS_PRODUCTION,
+    RELEASE_CHANNEL_IS_CANARY,
 };

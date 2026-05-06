@@ -6,3 +6,4 @@ export {
 } from './dir_names.js';
 export { APP_LOCAL_ORIGIN } from './url_origin.js';
 export * as ReleaseChannel from './release_channel.js';
+export { RELEASE_CHANNEL_IS_CANARY, RELEASE_CHANNEL_IS_PRODUCTION } from './release_channel.js';
