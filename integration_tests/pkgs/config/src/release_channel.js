@@ -1,25 +1,30 @@
+// @ts-check
+
 import { toNullableFromUndefinable } from 'option-t/undefinable/to_nullable';
 
 /**
  * @type    {string|null}
  */
-const RELEASE_CHANNEL = toNullableFromUndefinable(process.env['RELEASE_CHANNEL']);
+export const RELEASE_CHANNEL = toNullableFromUndefinable(process.env['RELEASE_CHANNEL']);
+
+const RELEASE_CHANNEL_VALUE_PRODUCTION = 'production';
+const RELEASE_CHANNEL_VALUE_CANARY = 'canary';
 
 const ReleaseChannel = Object.freeze({
-    Production: 'production',
-    Canary: 'canary',
+    Production: RELEASE_CHANNEL_VALUE_PRODUCTION,
+    Canary: RELEASE_CHANNEL_VALUE_CANARY,
 });
 
 /** @type   {boolean} */
-const RELEASE_CHANNEL_IS_PRODUCTION = RELEASE_CHANNEL === ReleaseChannel.Production;
+export const RELEASE_CHANNEL_IS_PRODUCTION = RELEASE_CHANNEL === RELEASE_CHANNEL_VALUE_PRODUCTION;
 /** @type   {boolean} */
-const RELEASE_CHANNEL_IS_CANARY = RELEASE_CHANNEL === ReleaseChannel.Canary;
+export const RELEASE_CHANNEL_IS_CANARY = RELEASE_CHANNEL === RELEASE_CHANNEL_VALUE_CANARY;
 
 export function verifyReleaseChannelIsExpected() {
     switch (RELEASE_CHANNEL) {
-        case ReleaseChannel.Production:
+        case RELEASE_CHANNEL_VALUE_PRODUCTION:
             break;
-        case ReleaseChannel.Canary:
+        case RELEASE_CHANNEL_VALUE_CANARY:
             break;
         case null:
             break;
@@ -30,10 +35,7 @@ export function verifyReleaseChannelIsExpected() {
 
 export {
     // @prettier-ignore
-    RELEASE_CHANNEL,
     ReleaseChannel as Channel,
     RELEASE_CHANNEL_IS_PRODUCTION as IS_PRODUCTION,
     RELEASE_CHANNEL_IS_CANARY as IS_CANARY,
-    RELEASE_CHANNEL_IS_PRODUCTION,
-    RELEASE_CHANNEL_IS_CANARY,
 };
