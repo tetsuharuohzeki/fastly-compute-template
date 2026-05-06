@@ -9,7 +9,7 @@ catalog:
   eslint: ^10.2.1
   eslint-config-prettier: ^10.1.8
   globals: ^17.5.0
-  option-t: ^56.1.0
+  option-t: ^56.1.1
   prettier: ^3.8.3
   typescript: ^6.0.3
   undici: ^8.1.0
