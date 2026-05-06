@@ -11,13 +11,13 @@ export default defineConfig([
             globals: {
                 ...globals.nodeBuiltin,
                 // Use globalThis instead.
-                global: false,
+                global: 'off',
                 // Use undici instead.
-                fetch: false,
-                FormData: false,
-                Headers: false,
-                Request: false,
-                Response: false,
+                fetch: 'off',
+                FormData: 'off',
+                Headers: 'off',
+                Request: 'off',
+                Response: 'off',
             },
             ecmaVersion: 'latest',
         },
