@@ -82,7 +82,11 @@ importers:
         specifier: 'catalog:'
         version: 8.1.0
 
-  pkgs/config: {}
+  pkgs/config:
+    dependencies:
+      option-t:
+        specifier: 'catalog:'
+        version: 56.1.1
 
   pkgs/eslint_config:
     dependencies:

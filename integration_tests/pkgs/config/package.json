@@ -10,6 +10,8 @@
         }
     },
     "scripts": {},
-    "dependencies": {},
+    "dependencies": {
+        "option-t": "catalog:"
+    },
     "devDependencies": {}
 }

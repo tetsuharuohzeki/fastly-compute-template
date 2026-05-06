@@ -1,12 +1,5 @@
 import * as assert from 'node:assert/strict';
-import { toNullableFromUndefinable } from 'option-t/undefinable/to_nullable';
-
-const RELEASE_CHANNEL = toNullableFromUndefinable(process.env['RELEASE_CHANNEL']);
-
-const ReleaseChannel = Object.freeze({
-    Production: 'production',
-    Canary: 'canary',
-});
+import { ReleaseChannel } from '@c_at_e_integration_tests/config';
 
 const TEST_TARGET_DIR_GLOB_PREFIX = `**/__tests__/**`;
 
@@ -43,11 +36,13 @@ function buildTargetPathPatternList() {
         ignore(`${TEST_TARGET_DIR_GLOB_PREFIX}/__helpers__/**/*`),
         ignore(`${TEST_TARGET_DIR_GLOB_PREFIX}/__fixtures__/**/*`),
     ];
+
+    const RELEASE_CHANNEL = ReleaseChannel.RELEASE_CHANNEL;
     switch (RELEASE_CHANNEL) {
-        case ReleaseChannel.Production:
+        case ReleaseChannel.Channel.Production:
             files.push(...PRODUCTION_ONLY_TEST_PATTERN, ...ignorePatterns(CANARY_ONLY_TEST_PATTERN));
             break;
-        case ReleaseChannel.Canary:
+        case ReleaseChannel.Channel.Canary:
             files.push(...ignorePatterns(PRODUCTION_ONLY_TEST_PATTERN), ...CANARY_ONLY_TEST_PATTERN);
             break;
         case null:
