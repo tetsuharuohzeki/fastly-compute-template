@@ -3,55 +3,23 @@ import { ReleaseChannel } from '@c_at_e_integration_tests/config';
 
 const TEST_TARGET_DIR_GLOB_PREFIX = `**/__tests__/**`;
 
-const PRODUCTION_ONLY_TEST_PATTERN = [
-    `${TEST_TARGET_DIR_GLOB_PREFIX}/*.production.js`,
-    `${TEST_TARGET_DIR_GLOB_PREFIX}/*.production.test.js`,
-];
-const CANARY_ONLY_TEST_PATTERN = [
-    `${TEST_TARGET_DIR_GLOB_PREFIX}/*.canary.js`,
-    `${TEST_TARGET_DIR_GLOB_PREFIX}/*.canary.test.js`,
-];
+/**
+ * @param {string} str
+ * @returns {`!${string}`}
+ */
+function ignore(str) {
+    assert.ok(typeof str === 'string');
+    return `!${str}`;
+}
 
 function buildTargetPathPatternList() {
-    /**
-     * @param {Array<string>} list
-     * @returns {Array<string>}
-     */
-    function ignorePatterns(list) {
-        assert.ok(Array.isArray(list));
-        return list.map(ignore);
-    }
-
-    /**
-     * @param {string} str
-     * @returns {`!${string}`}
-     */
-    function ignore(str) {
-        assert.ok(typeof str === 'string');
-        return `!${str}`;
-    }
-
     const files = [
         `${TEST_TARGET_DIR_GLOB_PREFIX}/*`,
         ignore(`${TEST_TARGET_DIR_GLOB_PREFIX}/__helpers__/**/*`),
         ignore(`${TEST_TARGET_DIR_GLOB_PREFIX}/__fixtures__/**/*`),
     ];
 
-    const RELEASE_CHANNEL = ReleaseChannel.RELEASE_CHANNEL;
-    switch (RELEASE_CHANNEL) {
-        case ReleaseChannel.Channel.Production:
-            files.push(...PRODUCTION_ONLY_TEST_PATTERN, ...ignorePatterns(CANARY_ONLY_TEST_PATTERN));
-            break;
-        case ReleaseChannel.Channel.Canary:
-            files.push(...ignorePatterns(PRODUCTION_ONLY_TEST_PATTERN), ...CANARY_ONLY_TEST_PATTERN);
-            break;
-        case null:
-            // ignore all specific release channel tests.
-            files.push(...ignorePatterns(PRODUCTION_ONLY_TEST_PATTERN), ...ignorePatterns(CANARY_ONLY_TEST_PATTERN));
-            break;
-        default:
-            throw new RangeError(`RELEASE_CHANNEL is unknown '${RELEASE_CHANNEL}'`);
-    }
+    ReleaseChannel.verifyReleaseChannelIsExpected();
     return files;
 }
 
@@ -59,7 +27,9 @@ function buildTargetPathPatternList() {
 export default function resolveAvaConfig() {
     const files = buildTargetPathPatternList();
     console.log(`
-============ Configurations for Ava ============
+============ Configurations for avajs ============
+RELEASE_CHANNEL: ${ReleaseChannel.RELEASE_CHANNEL}
+
 ava treats tests as these files:
 ${files.join('\n')}
 ================================================
