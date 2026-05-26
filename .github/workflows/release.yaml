@@ -10,8 +10,7 @@ on:
         types:
             - released
 
-permissions:
-    contents: read
+permissions: {}
 
 # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
 concurrency:
@@ -23,9 +22,13 @@ concurrency:
 jobs:
     ci:
         uses: ./.github/workflows/_ci.yaml
+        permissions:
+            contents: read
 
     deploy:
         needs: [ci]
+        permissions:
+            contents: read
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2

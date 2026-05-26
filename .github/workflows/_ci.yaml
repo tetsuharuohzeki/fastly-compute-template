@@ -15,13 +15,14 @@ on:
                     but this require to pass it explicitly to make the workflow simply.
                 required: true
 
-permissions:
-    contents: read
+permissions: {}
 
 # https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
 # https://docs.github.com/en/actions/learn-github-actions/contexts
 jobs:
     fetch_cargo_registry:
+        permissions:
+            contents: read
         runs-on: ubuntu-latest
         timeout-minutes: 5
         steps:
@@ -31,6 +32,8 @@ jobs:
             - uses: ./.github/actions/ci_prepare_to_compile
 
     fetch_npm_registry:
+        permissions:
+            contents: read
         runs-on: ubuntu-latest
         timeout-minutes: 5
         steps:
@@ -41,6 +44,8 @@ jobs:
 
     build:
         needs: [fetch_cargo_registry]
+        permissions:
+            contents: read
         runs-on: ubuntu-latest
         timeout-minutes: 10
         strategy:
@@ -71,6 +76,8 @@ jobs:
 
     integration_tests:
         needs: [fetch_npm_registry, build]
+        permissions:
+            contents: read
         runs-on: ubuntu-latest
         timeout-minutes: 10
         strategy:
@@ -100,6 +107,8 @@ jobs:
 
     unittests:
         needs: [fetch_cargo_registry]
+        permissions:
+            contents: read
         runs-on: ubuntu-latest
         timeout-minutes: 10
         steps:
@@ -112,6 +121,8 @@ jobs:
 
     lint_check:
         needs: [fetch_cargo_registry]
+        permissions:
+            contents: read
         runs-on: ubuntu-latest
         timeout-minutes: 10
         steps:
@@ -124,6 +135,8 @@ jobs:
 
     format_check:
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
         timeout-minutes: 10
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -143,6 +156,8 @@ jobs:
 
     format_check_integration_tests:
         needs: [fetch_npm_registry]
+        permissions:
+            contents: read
         runs-on: ubuntu-latest
         timeout-minutes: 10
         steps:
@@ -155,6 +170,8 @@ jobs:
 
     lint_check_integration_tests:
         needs: [fetch_npm_registry]
+        permissions:
+            contents: read
         runs-on: ubuntu-latest
         timeout-minutes: 10
         steps:
@@ -167,6 +184,8 @@ jobs:
 
     typecheck_integration_tests:
         needs: [fetch_npm_registry]
+        permissions:
+            contents: read
         runs-on: ubuntu-latest
         timeout-minutes: 10
         steps:
@@ -189,6 +208,7 @@ jobs:
             - lint_check_integration_tests
             - format_check_integration_tests
             - typecheck_integration_tests
+        permissions: {}
         runs-on: ubuntu-latest
         if: ${{ always() }}
         steps:

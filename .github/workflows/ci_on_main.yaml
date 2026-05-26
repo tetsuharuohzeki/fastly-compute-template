@@ -5,8 +5,7 @@ on:
         branches:
             - "main"
 
-permissions:
-    contents: read
+permissions: {}
 
 # See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
 #
@@ -30,9 +29,13 @@ jobs:
         uses: ./.github/workflows/_ci.yaml
         secrets:
             gh-token: ${{ secrets.GITHUB_TOKEN }}
+        permissions:
+            contents: read
 
     deploy:
         needs: [ci]
+        permissions:
+            contents: read
         runs-on: ubuntu-latest
         timeout-minutes: 10
         strategy:

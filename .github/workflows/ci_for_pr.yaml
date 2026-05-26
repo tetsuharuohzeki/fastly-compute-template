@@ -3,8 +3,7 @@ name: CI for each of Pull Requests
 on:
     pull_request:
 
-permissions:
-    contents: read
+permissions: {}
 
 # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
 concurrency:
@@ -16,3 +15,5 @@ jobs:
         uses: ./.github/workflows/_ci.yaml
         secrets:
             gh-token: ${{ secrets.GITHUB_TOKEN }}
+        permissions:
+            contents: read
