@@ -209,7 +209,7 @@ jobs:
             - format_check_integration_tests
             - typecheck_integration_tests
         permissions: {}
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         timeout-minutes: 5
         if: ${{ always() }}
         steps:
