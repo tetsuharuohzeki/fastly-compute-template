@@ -26,6 +26,8 @@ jobs:
         timeout-minutes: 5
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              with:
+                  persist-credentials: false
             - uses: ./.github/actions/ci_prepare_to_compile
 
     fetch_npm_registry:
@@ -33,6 +35,8 @@ jobs:
         timeout-minutes: 5
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              with:
+                  persist-credentials: false
             - uses: ./.github/actions/ci_prepare_npm_for_integration_test
 
     build:
@@ -46,6 +50,8 @@ jobs:
             fail-fast: true
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              with:
+                  persist-credentials: false
             - uses: ./.github/actions/ci_prepare_to_compile
             - uses: ./.github/actions/ci_prepare_fastly_cli
               with:
@@ -79,6 +85,8 @@ jobs:
             fail-fast: false
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              with:
+                  persist-credentials: false
             - uses: ./.github/actions/download_build_artifacts
               with:
                   git-sha: ${{ github.sha }}
@@ -96,6 +104,8 @@ jobs:
         timeout-minutes: 10
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              with:
+                  persist-credentials: false
             - uses: ./.github/actions/ci_prepare_to_compile
             - shell: bash
               run: make unittests -j
@@ -106,6 +116,8 @@ jobs:
         timeout-minutes: 10
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              with:
+                  persist-credentials: false
             - uses: ./.github/actions/ci_prepare_to_compile
             - shell: bash
               run: make lint_check -j
@@ -115,6 +127,8 @@ jobs:
         timeout-minutes: 10
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              with:
+                  persist-credentials: false
 
             - name: Install Rust toolchain
               uses: ./.github/actions/rust_toolchain
@@ -133,6 +147,8 @@ jobs:
         timeout-minutes: 10
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              with:
+                  persist-credentials: false
             - uses: ./.github/actions/ci_prepare_npm_for_integration_test
             - shell: bash
               run: make format_check_integration_tests -j
@@ -143,6 +159,8 @@ jobs:
         timeout-minutes: 10
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              with:
+                  persist-credentials: false
             - uses: ./.github/actions/ci_prepare_npm_for_integration_test
             - shell: bash
               run: make lint_integration_tests -j
@@ -153,6 +171,8 @@ jobs:
         timeout-minutes: 10
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+              with:
+                  persist-credentials: false
             - uses: ./.github/actions/ci_prepare_npm_for_integration_test
             - shell: bash
               run: make typecheck_integration_tests -j
