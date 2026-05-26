@@ -7,7 +7,7 @@ inputs:
     release-channel:
         required: true
     build-type:
-        required: tru
+        required: true
     working-directory:
         default: ${{ github.workspace }}
         required: false
