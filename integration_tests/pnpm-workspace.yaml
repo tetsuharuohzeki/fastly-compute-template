@@ -6,7 +6,7 @@ catalog:
   '@tsconfig/strictest': ^2.0.8
   '@types/node': ^25.6.0
   ava: ^8.0.1
-  eslint: ^10.2.1
+  eslint: ^10.5.0
   eslint-config-prettier: ^10.1.8
   globals: ^17.5.0
   option-t: ^56.1.2
