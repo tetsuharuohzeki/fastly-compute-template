@@ -37,7 +37,7 @@ catalogs:
       specifier: ^7.0.2
       version: 7.0.2
     undici:
-      specifier: ^8.5.0
+      specifier: ^8.7.0
       version: 8.7.0
 
 importers:
