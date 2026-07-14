@@ -12,6 +12,8 @@ runs:
         - name: Set up fastly CLI
           uses: fastly/compute-actions/setup@9ca64d641e165464cd4c0c988f2e549dc7d43b49 # v13
           with:
-              cli_version: "15.1.0"
+              cli_version: "15.4.0"
+              # FIXME: try to replace this with `install-tools` subcommand.
+              # https://github.com/fastly/cli/releases/tag/v15.4.0
               viceroy_version: "0.18.0"
               token: ${{ inputs.gh-token }}
