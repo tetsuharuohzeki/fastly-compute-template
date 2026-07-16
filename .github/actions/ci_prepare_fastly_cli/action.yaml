@@ -15,5 +15,5 @@ runs:
               cli_version: "15.4.0"
               # FIXME: try to replace this with `install-tools` subcommand.
               # https://github.com/fastly/cli/releases/tag/v15.4.0
-              viceroy_version: "0.20.0"
+              viceroy_version: "0.20.1"
               token: ${{ inputs.gh-token }}
