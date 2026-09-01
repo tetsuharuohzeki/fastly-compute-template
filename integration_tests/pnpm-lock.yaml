@@ -13,8 +13,8 @@ catalogs:
       specifier: ^2.0.8
       version: 2.0.8
     '@types/node':
-      specifier: ^26.1.1
-      version: 26.1.1
+      specifier: ^26.3.0
+      version: 26.3.0
     ava:
       specifier: ^8.0.1
       version: 8.0.1
@@ -53,7 +53,7 @@ importers:
         version: 2.0.8
       '@types/node':
         specifier: 'catalog:'
-        version: 26.1.1
+        version: 26.3.0
       eslint:
         specifier: 'catalog:'
         version: 10.6.0
@@ -251,8 +251,8 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
-  '@types/node@26.1.1':
-    resolution: {integrity: sha512-nxAkRSVkN1Y0JC1W8ky/fTfkGsMmcrRsbx+3XoZE+rMOX71kLYTV7fLXpqud1GpbpP5TuffXFqfX7fH2GgZREw==}
+  '@types/node@26.3.0':
+    resolution: {integrity: sha512-L3fgrnchriRC2ExBflb8j4uZZURHZfQsmQeyVzhjcHW4kkwVyo8/0h1B2MVzMTrYUJYu6G7EWs14hW/L9putqw==}
 
   '@typescript/typescript-aix-ppc64@7.0.2':
     resolution: {integrity: sha512-MTKKkWB7p/0E9xi1d1tHtZ5PiLkGEMIq88pK2CubZjOsLtYTLqhgIgi6zepFa+9GHZ6h05NMCkQxGKiPXMxXtQ==}
@@ -1195,7 +1195,7 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
-  '@types/node@26.1.1':
+  '@types/node@26.3.0':
     dependencies:
       undici-types: 8.3.0
 
